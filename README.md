@@ -1,5 +1,8 @@
 # Birdy-IN017
 Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social similaire à twitter. 
+Design Figma : 
+    https://www.figma.com/file/Uzti26XveeaxX0jSOI0cM9/Twitter?node-id=67%3A5&t=ARLekatTPFpHCrYN-0
+    
 
 <h1> Architecture de l'application : </h1>
 
