@@ -24,7 +24,7 @@ src/
 
 <h3>Langage utilisé </h3>
 
-Côté client 
+<u>Côté client </u>
 
 • Présentation graphique
 → HTML, CSS, Javascript/React JS
@@ -33,7 +33,7 @@ Côté client
 → React JS (librairie axios)
 
 
-Côté serveur
+<u>Côté serveur </u>
 
 • Serveur Web
 → Node
