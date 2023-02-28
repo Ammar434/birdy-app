@@ -23,16 +23,17 @@ src/
 ~~~
 
 <h3>Langage utilisé </h3>
-_
-Côté client _
+
+Côté client 
 
 • Présentation graphique
 → HTML, CSS, Javascript/React JS
 
 • Communication client - serveur
 → React JS (librairie axios)
-_
-Côté serveur_
+
+
+Côté serveur
 
 • Serveur Web
 → Node
