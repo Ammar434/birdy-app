@@ -1,8 +1,9 @@
 # Birdy-IN017
 Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social similaire à twitter. 
 
-Architecture de l'application : 
+<h1> Architecture de l'application : </h1>
 
+<h3> Structure </h3>
 ~~~
 src/
 ├── App.js
@@ -19,6 +20,8 @@ src/
 └── styles/
     ├── App.css
 ~~~
+
+<h3>Langage utilisé </h3>
 
 • Présentation graphique
 → HTML, CSS, Javascript/React JS
