@@ -6,20 +6,25 @@ Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social s
 <h3> Structure </h3>
 
 ~~~
-src/
-├── App.js
-├── index.js 
-├── components/
-│   ├── SideBar.js
-│   ├── Feed.js
-│   ├── Widget.js
-├── pages/
+
+Client/
+├──src/ 
+│   ├── App.js
+│   ├── index.js 
+│   ├── components/
+│       ├── SideBar.js
+│       ├── Feed.js
+│       ├── Widget.js  
+│   ├── pages/
 │   ├── HomePage.js
 │   ├── LoginPage.js
 ├── utils/
 │   ├── api.js
 └── styles/
     ├── App.css
+    
+Serveur/ 
+├──
 ~~~
 
 <h3>Langage utilisé </h3>
