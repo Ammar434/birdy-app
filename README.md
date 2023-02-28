@@ -4,6 +4,7 @@ Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social s
 <h1> Architecture de l'application : </h1>
 
 <h3> Structure </h3>
+
 ~~~
 src/
 ├── App.js
