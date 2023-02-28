@@ -6,7 +6,6 @@ Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social s
 <h3> Structure </h3>
 
 ~~~
-
 Client/
 ├──src/ 
 │   ├── App.js
