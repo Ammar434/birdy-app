@@ -8,7 +8,7 @@ Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social s
 ~~~
 src/
 ├── App.js
-├── index.js
+├── index.js 
 ├── components/
 │   ├── SideBar.js
 │   ├── Feed.js
