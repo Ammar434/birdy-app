@@ -1,16 +1,7 @@
-import React from 'react';
-import MainPage from './pages/MainPage';
+import React from "react";
 
-
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <MainPage/>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  return <div>Empty App</div>;
+};
 
 export default App;
