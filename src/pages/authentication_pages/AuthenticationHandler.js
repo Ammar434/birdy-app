@@ -5,7 +5,7 @@ const AuthenticationHandler = () => {
   let isAuthenticated = false;
 
   if (isAuthenticated) {
-    return <div>Not logged in</div>;
+    return <div> Logged in</div>;
   }
   return <SignIn />;
 };

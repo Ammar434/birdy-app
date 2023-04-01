@@ -1,2 +1,9 @@
-const kPaddingValue = 16;
-const kSmallPaddingValue = 8;
+export default {
+  padding: {
+    kPaddingValue: 8,
+    kSmallPaddingValue: 4,
+  },
+  radius: {
+    kRadius: "4vh",
+  },
+};
