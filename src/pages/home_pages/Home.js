@@ -12,7 +12,7 @@ const Home = () => {
   // Sinon, on le redirige vers la page de connexion.
 
   return (
-    <HStack w="full" h="100vh" bg="gray.100" padding={10}>
+    <HStack w="full" h="100vh" bg="purple.100" padding={10}>
     <Flex
         as="menu"
         w="full"

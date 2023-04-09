@@ -4,7 +4,7 @@ import React from "react";
 
 const RightSideBar = () => {
     return (
-        <Text fontSize={100} color="gray.100"> SEARCH </Text>
+        <Text fontSize={50} color="purple.100"> SEARCH </Text>
 
     )
 }

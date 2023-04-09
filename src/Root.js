@@ -10,6 +10,7 @@ export const ROOT = "/";
 export const PROFIL= "/profil"; 
 export const NOTIFICATION = "/notification"; 
 export const MESSAGES = "/messages";
+export const AMIS = "/amis"
 
 
 export const router = createBrowserRouter([
@@ -17,5 +18,7 @@ export const router = createBrowserRouter([
   { path: PROFIL, element: <Profil /> },
   { path: NOTIFICATION, element: <Notification /> },
   { path: MESSAGES, element: <Messages /> },
+  { path: MESSAGES, element: <Messages /> },
+  
 ]);
 

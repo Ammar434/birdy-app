@@ -4,7 +4,7 @@ import React from "react";
 
 const Feed = () => {
     return (
-        <Text fontSize={100} color="gray.100"> FEED DU USER </Text>
+        <Text fontSize={50} color="purple.100"> FEED DU USER </Text>
 
     )
 }
