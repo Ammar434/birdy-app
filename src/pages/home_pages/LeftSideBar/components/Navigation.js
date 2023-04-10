@@ -34,9 +34,9 @@ import { ROOT, NOTIFICATION, MESSAGES, AMIS, PROFIL } from './../../../../Root';
 import NavItem from './NavItem';
 
 
-const LinkItems = [
+export const LinkItems = [
   { name: 'Mon Profil', icon: MdOutlinePerson},
-  { name: 'Home', icon: MdHome},
+  { name: 'Home', icon: MdHome },
   { name: 'Notification', icon: GiWireframeGlobe },
   { name: 'Message', icon: MdMessage },
   { name: 'Mes Amis', icon: MdPeople}
@@ -49,6 +49,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w="full"
       h="full"
       maxW={350}
+      maxH={500}
       bg="blue"
       alignItems="center"
       padding={6}
@@ -85,7 +86,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
 export default function Navigation({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <>
+    <Box 
+    as="nav"
+    w="full"
+    h="full"
+    >
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
@@ -105,7 +110,7 @@ export default function Navigation({ children }) {
 
 
       <Box 
-      ml={{ base: 0, md: 10 }} p="4">
+      ml={{ base: 0, md: 4 }} p="4">
         <Link
             as={RouterLink}
             onClick={(() => alert("Vous allez être déconnecté"))}
@@ -122,7 +127,7 @@ export default function Navigation({ children }) {
         </Link>{" "}
           
       </Box>
-    </>
+    </Box>
   );
 }
 

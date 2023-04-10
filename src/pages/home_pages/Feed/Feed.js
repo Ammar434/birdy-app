@@ -6,10 +6,7 @@ import Profil from "../LeftSideBar/components/Profil";
 
 const Feed = () => {
     return (
-        <>
-        <Notification/>
-        <Profil/>
-        </>
+        <Text fontSize={50} color="purple.100"> Feed </Text>
     ); 
 }; 
 
