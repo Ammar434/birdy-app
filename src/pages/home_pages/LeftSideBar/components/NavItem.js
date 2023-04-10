@@ -4,10 +4,13 @@ import { Flex, Icon, Link } from '@chakra-ui/react';
 
 const NavItem = ({ icon, children, ...rest }) => {
     return (
-      <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+      <Link 
+      href="#" 
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}>
         <Flex
           align="center"
-          p="4"
+          p="5"
           mx="4"
           borderRadius="lg"
           role="group"

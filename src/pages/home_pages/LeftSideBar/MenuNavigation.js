@@ -7,7 +7,6 @@ import Profil from "./components/Profil";
 const MenuNavigation = () => (
     <Box w="full">
       <Navigation/>
-      <Profil/>
     </Box>
 );
 

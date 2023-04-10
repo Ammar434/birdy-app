@@ -35,11 +35,11 @@ import NavItem from './NavItem';
 
 
 const LinkItems = [
+  { name: 'Mon Profil', icon: MdOutlinePerson},
   { name: 'Home', icon: MdHome},
   { name: 'Notification', icon: GiWireframeGlobe },
   { name: 'Message', icon: MdMessage },
-  { name: 'Mes Amis', icon: MdPeople},
-  { name: 'Mon Profil', icon: MdOutlinePerson}
+  { name: 'Mes Amis', icon: MdPeople}
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -49,7 +49,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w="full"
       h="full"
       maxW={350}
-      bg="white"
+      bg="blue"
       alignItems="center"
       padding={6}
       flexDirection="column"
@@ -65,7 +65,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
 
       </Flex>
-     
+  
      {/* add on click items with a link component  */}
 
 
@@ -118,7 +118,8 @@ export default function Navigation({ children }) {
                 color: 'white',
               }}
               as={MdOutlineLogout}/>
-          </Link>{" "}
+
+        </Link>{" "}
           
       </Box>
     </>
