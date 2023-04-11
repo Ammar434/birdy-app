@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import MainPage from "./pages/home_pages/Home.js"; 
+import Home from "./pages/home_pages/Home.js"; 
 import Profil from "./pages/home_pages/LeftSideBar/components/Profil.js"; 
 import Notification from "./pages/home_pages/LeftSideBar/components/Notification.js"; 
 import Messages from "./pages/home_pages/LeftSideBar/components/Messages.js";
@@ -14,11 +14,11 @@ export const AMIS = "/amis"
 
 
 export const router = createBrowserRouter([
-  { path: ROOT, element: <MainPage /> },
-  { path: PROFIL, element: <Profil /> },
-  { path: NOTIFICATION, element: <Notification /> },
-  { path: MESSAGES, element: <Messages /> },
-  { path: MESSAGES, element: <Messages /> },
+  { path: ROOT, element: <Home/> },
+  { path: PROFIL, element: <Home/> },
+  { path: NOTIFICATION, element: <Home /> },
+  { path: MESSAGES, element: <Home /> },
+  { path: MESSAGES, element: <Home /> },
   
 ]);
 

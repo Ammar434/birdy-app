@@ -5,11 +5,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { LinkItems } from './Navigation';
 
 const NavItem = ({ icon, children, ...rest }) => {
-  const link = LinkItems.find((item) => item.name === children).link;
+  // const link = LinkItems.find((item) => item.name === children).link;
+  // console.log(link)
+  console.log(children)
     return (
       <Link 
-      // as={RouterLink}
-      // to={link}
+      href={"/profil"}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
         <Flex
