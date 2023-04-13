@@ -1,13 +1,29 @@
 import React from 'react';
-import { Flex, Icon, Link } from '@chakra-ui/react';
+import { 
+      Flex,
+      Icon, 
+      Link,
+    } from '@chakra-ui/react';
 
+const NavItem = ({children,icon, selectedComponent, updateSelectedComponent, ...rest }) => {
 
-const NavItem = ({ icon, children, ...rest }) => {
+  function handleClick() {
+    console.log("children in NavItem",children); 
+    console.log("selectedComponent ",selectedComponent);
+    const selected = children; 
+    updateSelectedComponent(selected);
+  }
+
     return (
-      <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-        <Flex
+      <Link 
+      onClick={handleClick}
+      href="#"
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}>
+     
+      <Flex
           align="center"
-          p="4"
+          p="5"
           mx="4"
           borderRadius="lg"
           role="group"
@@ -17,6 +33,7 @@ const NavItem = ({ icon, children, ...rest }) => {
             color: 'white',
           }}
           {...rest}>
+          
           {icon && (
             <Icon
               mr="4"
@@ -28,8 +45,9 @@ const NavItem = ({ icon, children, ...rest }) => {
             />
           )}
           {children}
-        </Flex>
-      </Link>
+      </Flex>
+     </Link>
+
     );
   };
   

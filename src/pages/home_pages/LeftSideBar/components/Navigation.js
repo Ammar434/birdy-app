@@ -1,127 +1,161 @@
-import React, { ReactNode } from 'react';
-import { Link as RouterLink } from "react-router-dom";
+import React from 'react';
 import {
-  IconButton,
+  Divider,
   Box,
-  Center,
   CloseButton,
-  Flex,
-  Icon,
-  useColorModeValue,
+  Flex, 
+  Text, 
+  Icon, 
   Link,
-  Drawer,
-  DrawerContent,
-  Text,
-  useDisclosure,
-  BoxProps,
-  FlexProps,
-  Spacer,
-} from '@chakra-ui/react';
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider, 
+  Button,
+  Center,
+  } 
+from '@chakra-ui/react';
+
+import { Link as RouterLink } from "react-router-dom";
+
 import { 
   GiWireframeGlobe,
   } from "react-icons/gi";
 import {
   MdHome, 
   MdMessage, 
-  MdPeople,
-  MdOutlinePerson,
   MdOutlineLogout
   } from "react-icons/md";
 
-import { IconType } from 'react-icons';
-import { ReactText } from 'react';
-import { ROOT, NOTIFICATION, MESSAGES, AMIS, PROFIL } from './../../../../Root';
+
 import NavItem from './NavItem';
-
-
-const LinkItems = [
-  { name: 'Home', icon: MdHome},
-  { name: 'Notification', icon: GiWireframeGlobe },
-  { name: 'Message', icon: MdMessage },
-  { name: 'Mes Amis', icon: MdPeople},
-  { name: 'Mon Profil', icon: MdOutlinePerson}
+export const LinkItems = [
+  { id: 1, name: 'Home', icon: MdHome},
+  { id: 2, name: 'Notification', icon: GiWireframeGlobe },
+  { id: 3, name: 'Messages', icon: MdMessage},
 ];
 
-const SidebarContent = ({ onClose, ...rest }) => {
+
+
+const Navigation = ({selectedComponent, updateSelectedComponent}) => {
+  
+
+  const handleClick = (newComponent) => {
+    updateSelectedComponent(newComponent);
+    console.log("selectedComponent in Navigation",selectedComponent)
+  }
+
   return (
-    <Box
-      as="menu"
-      w="full"
-      h="full"
-      maxW={350}
-      bg="white"
-      alignItems="center"
-      padding={6}
-      flexDirection="column"
-      justifyContent="space-between"
-      borderRadius="3xl"
-      {...rest}>
+  <Box
+    as="menu"
+    w="full"
+    h="full"
+    maxW={350}
+    justifyContent="center"
+    maxH={500}
+    borderRadius="3xl">
 
       {/* Ici le logo de l'app */}
       <Flex h="100" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="5xl" fontFamily="monospace" fontWeight="bold">
           Logo
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
-
+      
+      <CloseButton display={{ base: 'flex', md: 'none' }} />
       </Flex>
-     
-     {/* add on click items with a link component  */}
 
+      <Flex
+          align="center"
+          p="5"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          onClick={() => handleClick("Profil")}
+          _hover={{
+            bg: 'purple.200',
+            color: 'white',
+          }}>
+        {/* The avatar */}
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded="full"
+              variant="link"
+              cursor="pointer">
 
-      {/* Ici les boutons du menu  */}
+                <Avatar
+                  size="sm"
+                  src='https://avatars.dicebear.com/api/male/username.svg'
+                />
+
+            </MenuButton>
+        {/* The dropdown */}
+              <MenuList 
+              alignItems='center'
+              color="black"
+              >
+                <br />
+                <Center>
+                  <Avatar
+                    size="2xl"
+                    src='https://avatars.dicebear.com/api/male/username.svg'
+                  />
+                </Center>
+                <br />
+                <Center>
+                  <p>User.name</p>
+                </Center>
+                <br />
+                <MenuDivider />
+                <MenuItem>Paramètres</MenuItem>
+                <MenuItem>
+                <Link
+                  as={RouterLink}
+                  onClick={(() => alert("Vous allez être déconnecté"))}
+                  to={""}
+                  fontWeight="medium"
+                  textDecor="underline"
+                >
+                  <Icon mr="6" fontSize="16"
+                        _groupHover={{
+                          color: 'black',
+                        }}
+                        as={MdOutlineLogout}/>
+                Logout
+                </Link>{" "}
+                </MenuItem>
+              </MenuList>
+          </Menu>
+          <Text ml="4" fontWeight="large">
+            user.name
+          </Text> 
+      </Flex>
+  
+      <Divider my="6" borderColor="purple.400" />
+
+{/* The other buttons */}
+
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem 
+          onClick={handleClick}
+          key={link.name} 
+          icon={link.icon} 
+          selectedComponent={selectedComponent}
+          updateSelectedComponent={updateSelectedComponent}>
           {link.name}
         </NavItem>
       ))}
-    </Box>
+
+
+  </Box>
   );
 };
 
+export default Navigation;
 
 
 
-export default function Navigation({ children }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
-      />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full">
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
-        </DrawerContent>
-      </Drawer>
-
-
-      <Box 
-      ml={{ base: 0, md: 10 }} p="4">
-        <Link
-            as={RouterLink}
-            onClick={(() => alert("Vous allez être déconnecté"))}
-            to={""}
-            fontWeight="medium"
-            textDecor="underline"
-          >
-         <Icon mr="4" fontSize="16"
-              _groupHover={{
-                color: 'white',
-              }}
-              as={MdOutlineLogout}/>
-          </Link>{" "}
-          
-      </Box>
-    </>
-  );
-}
 
