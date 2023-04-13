@@ -1,9 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Home from "./pages/home_pages/Home.js"; 
-import Profil from "./pages/home_pages/LeftSideBar/components/Profil.js"; 
-import Notification from "./pages/home_pages/LeftSideBar/components/Notification.js"; 
-import Messages from "./pages/home_pages/LeftSideBar/components/Messages.js";
 
 
 export const ROOT = "/"; 

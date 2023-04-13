@@ -1,19 +1,27 @@
 import React from 'react';
-import { Flex, Icon, Link } from '@chakra-ui/react';
-import { Link as RouterLink } from "react-router-dom";
+import { 
+      Flex,
+      Icon, 
+      Link,
+    } from '@chakra-ui/react';
 
-import { LinkItems } from './Navigation';
+const NavItem = ({children,icon, selectedComponent, updateSelectedComponent, ...rest }) => {
 
-const NavItem = ({ icon, children, ...rest }) => {
-  // const link = LinkItems.find((item) => item.name === children).link;
-  // console.log(link)
-  console.log(children)
+  function handleClick() {
+    console.log("children in NavItem",children); 
+    console.log("selectedComponent ",selectedComponent);
+    const selected = children; 
+    updateSelectedComponent(selected);
+  }
+
     return (
       <Link 
-      href={"/profil"}
+      onClick={handleClick}
+      href="#"
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
-        <Flex
+     
+      <Flex
           align="center"
           p="5"
           mx="4"
@@ -25,6 +33,7 @@ const NavItem = ({ icon, children, ...rest }) => {
             color: 'white',
           }}
           {...rest}>
+          
           {icon && (
             <Icon
               mr="4"
@@ -36,8 +45,9 @@ const NavItem = ({ icon, children, ...rest }) => {
             />
           )}
           {children}
-        </Flex>
-      </Link>
+      </Flex>
+     </Link>
+
     );
   };
   

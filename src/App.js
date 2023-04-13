@@ -5,9 +5,10 @@ import { router } from "./Root.js"
 
 const App = () => {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
   );
 };
+
 export default App;

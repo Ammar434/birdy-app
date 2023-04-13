@@ -42,12 +42,11 @@ const SearchBar = () => {
             />
             <Input 
                 type="text"
-                placeholder="Search"
                 value={search}
                 onChange={handleChange}
                 bg="white"
                 alignItems="center"
-                bordeRadius="3xl"
+                borderRadius="3xl"
                 _hover=
                 {{
                     bg: "white",

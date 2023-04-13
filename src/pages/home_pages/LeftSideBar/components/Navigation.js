@@ -1,97 +1,97 @@
-import React, { ReactNode } from 'react';
-import { Link as RouterLink } from "react-router-dom";
+import React from 'react';
 import {
-  Avatar,
   Divider,
   Box,
   CloseButton,
-  Flex,
-  Icon,
-  Menu,
+  Flex, 
+  Text, 
+  Icon, 
   Link,
-  Drawer,
-  DrawerContent,
-  Text,
-  Button,
+  Avatar,
+  Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
-  useColorModeValue,
-  Stack,
-  Center
-} from '@chakra-ui/react';
+  MenuDivider, 
+  Button,
+  Center,
+  } 
+from '@chakra-ui/react';
+
+import { Link as RouterLink } from "react-router-dom";
+
 import { 
   GiWireframeGlobe,
   } from "react-icons/gi";
 import {
   MdHome, 
   MdMessage, 
-  MdPeople,
-  MdOutlinePerson,
   MdOutlineLogout
   } from "react-icons/md";
 
 
-import { ROOT, NOTIFICATION, MESSAGES, AMIS, PROFIL } from "../../../../Root.js";
 import NavItem from './NavItem';
-
-
 export const LinkItems = [
-  { id: 1, name: 'Home', icon: MdHome, link: "/profil"},
-  { id: 2, name: 'Notification', icon: GiWireframeGlobe, link: "/notification" },
-  { id: 3, name: 'Message', icon: MdMessage, link: "/messages"},
-  { id: 4, name: 'Mes Amis', icon: MdPeople, link: "/amis"},
+  { id: 1, name: 'Home', icon: MdHome},
+  { id: 2, name: 'Notification', icon: GiWireframeGlobe },
+  { id: 3, name: 'Messages', icon: MdMessage},
 ];
 
-const SidebarContent = ({ onClose}) => {
+
+
+const Navigation = ({selectedComponent, updateSelectedComponent}) => {
+  
+
+  const handleClick = (newComponent) => {
+    updateSelectedComponent(newComponent);
+    console.log("selectedComponent in Navigation",selectedComponent)
+  }
+
   return (
-    <Box
-      as="menu"
-      w="full"
-      h="full"
-      maxW={350}
-      justifyContent="center"
-      maxH={500}
-      borderRadius="3xl"
-    >
+  <Box
+    as="menu"
+    w="full"
+    h="full"
+    maxW={350}
+    justifyContent="center"
+    maxH={500}
+    borderRadius="3xl">
+
       {/* Ici le logo de l'app */}
       <Flex h="100" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="5xl" fontFamily="monospace" fontWeight="bold">
           Logo
         </Text>
       
-      <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+      <CloseButton display={{ base: 'flex', md: 'none' }} />
       </Flex>
-  
-      {/* Ici les boutons du menu  */}
-      {/* User */}
-      <Divider my="6" borderColor="purple.400" />
-        <Flex
+
+      <Flex
           align="center"
           p="5"
           mx="4"
           borderRadius="lg"
+          role="group"
           cursor="pointer"
+          onClick={() => handleClick("Profil")}
           _hover={{
             bg: 'purple.200',
             color: 'white',
-          }}>   
+          }}>
         {/* The avatar */}
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded="full"
-                variant="link"
-                cursor="pointer"
-                >
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded="full"
+              variant="link"
+              cursor="pointer">
 
                 <Avatar
                   size="sm"
                   src='https://avatars.dicebear.com/api/male/username.svg'
                 />
-            
-              </MenuButton>
+
+            </MenuButton>
         {/* The dropdown */}
               <MenuList 
               alignItems='center'
@@ -110,7 +110,7 @@ const SidebarContent = ({ onClose}) => {
                 </Center>
                 <br />
                 <MenuDivider />
-                <MenuItem>Paramètre</MenuItem>
+                <MenuItem>Paramètres</MenuItem>
                 <MenuItem>
                 <Link
                   as={RouterLink}
@@ -128,32 +128,34 @@ const SidebarContent = ({ onClose}) => {
                 </Link>{" "}
                 </MenuItem>
               </MenuList>
-            </Menu>
-            <Text ml="4" fontWeight="large">
-              user.name
-                </Text>
-        </Flex>
+          </Menu>
+          <Text ml="4" fontWeight="large">
+            user.name
+          </Text> 
+      </Flex>
+  
+      <Divider my="6" borderColor="purple.400" />
+
 {/* The other buttons */}
 
-          {LinkItems.map((link) => (
-            <NavItem key={link.id} icon={link.icon} name={link.name} />
-          ))}
+      {LinkItems.map((link) => (
+        <NavItem 
+          onClick={handleClick}
+          key={link.name} 
+          icon={link.icon} 
+          selectedComponent={selectedComponent}
+          updateSelectedComponent={updateSelectedComponent}>
+          {link.name}
+        </NavItem>
+      ))}
 
 
   </Box>
   );
 };
 
+export default Navigation;
 
 
 
-export default function Navigation({ children }) {
-
-  return (
-    <SidebarContent
-        display={{ base: 'none', md: 'block' }}
-      />  
-
-  );
-}
 
