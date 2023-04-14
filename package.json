@@ -2,6 +2,7 @@
   "name": "twitter-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.4",
@@ -42,5 +43,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Dans le cadre de l'UE Technologies du Web, nous allons coder un réseau social similaire à twitter. \r Design Figma : \r     https://www.figma.com/file/Uzti26XveeaxX0jSOI0cM9/Twitter?node-id=67%3A5&t=ARLekatTPFpHCrYN-0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
