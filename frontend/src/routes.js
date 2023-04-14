@@ -4,7 +4,7 @@ import AuthenticationHandler from "./pages/AuthenticationHandler.js";
 import SignIn from "./pages/authentication_pages/sign_in/SignIn.js";
 import SignUp from "./pages/authentication_pages/sign_up/SignUp";
 import RecoverPassword from "./pages/authentication_pages/recover_password/RecoverPassword";
-import MainPage from "./pages/home_pages/MainPage";
+import Home from "./pages/home_pages/Home";
 
 export const ROOT = "/";
 export const LOGIN = "/signIn";
@@ -18,10 +18,10 @@ export const router = createBrowserRouter([
   { path: LOGIN, element: <SignIn /> },
   { path: REGISTER, element: <SignUp /> },
   { path: RECOVER_PASSWORD, element: <RecoverPassword /> },
-  { path: MAIN_PAGE, element: <MainPage /> },
+  { path: MAIN_PAGE, element: <Home /> },
   {
     path: PROTECTED,
-    element: <MainPage />,
+    element: <Home />,
     children: [],
   },
 ]);
