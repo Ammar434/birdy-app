@@ -7,20 +7,8 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import theme from '../../../../utils/theme.js';
 
-// const NavLink = () => (
-//   <Link
-//     px={2}
-//     py={1}
-//     rounded={'md'}
-//     _hover={{
-//       textDecoration: 'none',
-
-//     }}
-//     href="color">
-  
-//   </Link>
-// );
 
 function getText(selectedComponent) {
   let text = '';
@@ -38,7 +26,7 @@ function getText(selectedComponent) {
       text = 'Notification';
       break;
     default:
-      text = '';
+      text = 'Home';
       break;
   }
   return text;
@@ -47,12 +35,12 @@ function getText(selectedComponent) {
 export default function Nav( {selectedComponent}) {
   const { colorMode, toggleColorMode } = useColorMode();
   const text = getText(selectedComponent);
-  console.log(selectedComponent)
 
   return (
     <Box 
       w='full'
-      bg="purple.200" 
+      bg={colorMode === "light" ? "white" : "black"}
+
       borderRadius="3xl"
       px={50}>
       <Flex 
