@@ -6,41 +6,27 @@ import { useUserInformation } from "../../../../hooks/useUserInformation.js";
 
 
 const Profil = () => { 
-  //Create state for the user information
-  //from the backend useUserInformation hook
+  // [userInformation, setUserInformation] = useState(null);
+  // const pseudo = localStorage.getItem("user");
 
+  // useEffect(() => {
+  //   const fetchUserInformation = async () => {
+  //     // Simulating a fetch request to get the user's information
+  //     const response = await fetch("h");
+  //     const data = await response.json();
+  //     setUserInformation(data);
+  //   };
 
-  const userInformation = useUserInformation();
-  console.log("useInfo",userInformation)
-  const pseudo = userInformation.pseudo;
-  console.log(pseudo)
+  //   fetchUserInformation();
+  // }, [pseudo]);
 
+  // if (!userInformation) {
+  //   return <div>Loading user information...</div>;
+  // }
 
-  
-// const [description, setDescription] = useState("");
-// const [avatar, setAvatar] = useState("");
-
-// const userInformation = useUserInformation();
-// console.log("useInfo",userInformation)
-// const pseudo = userInformation.pseudo;
-// console.log(pseudo)
-
-// const userObject = JSON.parse(userInformation);
-
-// console.log(userInformation.pseudo); 
-
-// useEffect(() => {
-//   if (userInformation) {
-//     // console.log("userObject",userObject); 
-//     // setPseudo(userObject.pseudo);
-//   } else {
-//     setPseudo("no user");
-//   }
-// }, [userInformation]);
     return (
         <>
             <Box>
-
                 <Text>Pseudo: </Text>
 
                 {/* <Text>Pseudo: {pseudo}</Text>

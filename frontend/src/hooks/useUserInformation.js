@@ -13,26 +13,5 @@ export const useUserInformation = (Pseudo) => {
     }, [pseudo]);
 
 
-
-    // useEffect(() => {
-    //     const fetchUserInformation = async (pseudo) => {
-
-    //         try {
-    //             const response = await fetch("/api/user/home", {
-    //                 method: "POST",
-    //                 headers: { "Content-Type": "application/json" },
-    //                 body: JSON.stringify({ pseudo }),
-    //             });
-    //             const json = await response.json();
-                
-    //             setUserInformation(response.data);
-    //         } catch (error) {
-    //             setError(error);
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchUserInformation();
-    // }, [pseudo]);
-
     return userInformation
   };

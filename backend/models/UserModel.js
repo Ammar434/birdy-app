@@ -15,7 +15,6 @@ const userSchema = new Schema({
 });
 
 
-
 userSchema.statics.signUp = async function (email, password, pseudo) {
   const exists = await this.findOne({ email });
 
@@ -73,40 +72,25 @@ userSchema.statics.logIn = async function (email, password) {
 
 
 
-
-//User pseudo to find the user
-// userSchema.statics.findUser = async function (pseudo) {
-
-//   if (!user) {
-//     throw Error("User not exists in our database");
-//   }
-//   console.log("user trouvé", user);
-//   return user;
-
-// };
-
-
-
-userSchema.statics.listFriends = async function (follower, following) {
-  const user = await this.findOne({ follower, following });
-
+//Amis de l'utilisateur 
+userSchema.statics.listFriends = async function (userId) {
+  const user = await this.findById(userId).populate("follower following");
   if (!user) {
-    throw Error("User not exists in our database");
+    throw new Error("User not found");
   }
-
-  return user;
+  const friends = [...user.follower, ...user.following];
+  return friends;
 };
 
-userSchema.statics.listPost = async function (post) {
-  const user = await this.findOne({ post });
 
+//Post de l'utilisateur
+userSchema.statics.listPosts = async function (userId) {
+  const user = await this.findById(userId).populate("post");
   if (!user) {
-    throw Error("User not exists in our database");
+    throw new Error("User not found");
   }
-  
-  return user;
+  return user.post;
 };
-
 
 
 
