@@ -10,7 +10,7 @@ export const ROOT = "/";
 export const LOGIN = "/signIn";
 export const REGISTER = "/signUp";
 export const RECOVER_PASSWORD = "/recover-password";
-export const MAIN_PAGE = "/main-page";
+export const HOME = "/";
 export const PROTECTED = "/protected";
 
 export const router = createBrowserRouter([
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
   { path: LOGIN, element: <SignIn /> },
   { path: REGISTER, element: <SignUp /> },
   { path: RECOVER_PASSWORD, element: <RecoverPassword /> },
-  { path: MAIN_PAGE, element: <Home /> },
+  { path: HOME, element: <Home /> },
   {
     path: PROTECTED,
     element: <Home />,

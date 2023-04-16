@@ -20,7 +20,7 @@ import {
 } from "react-icons/ai";
 
 import { Link as RouterLink } from "react-router-dom";
-import { RECOVER_PASSWORD } from "../../../../routes.js";
+import { RECOVER_PASSWORD, HOME } from "../../../../routes.js";
 import constants from "../../../../utils/constants.js";
 import { useState } from "react";
 import { useLogin } from "../../../../hooks/useLogin.js";
@@ -127,23 +127,36 @@ const FormLogIn = () => {
             Forgot your password?
           </Link>{" "}
         </Stack>
+      <Link
+        as={RouterLink}
+        to={HOME}
+        color="teal.800"
+        fontWeight="medium "
+        textDecor="underline"
+      >
         <Button
           type="submit"
           width="full"
-          bg={"black"}
+          bg="black"
+          color="white"
+          borderColor={"purple.500"}
+          borderWidth="1px"
           mt={constants.padding.kPaddingValue}
           size={"lg"}
           borderRadius={constants.radius.kRadius}
-          colorScheme={"purple"}
+          colorScheme={"purple.500"}
           isLoading={isLoading}
+          _hover={{ background: "purple.500" }}
         >
           Sign In
         </Button>
+      
         {error && (
           <Text color={"red"} mt={3}>
             {error}
           </Text>
         )}
+      </Link>
       </form>
     </Flex>
   );

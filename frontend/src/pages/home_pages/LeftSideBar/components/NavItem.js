@@ -9,8 +9,6 @@ const NavItem = ({
   ...rest
 }) => {
   function handleClick() {
-    console.log("children in NavItem", children);
-    console.log("selectedComponent ", selectedComponent);
     const selected = children;
     updateSelectedComponent(selected);
   }
@@ -18,7 +16,6 @@ const NavItem = ({
   return (
     <Link
       onClick={handleClick}
-      href="#"
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

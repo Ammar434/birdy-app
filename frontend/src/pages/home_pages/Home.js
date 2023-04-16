@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useColorMode } from "@chakra-ui/react";
+import theme from "../../utils/theme";
 
 import Navigation from "./LeftSideBar/components/Navigation";
 import Main from "./Feed/Main";
 import RightSideBar from "./RightSideBar/RightSideBar";
 
+
 import { HStack, Flex } from "@chakra-ui/react";
 
 
 const Home = () => {
-  // Prend le isAuthentificated en paramétre. Si l'utilisateur est authentifier, alors on peut le faire entre dans la page home 
+  // Prend le isAuthentificated en paramétre. Si le user  est authentifier, alors on peut le faire entre dans la page home 
   // Sinon, on le redirige vers la page de connexion.
   const [isAuthentificated, setIsAuthentificated] = useState(false);
   const {colorMode, toggleColorMode } = useColorMode();
@@ -21,7 +23,7 @@ const Home = () => {
   }
 
   return (
-    <HStack w="full" h="100vh" bg="purple.100" padding={10}>
+    <HStack w="full" h="100vh" bg={theme.colors.backgroundColor} padding={10}>
     <Flex
         as="menu"
         w="full"

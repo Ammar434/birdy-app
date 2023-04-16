@@ -35,7 +35,6 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
 
   const handleClick = (newComponent) => {
     updateSelectedComponent(newComponent);
-    console.log("selectedComponent in Navigation", selectedComponent);
   };
 
   return (
@@ -103,7 +102,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
               <Link
                 as={RouterLink}
                 onClick={() => logout()}
-                to={""}
+                to="/"
                 fontWeight="medium"
                 textDecor="underline"
               >

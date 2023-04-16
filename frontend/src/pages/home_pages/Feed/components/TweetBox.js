@@ -22,7 +22,7 @@ const TweetBox = () => {
                 
                 <Box>
                     <Flex>
-                        <Avatar src="https://pbs.twimg.com/profile_images/1360975814302658560/6a1nKj7i_400x400.jpg" />
+                        {/* <Avatar src="https://pbs.twimg.com/profile_images/1360975814302658560/6a1nKj7i_400x400.jpg" /> */}
                         <Input placeholder="What's happening?" type="text" />
                     </Flex>
                     <Input placeholder="Optional: Enter image URL" type="text" />

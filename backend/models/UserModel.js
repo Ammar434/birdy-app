@@ -5,7 +5,7 @@ const validator = require("validator");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  pseudo: { type: String, default: "No username" },
+  pseudo: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   follower: [{ type: Schema.Types.ObjectId, ref: "User" }],
@@ -13,6 +13,8 @@ const userSchema = new Schema({
   post: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   dateCreated: Date,
 });
+
+
 
 userSchema.statics.signUp = async function (email, password, pseudo) {
   const exists = await this.findOne({ email });
@@ -68,5 +70,44 @@ userSchema.statics.logIn = async function (email, password) {
 
   return user;
 };
+
+
+
+
+//User pseudo to find the user
+// userSchema.statics.findUser = async function (pseudo) {
+
+//   if (!user) {
+//     throw Error("User not exists in our database");
+//   }
+//   console.log("user trouvé", user);
+//   return user;
+
+// };
+
+
+
+userSchema.statics.listFriends = async function (follower, following) {
+  const user = await this.findOne({ follower, following });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  return user;
+};
+
+userSchema.statics.listPost = async function (post) {
+  const user = await this.findOne({ post });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+  
+  return user;
+};
+
+
+
 
 module.exports = mongoose.model("User", userSchema);

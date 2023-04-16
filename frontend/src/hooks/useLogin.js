@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuthContext } from "./useAuthContext";
-import { ROOT } from "../routes.js";
+import { MAIN_PAGE, ROOT } from "../routes.js";
+import { GiRobotAntennas } from "react-icons/gi";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -26,6 +27,7 @@ export const useLogin = () => {
       setError(json.error);
     }
     if (response.ok) {
+
       // save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
 
@@ -35,8 +37,15 @@ export const useLogin = () => {
       // update loading state
       setIsLoading(false);
       navigate(ROOT);
+      //initially it was set to navigate("/ROOT") but it was not working
     }
+
+    else{
+      console.log("erreur")
+    }
+
   };
 
   return { login, isLoading, error };
+
 };
