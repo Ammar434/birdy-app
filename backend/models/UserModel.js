@@ -209,4 +209,24 @@ userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
 
   return user;
 };
+
+//Amis de l'utilisateur
+userSchema.statics.listFriends = async function (userId) {
+  const user = await this.findById(userId).populate("follower following");
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const friends = [...user.follower, ...user.following];
+  return friends;
+};
+
+//Post de l'utilisateur
+userSchema.statics.listPosts = async function (userId) {
+  const user = await this.findById(userId).populate("post");
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return user.post;
+};
+
 module.exports = mongoose.model("User", userSchema);

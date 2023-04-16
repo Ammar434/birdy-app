@@ -11,6 +11,11 @@ const {
   getUserById,
   addFollowing,
   removeFollowing,
+  listFriends,
+  newPost,
+  addFriend,
+  removeFriend,
+  deletePost,
 } = require("../controllers/userController");
 
 router.post("/login", loginUser);
@@ -31,6 +36,22 @@ router.post("/remove-following", removeFollowing);
 
 router.post("/add-following");
 
+router.post("/profil/listFriends", listFriends);
+
+router.post("/profil/listPost", listPost);
+
+router.post("/home", newPost);
+
+//Pas encore aboutit
+// router.post("/home/getMessage", getMessage);
+
+// router.post("/home/getFriends", getFriends);
+
+router.post("/home/addFriends", addFriend);
+
+router.post("/home/removeFriend", removeFriend);
+
+router.post("/home/deletePost", deletePost);
 router.post("/", findUser);
 
 module.exports = router;
