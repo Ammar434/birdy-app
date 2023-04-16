@@ -1,0 +1,15 @@
+Bonjour,
+Du côté frontend, il est possible d'avoir un apercu très grossier du processus de login, de création de compte et d'affichage de la page principale.
+
+Pour le moment le serveur contient les fonctionalités suivantes:
+- Création d'un compte, avec envoi d'un token, hashage d'un mot de passe
+- Login a partir d'un email et mot de passe 
+- Obtenir des informations sur un utilisateur à partir de son identifiant
+- Obtenir la liste de follower d'un utilisateur à partir de son identifiant
+- Obtenir la liste de following d'un utilisateur à partir de son identifiant
+- Ajouter un utilisateur à sa liste de following à partir de deux identifiants, celui de la personne qui ajoute et l'identifiant de la personne ajouter.
+- Enlever un utilisateur à sa liste de following à partir de deux identifiants, celui de la personne qui enleve et l'identifiant de la personne à enlever.
+
+
+
+
