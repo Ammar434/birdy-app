@@ -17,6 +17,8 @@ import {
   Center,
 } from "@chakra-ui/react";
 
+
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 import { Link as RouterLink } from "react-router-dom";
 
 import { GiWireframeGlobe } from "react-icons/gi";
@@ -32,6 +34,9 @@ export const LinkItems = [
 
 const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
   const { logout } = useLogout();
+  const { user } = useAuthContext(); 
+  
+  console.log(user)
 
   const handleClick = (newComponent) => {
     updateSelectedComponent(newComponent);
@@ -79,7 +84,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           >
             <Avatar
               size="sm"
-              src="https://avatars.dicebear.com/api/male/username.svg"
+              src="https://api.multiavatar.com/${user.id}.svg"
             />
           </MenuButton>
           {/* The dropdown */}
@@ -88,12 +93,12 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
             <Center>
               <Avatar
                 size="2xl"
-                src="https://avatars.dicebear.com/api/male/username.svg"
-              />
+                src="https://api.multiavatar.com/${user.id}.svg"
+                />
             </Center>
             <br />
             <Center>
-              <p>User.name</p>
+              <p>{user.pseudo}</p>
             </Center>
             <br />
             <MenuDivider />

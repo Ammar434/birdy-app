@@ -25,23 +25,37 @@ const Profil = () => {
   // }
 
     return (
-        <>
-            <Box>
-                <Text>Pseudo: </Text>
+      <>
+      
+      <Box
+      w="full"
+      h="full"
+      justifyContent="center"
+      alignItems="start"
+      display="flex"
+      flexDirection="column">
+      
+        <Text fontSize={50}>  Profil </Text>      
+        <Text fontSize={20} color="gray"> User pseudo </Text>
+        {/* lists of follower from the backend */}
+        <Text fontSize={20} color="gray"> Followers </Text>
+        {/* lists of following from the backend */}
+        <Text fontSize={20} color="gray"> Following </Text>
+        {/* lists of post from the backend */}
+      </Box>
 
-                {/* <Text>Pseudo: {pseudo}</Text>
-                <Text>Email: {email}</Text>
-                <Text>Password: {password}</Text>
-                <Text>Description: {description}</Text> 
-                <Text>Avatar: {avatar}</Text> */}
-            </Box>
-            <Box>
-              <Text> Cover </Text>
+      <Box 
+      w="full"
+      h="full"
+      justifyContent="center"
+      alignItems="start"
+      display="flex"
+      flexDirection="column">
 
-
-            </Box>
-        </>
-
+        <Text fontSize={50}> Posts </Text>
+        <Text fontSize={20} color="gray"> Posts </Text>
+      </Box>
+      </>
     )
 };
 

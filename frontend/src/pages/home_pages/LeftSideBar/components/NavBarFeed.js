@@ -55,7 +55,7 @@ export default function Nav( {selectedComponent}) {
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
             <Button onClick={toggleColorMode}>
-              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              {colorMode === "light" ? <MoonIcon style={{ backgroundColor: 'transparent' }} /> : <SunIcon style={{ backgroundColor: 'transparent' }}  />}
             </Button>
           </Stack>
         </Flex>

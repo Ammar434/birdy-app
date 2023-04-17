@@ -47,7 +47,7 @@ userSchema.statics.signUp = async function (email, password, pseudo) {
   return user;
 };
 
-userSchema.statics.logIn = async function (email, password) {
+userSchema.statics.login = async function (email, password) {
   if (email === "") {
     throw Error("Email is empty");
   }
@@ -70,8 +70,6 @@ userSchema.statics.logIn = async function (email, password) {
   return user;
 };
 
-
-
 //Amis de l'utilisateur 
 userSchema.statics.listFriends = async function (userId) {
   const user = await this.findById(userId).populate("follower following");
@@ -80,16 +78,6 @@ userSchema.statics.listFriends = async function (userId) {
   }
   const friends = [...user.follower, ...user.following];
   return friends;
-};
-
-
-//Post de l'utilisateur
-userSchema.statics.listPosts = async function (userId) {
-  const user = await this.findById(userId).populate("post");
-  if (!user) {
-    throw new Error("User not found");
-  }
-  return user.post;
 };
 
 

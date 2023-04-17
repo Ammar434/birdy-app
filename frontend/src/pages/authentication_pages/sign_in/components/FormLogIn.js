@@ -127,13 +127,14 @@ const FormLogIn = () => {
             Forgot your password?
           </Link>{" "}
         </Stack>
-      <Link
+
+      {/* <Link
         as={RouterLink}
         to={HOME}
         color="teal.800"
         fontWeight="medium "
         textDecor="underline"
-      >
+      > */}
         <Button
           type="submit"
           width="full"
@@ -156,7 +157,7 @@ const FormLogIn = () => {
             {error}
           </Text>
         )}
-      </Link>
+      {/* </Link> */}
       </form>
     </Flex>
   );

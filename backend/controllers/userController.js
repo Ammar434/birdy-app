@@ -13,8 +13,9 @@ const loginUser = async (req, res) => {
   try {
     //add the pseudo to the token
     const user = await User.login(email, password);
+    const id = user._id;
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id});
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -25,6 +26,7 @@ const signUpUser = async (req, res) => {
   try {
     const user = await User.signUp(email, password, pseudo);
     const token = createToken(user._id);
+    const id = user._id;
 
     console.log("pas de problème, voici le pseudo", pseudo);
     res.status(200).json({ email, token, pseudo: user.pseudo });
@@ -46,7 +48,6 @@ const getUserById = async (req, res) => {
   }
 };
 
-
 const findUser = async (req, res) => {
   const { pseudo } = req.body;
   try {
@@ -58,44 +59,13 @@ const findUser = async (req, res) => {
   }
 };
 
-//Sortie JSON  des nouveaux posts
-const newPost = async (req, res) => {
-  const { userId, postId, comment } = req.body;
-
-  try {
-    // Vérifier si l'utilisateur existe
-    const user = await UserModel.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Vérifier si le post existe
-    const post = await PostModel.findById(postId);
-
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-
-    // Ajouter le commentaire au post
-    post.comments.push({ user: userId, text: comment });
-    await post.save();
-
-    res.status(201).json({ message: "Comment added successfully" });
-  } catch (error) {
-    console.error("Error adding comment", error);
-    res.status(500).json({ error: "Error adding comment" });
-  }
-};
-
-
 
 
 // méthode pour récupérer la liste des amis de l'utilisateur et renvoyer une réponse HTML
 //Sortie HTML avec la liste des amis
 const listFriends = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate('follower following');
+    const user = await User.findById(req.id).populate('follower following');
     if (!user) {
       res.status(404).send('User not found');
       return;
@@ -115,24 +85,10 @@ const listFriends = async (req, res) => {
 };
 
 
-
-//sortie : JSON avec la liste des post 
-const listPost = async (req, res) => {
-  try {
-    const posts = await User.listPosts(req.params.id);
-    res.status(200).json({ posts });
-  } catch (error) {
-    res.status(500).json({ error: "Error retrieving user's posts" });
-    res.status(400).json({ error: error.message });
-
-  }
-};
-
-
 // Sortie : HTML avec la suppression d'un ami
 const removeFriend = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.id; 
     const { friendId } = req.body;
     
     const user = await User.findById(id);
@@ -154,7 +110,7 @@ const removeFriend = async (req, res) => {
 // Sortie : HTML avec l'ajout d'un ami
 const addFriend = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.id;
     const { friendId } = req.body;
 
     const user = await User.findById(id);
@@ -175,53 +131,23 @@ const addFriend = async (req, res) => {
   }
 };
 
-//sortie HTML avec la suppression d'un post
-const deletePost = async (req, res) => {
+//Question : Est-ce obligatoire de retourner un HTML ? Parce que pas optimal
+const getFriends = async (req, res) => {
   try {
-    const postId = req.params.id;
-    const userId = req.user._id;
+    const user = await User.findById(req.params.id).populate('follower following');
+    const friends = [...user.follower, ...user.following];
 
-    // Vérifier que le post existe et appartient à l'utilisateur
-    const post = await PostModel.findOne({ _id: postId, user: userId });
-    if (!post) {
-      return res.status(404).send("<h1>Post pas trouvé</h1>");
-    }
+    let friendsHtml = '<h1>Friends</h1><ul>';
+    friends.forEach((friend) => {
+      friendsHtml += `<li><strong>${friend.pseudo}</strong> - ${friend.email}</li>`;
+    });
+    friendsHtml += '</ul>';
 
-    // Supprimer le post
-    await PostModel.deleteOne({ _id: postId });
-
-    // Rediriger vers la page des posts de l'utilisateur
-    res.redirect(`/users/${userId}/posts`);
+    res.status(200).send(friendsHtml);
   } catch (error) {
-    console.error("Error deleting post", error);
-    res.status(500).send("<h1>Error deleting post</h1>");
+    res.status(500).send(error.message);
   }
 };
-
-//recherche
-// const getMessage = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { message } = req.body;
-
-//   }
-//   catch (error) {
-//     console.error("Error finding message", error);
-//     res.status(500).send("<h1>Error finding message</h1>");
-//   }
-// };
-
-// const getFriends = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { friend } = req.body;
-//   }
-//   catch (error) {
-//     console.error("Error finding friend", error);
-//     res.status(500).send("<h1>Error finding friend</h1>");
-//   }
-// };
-
 
 
 const resetPassword = async (req, res) => {
@@ -229,4 +155,4 @@ const resetPassword = async (req, res) => {
 };
 
 
-module.exports = { loginUser, signUpUser, resetPassword, findUser, newPost, listFriends, listPost, removeFriend, addFriend, deletePost};
+module.exports = { loginUser, signUpUser, getUserById, findUser, listFriends, removeFriend, addFriend, resetPassword, getFriends};
