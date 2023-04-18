@@ -5,7 +5,7 @@ const Feed = () => {
     return (
         <Box>
         <Text fontSize={50} color="purple.100"> Home </Text>
-        <TweetBox />
+        {/* <TweetBox /> */}
         </Box>
     );
     }

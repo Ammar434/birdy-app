@@ -2,16 +2,20 @@ const express = require("express");
 const router = express.Router();
 const {
   loginUser,
-  signUpUser,
-  resetPassword,
-  listFriends,
-  addFriend, 
-  removeFriend
+  signUpUser, 
+  getListFollowing, 
+  getListFollower, 
+  addFollowing, 
+  removeFollowing, 
+  getUserById, 
+  findUser, 
+  resetPassword, 
   } = require("../controllers/userController");
 
 const{ 
   newPost, 
   likePost, 
+  removelikePost,
   deletePost, 
   listPost, 
   searchPostsandFriends
@@ -25,22 +29,30 @@ router.post("/signup", signUpUser);
 
 router.post("/reset-password", resetPassword);
 
-router.post("/profil/listFriends", listFriends);
+router.post("/profil/listfollowing", getListFollowing);
 
-router.post("/home/addFriends", addFriend);
+router.post("/profil/listfollower", getListFollower);
 
-router.post("/home/removeFriend", removeFriend);
+router.post("/profil/addfollowing", addFollowing);
+
+router.post("/profil/removefollowing", removeFollowing);
+
+router.post("/profil/getUserById", getUserById);
+
+router.post("/profil/findUser", findUser);
 
 
 //PostController endpoints
 
 router.post("/home", newPost);
 
+router.get("/profil/listPost", listPost);
+
 router.post("/home/deletePost", deletePost);
 
-router.post("/profil/listPost", listPost);
-
 router.post("/home/likePost", likePost);
+
+router.post("/home/removelikePost", removelikePost);
 
 router.post("/home/searchPostsandFriends", searchPostsandFriends);
 

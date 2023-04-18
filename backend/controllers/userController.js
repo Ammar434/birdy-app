@@ -8,14 +8,13 @@ const createToken = (id) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   try {
     //add the pseudo to the token
     const user = await User.login(email, password);
-    const id = user._id;
     const token = createToken(user._id);
-    res.status(200).json({ email, token, id});
+    res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -27,15 +26,61 @@ const signUpUser = async (req, res) => {
     const user = await User.signUp(email, password, pseudo);
     const token = createToken(user._id);
     const id = user._id;
-
-    console.log("pas de problème, voici le pseudo", pseudo);
-    res.status(200).json({ email, token, pseudo: user.pseudo });
-  
+    res.status(200).json({ email, token, id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
+
+//get the list of follower and following
+const getListFollowing = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const user = await User.findById(id);
+    const following = user.following;
+    res.status(200).json({ following });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getListFollower = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const user = await User.findById(id);
+    const follower = user.follower;
+    res.status(200).json({ follower });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const addFollowing = async (req, res) => {
+  const { user1Id, user2Id } = req.body;
+  try {
+    const user1 = await User.addFollower(user1Id, user2Id);
+    const user2 = await User.addFollowing(user1Id, user2Id);
+    res.status(200).json({ user1, user2 });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const removeFollowing = async (req, res) => {
+  const { user1Id, user2Id } = req.body;
+  try {
+    const user1 = await User.removeFollower(user1Id, user2Id);
+    const user2 = await User.removeFollowing(user1Id, user2Id);
+    res.status(200).json({ user1, user2 });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//OK
 const getUserById = async (req, res) => {
   const { id } = req.body;
   console.log(id);
@@ -48,10 +93,11 @@ const getUserById = async (req, res) => {
   }
 };
 
+//OK
 const findUser = async (req, res) => {
   const { pseudo } = req.body;
   try {
-    const user = await UserModel.findOne({ pseudo });
+    const user = await User.findOne({ pseudo });
     return user;
   } catch (error) {
     console.error("Error finding user", error);
@@ -60,99 +106,16 @@ const findUser = async (req, res) => {
 };
 
 
-
-// méthode pour récupérer la liste des amis de l'utilisateur et renvoyer une réponse HTML
-//Sortie HTML avec la liste des amis
-const listFriends = async (req, res) => {
-  try {
-    const user = await User.findById(req.id).populate('follower following');
-    if (!user) {
-      res.status(404).send('User not found');
-      return;
-    }
-    const friends = [...user.follower, ...user.following];
-    let html = '<h1>Friends List</h1>';
-    html += '<ul>';
-    friends.forEach(friend => {
-      html += `<li>${friend.pseudo}</li>`;
-    });
-    html += '</ul>';
-    res.send(html);
-  } catch (error) {
-    console.error('Error retrieving user\'s friends', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
-
-// Sortie : HTML avec la suppression d'un ami
-const removeFriend = async (req, res) => {
-  try {
-    const { id } = req.id; 
-    const { friendId } = req.body;
-    
-    const user = await User.findById(id);
-    if (!user) throw new Error("User not found");
-
-    const friendIndex = user.follower.findIndex(followerId => followerId.toString() === friendId.toString());
-    if (friendIndex === -1) throw new Error("Friend not found");
-
-    user.follower.splice(friendIndex, 1);
-    await user.save();
-
-    res.send(`<h1>Vous avez supprimé de vos amis:  ${friendId}.</h1>`);
-  } catch (error) {
-    console.error("Error removing friend", error);
-    res.status(500).send("<h1>Error removing friend</h1>");
-  }
-};
-
-// Sortie : HTML avec l'ajout d'un ami
-const addFriend = async (req, res) => {
-  try {
-    const { id } = req.id;
-    const { friendId } = req.body;
-
-    const user = await User.findById(id);
-    if (!user) throw new Error("User not found");
-
-    const friendUser = await User.findById(friendId);
-    if (!friendUser) throw new Error("Friend not found");
-
-    if (user.follower.indexOf(friendId) !== -1) throw new Error("Friend already exists");
-
-    user.follower.push(friendUser._id);
-    await user.save();
-
-    res.send(`<h1> Vous avez ajouter ${friendId} à vos amis.</h1>`);
-  } catch (error) {
-    console.error("Error adding friend", error);
-    res.status(500).send("<h1>Error adding friend</h1>");
-  }
-};
-
-//Question : Est-ce obligatoire de retourner un HTML ? Parce que pas optimal
-const getFriends = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).populate('follower following');
-    const friends = [...user.follower, ...user.following];
-
-    let friendsHtml = '<h1>Friends</h1><ul>';
-    friends.forEach((friend) => {
-      friendsHtml += `<li><strong>${friend.pseudo}</strong> - ${friend.email}</li>`;
-    });
-    friendsHtml += '</ul>';
-
-    res.status(200).send(friendsHtml);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
-
 const resetPassword = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, previousPassword, newPassword } = req.body;
+
+  console.log({ email, previousPassword, newPassword });
+  try {
+    const user = await User.resetPassword(email, previousPassword, newPassword);
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-
-module.exports = { loginUser, signUpUser, getUserById, findUser, listFriends, removeFriend, addFriend, resetPassword, getFriends};
+module.exports = { loginUser, signUpUser, getUserById, findUser, resetPassword, getListFollowing, getListFollower, addFollowing, removeFollowing };

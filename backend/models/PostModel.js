@@ -3,21 +3,23 @@ const mongoose = require("mongoose");
 const User = require("./UserModel");
 const Schema = mongoose.Schema;
 
-
+//OK
 const postSchema = new Schema({
     content: { type: String, required: true },
-    like : [{ type: Schema.Types.ObjectId, ref: "User" }], 
+    like: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     dateCreated: { type: Date, default: Date.now }, 
-    author: { type: Schema.Types.ObjectId, ref: "User" }
+    author: { type: Schema.Types.ObjectId, ref: "User" }, 
 });
 
 
+//OK
 //add a post 
 postSchema.statics.addPost = async function(content, userId) {
     // Créer un nouveau document Post
     const newPost = new this({
       content: content,
-      user: userId,
+      author: userId,
     });
     
     // Enregistrer le document Post dans la collection posts
@@ -32,40 +34,81 @@ postSchema.statics.addPost = async function(content, userId) {
     return newPost;
 };
 
+//OK mais des fois lent
 //Like a post
 postSchema.statics.likePost = async function (postId, userId) {
-    const post = await this.findById(postId);
+    const post = await this.findById(postId); 
+    
     if (!post) {
         throw new Error("Post not found");
     }
-    await post.updateOne({ $push: { like: userId } });
+    //Rajouter un like au post correspondant
+    // Ne permet pas à un utilisateur de liker plusieurs fois le même post
+    const hasLiked = post.like.includes(userId);
+    if (hasLiked) {
+      throw new Error("Post already liked by user");
+    }
+    post.like.push(userId);
+    await post.save();
     return post;
 };
 
-
-//Post de l'utilisateur
-postSchema.statics.getPostsForUser = async function(userId) {
-    const user = await User.findById(userId).populate("follower following");
-    const friends = [...user.follower, ...user.following];
-    const friendIds = friends.map((friend) => friend._id);
-    const posts = await this.find({ user: { $in: friendIds } }).populate("user");
+//A TESTER
+//remove a like
+postSchema.statics.removeLike = async function (postId, userId) {
+  const post = await this.findById(postId);
   
-    return posts.toArray();
+  if (!post) {
+    throw new Error("Post not found");
+  }
+  // Supprimer un like d'un post correspondant
+  // Ne permet pas à un utilisateur de retirer un like s'il n'a pas déjà aimé le post
+  const hasLiked = post.like.includes(userId);
+  if (!hasLiked) {
+    throw new Error("User has not liked the post");
+  }
+  post.like.pull(userId);
+  await post.save();
+  return post;
 };
 
 
+//OK
+//post de l'ulisateur avec son contenue 
+postSchema.statics.listPosts = async function(userId) {
+  const userPosts = await this.find({ author: userId }).populate('author', 'pseudo');
+  if (!userPosts) {
+    console.log("pas de post pour cet utilisateur")
+    throw new Error("Posts not found");
+  }
+    // On récupère le contenu et l'auteur de chaque post, et on les ajoute à un objet qui sera retourné
+    const postsWithContentAndAuthor = userPosts.map(post => {
+      return {
+        content: post.content,
+        author: post.author.pseudo,
+        dateCreated: post.dateCreated,
+        like: post.like,
+        id: post.id,
+      };
+    });
+  
+    return postsWithContentAndAuthor;
+
+};
+
+//OK
 // supprimer un post
 postSchema.statics.deletePost = async function (postId) {
     const post = await this.findById(postId);
     if (!post) {
         throw new Error("Post not found");
     }
-    await post.remove();
+    await this.deleteOne({ _id: postId });
     return post;
 };
 
 
-
+//A TESTER
 //Recherche de post et d'amis
 postSchema.statics.searchAll = async function (query) {
     try {
@@ -99,6 +142,8 @@ postSchema.statics.searchAll = async function (query) {
     }
   };
 
+
+//A TESTER 
 //Algorithme de pertinence basé sur un score pour les résultats de recherche
 const getRelevanceScore = (result, query) => {
   let score = 0;

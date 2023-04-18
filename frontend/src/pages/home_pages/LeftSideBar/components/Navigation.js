@@ -36,7 +36,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
   const { logout } = useLogout();
   const { user } = useAuthContext(); 
   
-  console.log(user)
+  // console.log("user",user)
 
   const handleClick = (newComponent) => {
     updateSelectedComponent(newComponent);
@@ -84,7 +84,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           >
             <Avatar
               size="sm"
-              src="https://api.multiavatar.com/${user.id}.svg"
+              src="https://api.multiavatar.com/${user}.svg"
             />
           </MenuButton>
           {/* The dropdown */}
@@ -93,7 +93,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
             <Center>
               <Avatar
                 size="2xl"
-                src="https://api.multiavatar.com/${user.id}.svg"
+                src="https://api.multiavatar.com/${user}.svg"
                 />
             </Center>
             <br />

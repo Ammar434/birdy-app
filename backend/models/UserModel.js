@@ -15,6 +15,7 @@ const userSchema = new Schema({
 });
 
 
+
 userSchema.statics.signUp = async function (email, password, pseudo) {
   const exists = await this.findOne({ email });
 
@@ -70,14 +71,143 @@ userSchema.statics.login = async function (email, password) {
   return user;
 };
 
-//Amis de l'utilisateur 
-userSchema.statics.listFriends = async function (userId) {
-  const user = await this.findById(userId).populate("follower following");
-  if (!user) {
-    throw new Error("User not found");
+//User pseudo to find the user
+userSchema.statics.findUserById = async function (id) {
+  if (!id) {
+    throw Error("UserId is empty");
   }
-  const friends = [...user.follower, ...user.following];
-  return friends;
+  const user = await this.findOne({ _id: id });
+
+  console.log("user trouvé", user);
+  return user;
+};
+
+userSchema.statics.listPost = async function (post) {
+  const user = await this.findOne({ post });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  return user;
+};
+
+userSchema.statics.resetPassword = async function (
+  email,
+  previousPassword,
+  newPassword
+) {
+  let user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error("Email not exists in our database");
+  }
+
+  if (!validator.isStrongPassword(previousPassword)) {
+    throw Error("New Password is not strong enough");
+  }
+
+  const match = await bcrypt.compare(previousPassword, user.password);
+
+  if (!match) {
+    throw Error("Password is not correct");
+  }
+
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(newPassword, salt);
+
+  const filter = { email };
+  const updateDoc = {
+    $set: {
+      password: hash,
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ email });
+
+  return user;
+};
+
+// Dans la suite utilisateur est le compte courrant celui qui ajoute l'ami à l'identifiant user2Id
+
+userSchema.statics.addFollower = async function (user1Id, user2Id) {
+  let user = await this.findOne({ _id: user1Id });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  const filter = { _id: user1Id };
+  const updateDoc = {
+    $push: {
+      following: [user2Id],
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ _id: user1Id });
+
+  return user;
+};
+
+// user1ID retire  à l'identifiant user2Id de sa liste de following
+
+userSchema.statics.removeFollower = async function (user1Id, user2Id) {
+  let user = await this.findOne({ _id: user1Id });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  const filter = { _id: user1Id };
+  const updateDoc = {
+    $pull: {
+      following: user2Id,
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ _id: user1Id });
+
+  return user;
+};
+
+// user2ID ajoute à sa liste de   à l'identifiant user2Id de sa liste de following
+userSchema.statics.addFollowing = async function (user1Id, user2Id) {
+  let user = await this.findOne({ _id: user2Id });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  const filter = { _id: user2Id };
+  const updateDoc = {
+    $push: {
+      follower: [user1Id],
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ _id: user2Id });
+
+  return user;
+};
+
+userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
+  let user = await this.findOne({ _id: user2Id });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  const filter = { _id: user2Id };
+  const updateDoc = {
+    $pull: {
+      following: user1Id,
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ _id: user2Id });
+
+  return user;
 };
 
 
