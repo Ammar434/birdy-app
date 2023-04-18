@@ -16,7 +16,6 @@ const RightSideBar = () => {
         >
 
             <SearchBar/>
-            <Text fontSize={50} color="purple.100"> Actualité </Text>
             <Actualite/>
 
         </Box>
