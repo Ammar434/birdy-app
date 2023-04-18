@@ -3,13 +3,14 @@ const router = express.Router();
 const {
   loginUser,
   signUpUser, 
+  getPseudoById,
   getListFollowing, 
   getListFollower, 
   addFollowing, 
   removeFollowing, 
   getUserById, 
-  findUser, 
-  resetPassword, 
+  resetPassword,
+  listUsers
   } = require("../controllers/userController");
 
 const{ 
@@ -27,6 +28,10 @@ router.post("/login", loginUser);
 
 router.post("/signup", signUpUser);
 
+router.post("/profil/getUserById", getUserById);
+
+router.post("/profil/getPseudoById", getPseudoById);
+
 router.post("/reset-password", resetPassword);
 
 router.post("/profil/listfollowing", getListFollowing);
@@ -37,10 +42,7 @@ router.post("/profil/addfollowing", addFollowing);
 
 router.post("/profil/removefollowing", removeFollowing);
 
-router.post("/profil/getUserById", getUserById);
-
-router.post("/profil/findUser", findUser);
-
+router.post("/listUser", listUsers); 
 
 //PostController endpoints
 

@@ -58,12 +58,15 @@ const getListFollower = async (req, res) => {
   }
 };
 
+
 const addFollowing = async (req, res) => {
   const { user1Id, user2Id } = req.body;
   try {
     const user1 = await User.addFollower(user1Id, user2Id);
     const user2 = await User.addFollowing(user1Id, user2Id);
     res.status(200).json({ user1, user2 });
+    console.log("user1 suit le user2", user1, user2 )
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -82,28 +85,36 @@ const removeFollowing = async (req, res) => {
 
 //OK
 const getUserById = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const idUser = req.body; 
+
   try {
+    const id = idUser._id;
     const user = await User.findUserById(id);
 
     res.status(200).json({ user });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log("error", error);
+    res.status(500).json({ message: "Une erreur est survenue dans le getuserbyid." });
   }
 };
 
 //OK
-const findUser = async (req, res) => {
-  const { pseudo } = req.body;
+const getPseudoById = async (req, res) => {
+  const idUser = req.body; 
+  console.log(idUser); 
+
   try {
-    const user = await User.findOne({ pseudo });
-    return user;
+    const id = idUser._id;
+    const user = await User.findPseudoById(id);
+
+    res.status(200).json({ user });
   } catch (error) {
-    console.error("Error finding user", error);
-    throw error;
+    console.log("error", error);
+    res.status(500).json({ message: "Une erreur est survenue dans le getPseudoById." });
   }
+
 };
+
 
 
 const resetPassword = async (req, res) => {
@@ -118,4 +129,14 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signUpUser, getUserById, findUser, resetPassword, getListFollowing, getListFollower, addFollowing, removeFollowing };
+const listUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+
+module.exports = { listUsers, loginUser, signUpUser, getUserById,getPseudoById, resetPassword, getListFollowing, getListFollower, addFollowing, removeFollowing };

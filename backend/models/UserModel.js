@@ -82,6 +82,17 @@ userSchema.statics.findUserById = async function (id) {
   return user;
 };
 
+//find pseudo by user id
+userSchema.statics.findPseudoById = async function (id) {
+  if (!id) {
+    throw Error("UserId is empty");
+  }
+  const user = await this.findOne({ _id: id });
+
+  return user.pseudo;
+};
+
+
 userSchema.statics.listPost = async function (post) {
   const user = await this.findOne({ post });
 
