@@ -16,11 +16,24 @@ const listPost = async (req, res) => {
   }
 };
 
+
+const listPostAll = async (req, res) => {
+
+  try {
+    const posts = await Post.listPostsAll();
+    res.status(200).json({ posts });
+  } catch (error) {
+    res.status(500).json({ message: "Une erreur est survenue dans la liste post." });
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 //OK
 //Sortie JSON  des nouveaux posts
 const newPost = async (req, res) => {
   const { content, userId } = req.body;
-
+ 
   if (!content) {
     return res.status(400).json({ message: "Le contenu du post est vide." });
   }
@@ -92,4 +105,4 @@ const searchPostsandFriends = async (req, res) => {
 
 
 
-  module.exports = { newPost, likePost, removelikePost, deletePost, listPost, searchPostsandFriends };
+  module.exports = { newPost, likePost, listPostAll, removelikePost, deletePost, listPost, searchPostsandFriends };

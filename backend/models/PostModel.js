@@ -12,6 +12,11 @@ const postSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: "User" }, 
 });
 
+postSchema.statics.listPostsAll = async function () {
+    const posts = await this.find().populate("author").populate("like").populate("likedBy");  
+    return posts;
+};
+
 
 //OK
 //add a post 
@@ -52,6 +57,8 @@ postSchema.statics.likePost = async function (postId, userId) {
     await post.save();
     return post;
 };
+
+
 
 //A TESTER
 //remove a like

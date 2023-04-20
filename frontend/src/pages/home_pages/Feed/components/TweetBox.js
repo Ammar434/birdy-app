@@ -10,6 +10,7 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 
 const TweetBox = () => {
+  
   const [text, setText] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(280);
 
@@ -19,14 +20,19 @@ const TweetBox = () => {
     setCharactersLeft(280 - tweetText.length);
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log(text);
-  // };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //appeler au hook usePost dans hooks/
-    
+    console.log(text);
+    //ajout d'un nouveau post. Appel à l'APi newPost pour créer un nouveau tweet 
+    // await newPost(text);
+    // // Appeler la méthode addPost du schéma Post pour créer un nouveau tweet
+    // const addPost = (newPost) => {
+    //   setPosts((prevPosts) => [newPost, ...prevPosts]);
+    // };
+  
+  }
 
 
   const bg = useColorModeValue("white", "gray.900");
@@ -52,7 +58,7 @@ const TweetBox = () => {
       </Flex>
       <form onSubmit={handleSubmit}>
         <Textarea
-          placeholder="Write your tweet..."
+          placeholder="Quoi de neuf ? "
           value={text}
           onChange={handleTextChange}
           mb={2}
@@ -92,104 +98,3 @@ const TweetBox = () => {
 };
 
 export default TweetBox;
-// import { useState } from "react";
-// import {
-//   Flex,
-//   Textarea,
-//   Button,
-//   IconButton,
-//   useColorMode,
-//   useDisclosure,
-//   Modal,
-//   ModalOverlay,
-//   ModalContent,
-//   ModalHeader,
-//   ModalCloseButton,
-//   ModalBody,
-//   ModalFooter,
-//   useToast,
-// } from "@chakra-ui/react";
-// import { AddIcon } from "@chakra-ui/icons";
-
-// const TweetBox = () => {
-//   const { colorMode } = useColorMode();
-//   const { isOpen, onOpen, onClose } = useDisclosure();
-//   const [text, setText] = useState("");
-//   const toast = useToast();
-
-//   const handleTweet = (e) => {
-//     e.preventDefault();
-//     onClose();
-//     setText("");
-//     toast({
-//       title: "Tweet sent!",
-//       status: "success",
-//       duration: 2000,
-//       isClosable: true,
-//     });
-//   };
-
-//   return (
-//     <>
-//       <IconButton
-//         aria-label="New tweet"
-//         icon={<AddIcon />}
-//         onClick={onOpen}
-//         position="fixed"
-//         bottom="5%"
-//         right="5%"
-//         size="lg"
-//         borderRadius="full"
-//         bgGradient="linear(to-r, purple.400, pink.400)"
-//         _hover={{
-//           bgGradient: "linear(to-r, purple.500, pink.500)",
-//           boxShadow: "md",
-//         }}
-//         _focus={{
-//           boxShadow: "none",
-//         }}
-//       />
-//       <Modal isOpen={isOpen} onClose={onClose}>
-//         <ModalOverlay />
-//         <ModalContent
-//           bg={colorMode === "light" ? "white" : "blackAlpha.800"}
-//           borderRadius="3xl"
-//         >
-//           <ModalHeader>Tweet something new</ModalHeader>
-//           <ModalCloseButton />
-//           <ModalBody>
-//             <Textarea
-//               placeholder="What's happening?"
-//               size="lg"
-//               value={text}
-//               onChange={(e) => setText(e.target.value)}
-//               borderRadius="lg"
-//               resize="none"
-//               focusBorderColor="purple.400"
-//               borderColor={colorMode === "light" ? "gray.200" : "gray.700"}
-//               bg={colorMode === "light" ? "white" : "gray.800"}
-//               color={colorMode === "light" ? "gray.700" : "white"}
-//             />
-//           </ModalBody>
-
-//           <ModalFooter>
-//             <Button
-//               colorScheme="purple"
-//               mr={3}
-//               onClick={handleTweet}
-//               isDisabled={text.length === 0 || text.length > 280}
-//               _disabled={{
-//                 opacity: "0.4",
-//                 cursor: "not-allowed",
-//               }}
-//             >
-//               Tweet
-//             </Button>
-//           </ModalFooter>
-//         </ModalContent>
-//       </Modal>
-//     </>
-//   );
-// };
-
-// export default TweetBox;

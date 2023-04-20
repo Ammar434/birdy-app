@@ -19,7 +19,8 @@ const{
   removelikePost,
   deletePost, 
   listPost, 
-  searchPostsandFriends
+  searchPostsandFriends,
+  listPostAll
 } = require("../controllers/postController");
 
 //UserController endpoints
@@ -51,6 +52,8 @@ router.post("/home", newPost);
 router.get("/profil/listPost", listPost);
 
 router.post("/home/deletePost", deletePost);
+
+router.get("/home/listPostAll", listPostAll);
 
 router.post("/home/likePost", likePost);
 
