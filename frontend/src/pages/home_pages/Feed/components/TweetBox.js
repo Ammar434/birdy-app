@@ -19,10 +19,15 @@ const TweetBox = () => {
     setCharactersLeft(280 - tweetText.length);
   };
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(text);
+  // };
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(text);
-  };
+    //appeler au hook usePost dans hooks/
+    
+
 
   const bg = useColorModeValue("white", "gray.900");
   const borderColor = useColorModeValue("gray.200", "gray.700");
@@ -63,6 +68,9 @@ const TweetBox = () => {
           </Text>
           <IconButton
             type="submit"
+            //onClick sends the tweet to the backend and then to the database and then to the frontend 
+            onClick={handleSubmit}
+
             aria-label="Tweet"
             icon={<AddIcon />}
             bgGradient="linear(to-r, purple.400, pink.400)"
@@ -75,6 +83,8 @@ const TweetBox = () => {
             }}
             isDisabled={text.length === 0 || text.length > 280}
           />
+
+
         </Flex>
       </form>
     </Flex>
