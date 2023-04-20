@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box } from "@chakra-ui/react";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
@@ -6,13 +6,7 @@ import usePosts from "../../../../hooks/usePost";
 
 const Feed = () => {
 
-    const posts = usePosts();
-
-    //console.log avec la map de posts pour voir ce que cela fait 
-    //
-    posts.map((post) => (
-        console.log("post dans feed avec la map ", post)
-    )); 
+    const posts = usePosts(); 
 
 
   return (

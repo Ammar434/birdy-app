@@ -1,6 +1,5 @@
 
 import { Box, Text, IconButton, Avatar, Spacer, Flex, Button } from "@chakra-ui/react";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 
 import { formatDistanceToNow, format } from 'date-fns';
