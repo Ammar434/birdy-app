@@ -98,6 +98,22 @@ const getUserById = async (req, res) => {
   }
 };
 
+
+//en attendant le useContext
+const getIdByEmail = async (req, res) => {
+  const emailUser = req.body;
+  try { 
+    const email = emailUser.email;
+    const user = await User.findIdByEmail(email);
+    res.status(200).json({ user });
+
+  } catch (error) {
+    console.log("error", error); 
+    res.status(500).json({ message: " Une erreur est survenue dans le getIdByEmail. "}); 
+  }
+}; 
+
+
 //OK
 const getPseudoById = async (req, res) => {
   const idUser = req.body; 
@@ -139,4 +155,4 @@ const listUsers = async (req, res) => {
 }
 
 
-module.exports = { listUsers, loginUser, signUpUser, getUserById,getPseudoById, resetPassword, getListFollowing, getListFollower, addFollowing, removeFollowing };
+module.exports = {getIdByEmail, listUsers, loginUser, signUpUser, getUserById,getPseudoById, resetPassword, getListFollowing, getListFollower, addFollowing, removeFollowing };

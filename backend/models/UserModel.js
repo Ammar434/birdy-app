@@ -15,6 +15,15 @@ const userSchema = new Schema({
 });
 
 
+userSchema.statics.findIdByEmail = async function (email) {
+  if (!email) {
+    throw Error("UserId is empty");
+  }
+
+  const user = await this.findOne({ email: email });
+
+  return user._id; 
+}
 
 userSchema.statics.signUp = async function (email, password, pseudo) {
   const exists = await this.findOne({ email });

@@ -7,32 +7,56 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import { useAddPost } from "../../../../hooks/useAddPost";
+
+
 
 const TweetBox = () => {
-  
+  //get the email from the localStorage 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const {email} = user;  
   const [text, setText] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(280);
+  const [addPost, isLoading] = useAddPost();
+  const [userId, setUserId] = useState('');
+  const [refresh, setRefresh] = useState(false);
 
+
+  const getUserId = async (email) => {
+    try {
+      const response = await fetch('/api/user/home/idUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      const userId = data.user;
+      setUserId(userId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+  
   const handleTextChange = (event) => {
     const tweetText = event.target.value;
     setText(tweetText);
+    getUserId(email);
     setCharactersLeft(280 - tweetText.length);
   };
 
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log(text);
-    //ajout d'un nouveau post. Appel à l'APi newPost pour créer un nouveau tweet 
-    // await newPost(text);
-    // // Appeler la méthode addPost du schéma Post pour créer un nouveau tweet
-    // const addPost = (newPost) => {
-    //   setPosts((prevPosts) => [newPost, ...prevPosts]);
-    // };
-  
-  }
-
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addPost({ content: text, userId });
+    setText('');
+    setRefresh(true);
+    //REFLECHIR A UNE AUTRE SOLUTION CAR TROP LOURD DE TOUJOURS RECHARGER LA PAGE 
+    window.location.reload();
+  };
 
   const bg = useColorModeValue("white", "gray.900");
   const borderColor = useColorModeValue("gray.200", "gray.700");
@@ -73,9 +97,8 @@ const TweetBox = () => {
           </Text>
           <IconButton
             type="submit"
-            //onClick sends the tweet to the backend and then to the database and then to the frontend 
             onClick={handleSubmit}
-
+            isLoading={refresh}
             aria-label="Tweet"
             icon={<AddIcon />}
             bgGradient="linear(to-r, purple.400, pink.400)"
@@ -86,7 +109,7 @@ const TweetBox = () => {
             _focus={{
               boxShadow: "none",
             }}
-            isDisabled={text.length === 0 || text.length > 280}
+            isDisabled={text.length === 0 || text.length > 280 || isLoading}
           />
 
 

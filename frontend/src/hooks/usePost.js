@@ -8,7 +8,8 @@ const usePosts = () => {
     try {
       const response = await fetch('/api/user/home/listPostAll');
       const { posts } = await response.json();
-      setPosts(posts);
+      const sortedPosts = posts.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)); // sort the posts chronologically
+      setPosts(sortedPosts);
     } catch (error) {
       console.error(error);
     }

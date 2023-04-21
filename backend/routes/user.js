@@ -10,7 +10,8 @@ const {
   removeFollowing, 
   getUserById, 
   resetPassword,
-  listUsers
+  listUsers, 
+  getIdByEmail
   } = require("../controllers/userController");
 
 const{ 
@@ -30,6 +31,8 @@ router.post("/login", loginUser);
 router.post("/signup", signUpUser);
 
 router.post("/profil/getUserById", getUserById);
+
+router.post("/home/idUser", getIdByEmail); 
 
 router.post("/profil/getPseudoById", getPseudoById);
 

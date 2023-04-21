@@ -24,7 +24,7 @@ const TweetList = ( { post } ) => {
       }
   
     return (
-       <Box
+    <Box
       w="100%"
       h="auto"
       maxH={600}
@@ -34,6 +34,7 @@ const TweetList = ( { post } ) => {
       borderColor="white"
       p={10}
     >
+      {/* each post should be sorted in  order   */}
       <Flex alignItems="center" mb={5}>
         <Avatar name={author.pseudo} src={author.avatar} mr={3} />
         <Text fontWeight="bold">{author.pseudo}</Text>
