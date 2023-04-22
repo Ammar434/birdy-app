@@ -4,20 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
 import { ROOT } from "../routes.js";
 
-export const useLogin = () => {
+export const useResetPassword = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
 
-  const login = async (email, password) => {
+  const reset = async (email, previousPassword, newPassword) => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("/api/user/login", {
+    const response = await fetch("/api/user/reset-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, previousPassword, newPassword }),
     });
     const json = await response.json();
 
@@ -26,20 +26,20 @@ export const useLogin = () => {
       setError(json.error);
     }
     if (response.ok) {
-      // save the user to local storage
-      localStorage.setItem("user", JSON.stringify(json));
+      //   // save the user to local storage
+      //   localStorage.setItem("user", JSON.stringify(json));
 
-      // update the auth context
-      dispatch({ type: "LOGIN", payload: json });
+      //   // update the auth context
+      //   dispatch({ type: "LOGIN", payload: json });
 
-      // update loading state
+      //   // update loading state
       setIsLoading(false);
-      navigate(ROOT);
+      //   navigate(ROOT);
       //initially it was set to navigate("/ROOT") but it was not working
     } else {
       console.log("erreur");
     }
   };
 
-  return { login, isLoading, error };
+  return { reset, isLoading, error };
 };

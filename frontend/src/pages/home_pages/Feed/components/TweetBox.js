@@ -1,36 +1,122 @@
-import React from 'react';
-import { Button, Avatar, FormControl, Flex, Box, Input } from "@chakra-ui/react";
-
+import { useState } from "react";
+import {
+  Flex,
+  Text,
+  Textarea,
+  IconButton,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { useAddPost } from "../../../../hooks/useAddPost";
 
 
 
 const TweetBox = () => {
-    
-        return (
-            <Box
-                w="100%"
-                h="100%"
-                bg="white"
-                border="1px"
-                borderColor="gray.200"
-                borderRadius="lg"
-                p="4"
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-            >
-                
-                <Box>
-                    <Flex>
-                        {/* <Avatar src="https://pbs.twimg.com/profile_images/1360975814302658560/6a1nKj7i_400x400.jpg" /> */}
-                        <Input placeholder="What's happening?" type="text" />
-                    </Flex>
-                    <Input placeholder="Optional: Enter image URL" type="text" />
-                    <Button>Tweet</Button>
-                </Box>
-            </Box>
-        );
+  //get the email from the localStorage 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const {email} = user;  
+  const [text, setText] = useState("");
+  const [charactersLeft, setCharactersLeft] = useState(280);
+  const [addPost, isLoading] = useAddPost();
+  const [userId, setUserId] = useState('');
+  const [refresh, setRefresh] = useState(false);
 
-}
 
-export default TweetBox; 
+  const getUserId = async (email) => {
+    try {
+      const response = await fetch('/api/user/home/idUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      const userId = data.user;
+      setUserId(userId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+  
+  const handleTextChange = (event) => {
+    const tweetText = event.target.value;
+    setText(tweetText);
+    getUserId(email);
+    setCharactersLeft(280 - tweetText.length);
+  };
+
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addPost({ content: text, userId });
+    setText('');
+    setRefresh(true);
+    //REFLECHIR A UNE AUTRE SOLUTION CAR TROP LOURD DE TOUJOURS RECHARGER LA PAGE 
+    window.location.reload();
+  };
+
+  const bg = useColorModeValue("white", "gray.900");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const boxShadow = useColorModeValue(
+    "0px 10px 30px -5px rgba(0, 0, 0, 0.1)",
+    "0px 10px 30px -5px rgba(255, 255, 255, 0.1)"
+  );
+
+  return (
+    <Flex
+      direction="column"
+      p={4}
+      w="full"
+      rounded="xl"
+      bg={bg}
+      border="1px solid"
+      borderColor={borderColor}
+      boxShadow={boxShadow}
+    >
+      <Flex mb={2} align="center">
+        <Text mr={2}>What's happening?</Text>
+      </Flex>
+      <form onSubmit={handleSubmit}>
+        <Textarea
+          placeholder="Quoi de neuf ? "
+          value={text}
+          onChange={handleTextChange}
+          mb={2}
+          resize="none"
+          _focus={{
+            outline: "none",
+            boxShadow: "none",
+          }}
+        />
+        <Flex justify="space-between" align="center">
+          <Text fontSize="xs" color="gray.500">
+            {charactersLeft} characters left
+          </Text>
+          <IconButton
+            type="submit"
+            onClick={handleSubmit}
+            isLoading={refresh}
+            aria-label="Tweet"
+            icon={<AddIcon />}
+            bgGradient="linear(to-r, purple.400, pink.400)"
+            _hover={{
+              bgGradient: "linear(to-r, purple.500, pink.500)",
+              boxShadow: "md",
+            }}
+            _focus={{
+              boxShadow: "none",
+            }}
+            isDisabled={text.length === 0 || text.length > 280 || isLoading}
+          />
+
+
+        </Flex>
+      </form>
+    </Flex>
+  );
+};
+
+export default TweetBox;

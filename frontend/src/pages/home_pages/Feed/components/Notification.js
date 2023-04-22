@@ -1,11 +1,22 @@
-import { Text } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
 import React from "react"; 
 
 
 const Notification = () => {
     return (
-        <Text fontSize={50} color="purple.100"> MES NOTIFICATIONS </Text>
-    ); 
+    <Box
+        w="full"
+        h="full"
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+        flexDirection="column"
+    >
+        <Text fontSize={50} color="purple.100"> 
+        Notifications bientôt disponible . . . 
+        </Text>
+    </Box>
+    );
 }; 
 
 export default Notification; 

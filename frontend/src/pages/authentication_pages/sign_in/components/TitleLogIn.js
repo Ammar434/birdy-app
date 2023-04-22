@@ -4,7 +4,7 @@ const TitleLogIn = () => {
   return (
     <GridItem w="100%">
       <Center height={"100%"}>
-        <Text fontSize={"4xl"} fontWeight={"bold"} color={"black"}>
+        <Text fontSize={"5xl"} fontWeight={"bold"} color={"black"}>
           Welcome back 👋
         </Text>
       </Center>

@@ -3,20 +3,19 @@ import { React } from "react";
 import constants from "../../../../utils/constants.js";
 
 import FormLogIn from "./FormLogIn.js";
-import SwitchToSignUp from "./SwitchToSignUp.js";
-import TitleLogIn from "./TitleLogIn.js";
+import TitleRecover from "./TitleRecover.js";
 
 const LeftSide = () => {
   return (
     <Box flex="1" w="100%">
       <Grid
         h={"100%"}
-        gap={constants.padding.kSmallPaddingValue}
+        // w={"100%"}
+        templateRows="repeat(3, 1fr)"
         // margin={100}
       >
-        <TitleLogIn />
+        <TitleRecover />
         <FormLogIn />
-        <SwitchToSignUp />
       </Grid>
     </Box>
   );

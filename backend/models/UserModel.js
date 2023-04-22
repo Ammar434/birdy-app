@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
-const { use } = require("../routes/user.js");
 
 const Schema = mongoose.Schema;
 
@@ -14,6 +13,16 @@ const userSchema = new Schema({
   post: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   dateCreated: Date,
 });
+
+userSchema.statics.findIdByEmail = async function (email) {
+  if (!email) {
+    throw Error("UserId is empty");
+  }
+
+  const user = await this.findOne({ email: email });
+
+  return user._id;
+};
 
 userSchema.statics.signUp = async function (email, password, pseudo) {
   const exists = await this.findOne({ email });
@@ -47,7 +56,7 @@ userSchema.statics.signUp = async function (email, password, pseudo) {
   return user;
 };
 
-userSchema.statics.logIn = async function (email, password) {
+userSchema.statics.login = async function (email, password) {
   if (email === "") {
     throw Error("Email is empty");
   }
@@ -81,6 +90,16 @@ userSchema.statics.findUserById = async function (id) {
   return user;
 };
 
+//find pseudo by user id
+userSchema.statics.findPseudoById = async function (id) {
+  if (!id) {
+    throw Error("UserId is empty");
+  }
+  const user = await this.findOne({ _id: id });
+
+  return user.pseudo;
+};
+
 userSchema.statics.listPost = async function (post) {
   const user = await this.findOne({ post });
 
@@ -102,14 +121,8 @@ userSchema.statics.resetPassword = async function (
     throw Error("Email not exists in our database");
   }
 
-  if (!validator.isStrongPassword(previousPassword)) {
+  if (!validator.isStrongPassword(newPassword)) {
     throw Error("New Password is not strong enough");
-  }
-
-  const match = await bcrypt.compare(previousPassword, user.password);
-
-  if (!match) {
-    throw Error("Password is not correct");
   }
 
   const saltRounds = 10;
@@ -171,7 +184,6 @@ userSchema.statics.removeFollower = async function (user1Id, user2Id) {
 };
 
 // user2ID ajoute à sa liste de   à l'identifiant user2Id de sa liste de following
-
 userSchema.statics.addFollowing = async function (user1Id, user2Id) {
   let user = await this.findOne({ _id: user2Id });
 
@@ -208,25 +220,6 @@ userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
   user = await this.findOne({ _id: user2Id });
 
   return user;
-};
-
-//Amis de l'utilisateur
-userSchema.statics.listFriends = async function (userId) {
-  const user = await this.findById(userId).populate("follower following");
-  if (!user) {
-    throw new Error("User not found");
-  }
-  const friends = [...user.follower, ...user.following];
-  return friends;
-};
-
-//Post de l'utilisateur
-userSchema.statics.listPosts = async function (userId) {
-  const user = await this.findById(userId).populate("post");
-  if (!user) {
-    throw new Error("User not found");
-  }
-  return user.post;
 };
 
 module.exports = mongoose.model("User", userSchema);

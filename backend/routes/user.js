@@ -2,56 +2,67 @@ const express = require("express");
 const router = express.Router();
 const {
   loginUser,
-  signUpUser,
+  signUpUser, 
+  getPseudoById,
+  getListFollowing, 
+  getListFollower, 
+  addFollowing, 
+  removeFollowing, 
+  getUserById, 
   resetPassword,
-  getListFollowing,
-  getListFollower,
-  listPost,
-  findUser,
-  getUserById,
-  addFollowing,
-  removeFollowing,
-  listFriends,
-  newPost,
-  addFriend,
-  removeFriend,
-  deletePost,
-} = require("../controllers/userController");
+  listUsers, 
+  getIdByEmail
+  } = require("../controllers/userController");
+
+const{ 
+  newPost, 
+  likePost, 
+  removelikePost,
+  deletePost, 
+  listPost, 
+  searchPostsandFriends,
+  listPostAll
+} = require("../controllers/postController");
+
+//UserController endpoints
 
 router.post("/login", loginUser);
 
 router.post("/signup", signUpUser);
 
+router.post("/profil/getUserById", getUserById);
+
+router.post("/home/idUser", getIdByEmail); 
+
+router.post("/profil/getPseudoById", getPseudoById);
+
 router.post("/reset-password", resetPassword);
 
-router.post("/find-by-id", getUserById);
+router.post("/profil/listfollowing", getListFollowing);
 
-router.post("/get-list-following", getListFollowing);
+router.post("/profil/listfollower", getListFollower);
 
-router.post("/get-list-follower", getListFollower);
+router.post("/profil/addfollowing", addFollowing);
 
-router.post("/add-following", addFollowing);
+router.post("/profil/removefollowing", removeFollowing);
 
-router.post("/remove-following", removeFollowing);
+router.post("/listUser", listUsers); 
 
-router.post("/add-following");
-
-router.post("/profil/listFriends", listFriends);
-
-router.post("/profil/listPost", listPost);
+//PostController endpoints
 
 router.post("/home", newPost);
 
-//Pas encore aboutit
-// router.post("/home/getMessage", getMessage);
-
-// router.post("/home/getFriends", getFriends);
-
-router.post("/home/addFriends", addFriend);
-
-router.post("/home/removeFriend", removeFriend);
+router.get("/profil/listPost", listPost);
 
 router.post("/home/deletePost", deletePost);
-router.post("/", findUser);
+
+router.get("/home/listPostAll", listPostAll);
+
+router.post("/home/likePost", likePost);
+
+router.post("/home/removelikePost", removelikePost);
+
+router.post("/home/searchPostsandFriends", searchPostsandFriends);
+
 
 module.exports = router;

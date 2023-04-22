@@ -10,7 +10,7 @@ export const ROOT = "/";
 export const LOGIN = "/signIn";
 export const REGISTER = "/signUp";
 export const RECOVER_PASSWORD = "/recover-password";
-export const HOME = "/";
+export const HOME = "/home";
 export const PROTECTED = "/protected";
 
 export const router = createBrowserRouter([

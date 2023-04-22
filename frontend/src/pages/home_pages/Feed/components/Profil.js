@@ -6,56 +6,56 @@ import { useUserInformation } from "../../../../hooks/useUserInformation.js";
 
 
 const Profil = () => { 
-  //Create state for the user information
-  //from the backend useUserInformation hook
+  // [userInformation, setUserInformation] = useState(null);
+  // const pseudo = localStorage.getItem("user");
 
+  // useEffect(() => {
+  //   const fetchUserInformation = async () => {
+  //     // Simulating a fetch request to get the user's information
+  //     const response = await fetch("h");
+  //     const data = await response.json();
+  //     setUserInformation(data);
+  //   };
 
-  const userInformation = useUserInformation();
-  console.log("useInfo",userInformation)
-  const pseudo = userInformation.pseudo;
-  console.log(pseudo)
+  //   fetchUserInformation();
+  // }, [pseudo]);
 
+  // if (!userInformation) {
+  //   return <div>Loading user information...</div>;
+  // }
 
-  
-// const [description, setDescription] = useState("");
-// const [avatar, setAvatar] = useState("");
-
-// const userInformation = useUserInformation();
-// console.log("useInfo",userInformation)
-// const pseudo = userInformation.pseudo;
-// console.log(pseudo)
-
-// const userObject = JSON.parse(userInformation);
-
-// console.log(userInformation.pseudo); 
-
-// useEffect(() => {
-//   if (userInformation) {
-//     // console.log("userObject",userObject); 
-//     // setPseudo(userObject.pseudo);
-//   } else {
-//     setPseudo("no user");
-//   }
-// }, [userInformation]);
     return (
-        <>
-            <Box>
+      <>
+      
+      <Box
+      w="full"
+      h="full"
+      justifyContent="center"
+      alignItems="start"
+      display="flex"
+      flexDirection="column">
+      
+        <Text fontSize={50}>  Profil </Text>      
+        <Text fontSize={20} color="gray"> User pseudo </Text>
+        {/* lists of follower from the backend */}
+        <Text fontSize={20} color="gray"> Followers </Text>
+        {/* lists of following from the backend */}
+        <Text fontSize={20} color="gray"> Following </Text>
+        {/* lists of post from the backend */}
+      </Box>
 
-                <Text>Pseudo: </Text>
+      <Box 
+      w="full"
+      h="full"
+      justifyContent="center"
+      alignItems="start"
+      display="flex"
+      flexDirection="column">
 
-                {/* <Text>Pseudo: {pseudo}</Text>
-                <Text>Email: {email}</Text>
-                <Text>Password: {password}</Text>
-                <Text>Description: {description}</Text> 
-                <Text>Avatar: {avatar}</Text> */}
-            </Box>
-            <Box>
-              <Text> Cover </Text>
-
-
-            </Box>
-        </>
-
+        <Text fontSize={50}> Posts </Text>
+        <Text fontSize={20} color="gray"> Posts </Text>
+      </Box>
+      </>
     )
 };
 

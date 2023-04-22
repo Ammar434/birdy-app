@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes.js";
 import { AuthContextProvider } from "./context/AuthContext";
+import { UserContextProvider } from "./context/UserContext";
 
 const App = () => {
   return (
