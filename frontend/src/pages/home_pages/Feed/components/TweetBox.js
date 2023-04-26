@@ -19,7 +19,6 @@ const TweetBox = () => {
   const [charactersLeft, setCharactersLeft] = useState(280);
   const [addPost, isLoading] = useAddPost();
   const [userId, setUserId] = useState('');
-  const [refresh, setRefresh] = useState(false);
 
 
   const getUserId = async (email) => {
@@ -53,9 +52,7 @@ const TweetBox = () => {
     e.preventDefault();
     addPost({ content: text, userId });
     setText('');
-    setRefresh(true);
-    //REFLECHIR A UNE AUTRE SOLUTION CAR TROP LOURD DE TOUJOURS RECHARGER LA PAGE 
-    window.location.reload();
+
   };
 
   const bg = useColorModeValue("white", "gray.900");
@@ -98,7 +95,6 @@ const TweetBox = () => {
           <IconButton
             type="submit"
             onClick={handleSubmit}
-            isLoading={refresh}
             aria-label="Tweet"
             icon={<AddIcon />}
             bgGradient="linear(to-r, purple.400, pink.400)"

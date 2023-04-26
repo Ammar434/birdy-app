@@ -1,62 +1,55 @@
-import React, {useState, useEffect} from "react";
-import { Text, Box } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Button,
+  Divider,
+  SimpleGrid,
+} from "@chakra-ui/react";
+// import { useUser } from "../../hooks/useUser";
+// import { usePosts } from "../../hooks/usePosts";
+// import { useFollowers } from "../../hooks/useFollowers";
+// import { useFollowing } from "../../hooks/useFollowing";
+// import Post from "../Post";
 
-import { useUserInformation } from "../../../../hooks/useUserInformation.js";
+const Profile = ({ username }) => {
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+
+  // const { isLoading: userLoading } = useUser(username, setUser);
+  // const { isLoading: postsLoading } = usePosts(username, setPosts);
+  // const { isLoading: followersLoading } = useFollowers(
+  //   username,
+  //   setFollowers
+  // );
+  // const { isLoading: followingLoading } = useFollowing(
+  //   username,
+  //   setFollowing
+  // );
+
+  const { isLoading: userLoading } = false;
+  const { isLoading: postsLoading } = false;
+  const { isLoading: followersLoading } = false;
+  const { isLoading: followingLoading } = false; 
 
 
+  useEffect(() => {
+    setUser(null);
+    setPosts([]);
+    setFollowers([]);
+    setFollowing([]);
+  }, [username]);
 
-const Profil = () => { 
-  // [userInformation, setUserInformation] = useState(null);
-  // const pseudo = localStorage.getItem("user");
-
-  // useEffect(() => {
-  //   const fetchUserInformation = async () => {
-  //     // Simulating a fetch request to get the user's information
-  //     const response = await fetch("h");
-  //     const data = await response.json();
-  //     setUserInformation(data);
-  //   };
-
-  //   fetchUserInformation();
-  // }, [pseudo]);
-
-  // if (!userInformation) {
-  //   return <div>Loading user information...</div>;
-  // }
-
-    return (
-      <>
-      
-      <Box
-      w="full"
-      h="full"
-      justifyContent="center"
-      alignItems="start"
-      display="flex"
-      flexDirection="column">
-      
-        <Text fontSize={50}>  Profil </Text>      
-        <Text fontSize={20} color="gray"> User pseudo </Text>
-        {/* lists of follower from the backend */}
-        <Text fontSize={20} color="gray"> Followers </Text>
-        {/* lists of following from the backend */}
-        <Text fontSize={20} color="gray"> Following </Text>
-        {/* lists of post from the backend */}
-      </Box>
-
-      <Box 
-      w="full"
-      h="full"
-      justifyContent="center"
-      alignItems="start"
-      display="flex"
-      flexDirection="column">
-
-        <Text fontSize={50}> Posts </Text>
-        <Text fontSize={20} color="gray"> Posts </Text>
-      </Box>
-      </>
-    )
+  return (
+    <h1>Bonjour</h1>
+  );
 };
 
-export default Profil;
+export default Profile;
