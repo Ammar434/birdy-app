@@ -4,10 +4,26 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
+
     case "LOGIN":
-      return { user: action.payload };
+      return { 
+        user: action.payload, 
+        pseudo: action.payload.pseudo,  // Assuming `pseudo` is a property of your user data
+        avatar: `https://api.multiavatar.com/${action.payload._id}.svg`,
+      };
+
+    case "SET_USER":
+      return { ...state, user: action.payload };
+
+    case "SET_PSEUDO":
+      return { ...state, pseudo: action.payload };
+
+    case "SET_AVATAR":
+      return { ...state, avatar: action.payload };
+
     case "LOGOUT":
-      return { user: null };
+      // return { user: null };
+      return { user: null, pseudo: '', avatar: '' };
 
     default:
       return state;
@@ -15,15 +31,42 @@ export const authReducer = (state, action) => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [state, dispatch] = useReducer(authReducer, { user: null, pseudo: '', avatar: ''  });
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
     } 
   }, []);
+  
+  //state.user.userId correspond à l'id de l'utilisateur connecté récupéré dans le local storage
+  useEffect(() => {
+    async function getUserInformation() {
+      const response = await fetch('/api/user/profil/getUserById', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ _id: state.user.userId }),
+      });
+        
+      if (!response.ok) {
+        throw new Error('Failed to fetch user information');
+      }
+  
+      const userData = await response.json();
+      const pseudo = userData.user.pseudo;      
+  
+      dispatch({ type: "SET_USER", payload: userData.user });
+      dispatch({ type: "SET_PSEUDO", payload: pseudo });
+      dispatch({ type: "SET_AVATAR", payload: `https://api.multiavatar.com/${userData.user._id}.svg` });
+    }
+  
+    if (state.user && state.user.userId) {
+      getUserInformation();
+    }
+  }, [state.user]); 
 
-  // console.log(state);
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}

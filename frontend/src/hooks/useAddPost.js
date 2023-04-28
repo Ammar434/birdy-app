@@ -5,7 +5,6 @@ export const useAddPost = () => {
 
   const addPost = async (post) => {
     setIsLoading(true);
-    console.log("post dans useAddPost",post)
     try {
       const response = await fetch('/api/user/home', {
         method: 'POST',

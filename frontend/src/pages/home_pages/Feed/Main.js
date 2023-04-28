@@ -8,7 +8,6 @@ import NavBarFeed from "../LeftSideBar/components/NavBarFeed";
 const Main = ( { selectedComponent } ) => {
     return (
         <>
-        {/* La nav bar fait partie de la structure du Main */}
             <NavBarFeed selectedComponent={selectedComponent} />
             <FeedChoice selectedComponent={selectedComponent} />
         </>

@@ -6,7 +6,7 @@ import usePosts from "../../../../hooks/usePost";
 
 const Feed = () => {
 
-    const posts = usePosts(); 
+  const posts = usePosts(); 
 
 
   return (

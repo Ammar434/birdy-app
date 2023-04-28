@@ -8,15 +8,16 @@ const createToken = (id) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     //add the pseudo to the token
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, userId: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
+    
   }
 };
 
@@ -25,8 +26,7 @@ const signUpUser = async (req, res) => {
   try {
     const user = await User.signUp(email, password, pseudo);
     const token = createToken(user._id);
-    const id = user._id;
-    res.status(200).json({ email, token, id });
+    res.status(200).json({ email, token, pseudo });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -117,7 +117,6 @@ const getIdByEmail = async (req, res) => {
 //OK
 const getPseudoById = async (req, res) => {
   const idUser = req.body; 
-  console.log(idUser); 
 
   try {
     const id = idUser._id;

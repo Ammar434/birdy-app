@@ -18,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 
 
-import { useAuthContext } from "../../../../hooks/useAuthContext";
 import { Link as RouterLink } from "react-router-dom";
 
 import { GiWireframeGlobe } from "react-icons/gi";
@@ -26,6 +25,8 @@ import { MdHome, MdMessage, MdOutlineLogout } from "react-icons/md";
 
 import NavItem from "./NavItem";
 import { useLogout } from "../../../../hooks/useLogout.js";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
+
 export const LinkItems = [
   { id: 1, name: "Home", icon: MdHome },
   { id: 2, name: "Notification", icon: GiWireframeGlobe },
@@ -34,9 +35,8 @@ export const LinkItems = [
 
 const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
   const { logout } = useLogout();
-  const { user } = useAuthContext(); 
+  const { pseudo, avatar } = useAuthContext();
   
-  // console.log("user",user)
 
   const handleClick = (newComponent) => {
     updateSelectedComponent(newComponent);
@@ -84,7 +84,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           >
             <Avatar
               size="sm"
-              src="https://api.multiavatar.com/${user}.svg"
+              src={avatar}
             />
           </MenuButton>
           {/* The dropdown */}
@@ -93,12 +93,12 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
             <Center>
               <Avatar
                 size="2xl"
-                src="https://api.multiavatar.com/${user}.svg"
+                src={avatar}
                 />
             </Center>
             <br />
             <Center>
-              <p>{user.pseudo}</p>
+              <p>{pseudo}</p>
             </Center>
             <br />
             <MenuDivider />
@@ -125,7 +125,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           </MenuList>
         </Menu>
         <Text ml="4" fontWeight="large">
-          user.name
+          {pseudo}
         </Text>
       </Flex>
 

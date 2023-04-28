@@ -3,12 +3,16 @@ import { Box, Text, IconButton, Avatar, Spacer, Flex, Button } from "@chakra-ui/
 import { FaHeart } from "react-icons/fa";
 
 import { formatDistanceToNow, format } from 'date-fns';
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const TweetList = ( { post } ) => {
     const { author, content, dateCreated, like, likedBy } = post;
+    // const { user, pseudo, avatar, dispatch } = useAuthContext();
+
 
     const handleLikeClick = () => {
-      // handle like button click
+        //TODO : interaction avec le backend, quand au click ajout d'un like dans le post 
+
     };
   
     const isLiked = likedBy.includes(author._id);
@@ -34,9 +38,8 @@ const TweetList = ( { post } ) => {
       borderColor="white"
       p={10}
     >
-      {/* each post should be sorted in  order   */}
       <Flex alignItems="center" mb={5}>
-        <Avatar name={author.pseudo} src={author.avatar} mr={3} />
+        <Avatar src={`https://api.multiavatar.com/${author._id}.svg`} mr={3} />
         <Text fontWeight="bold">{author.pseudo}</Text>
         <Spacer />
         <Text fontSize="sm" color="gray.500">

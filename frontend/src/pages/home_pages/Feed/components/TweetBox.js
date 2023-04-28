@@ -48,6 +48,8 @@ const TweetBox = () => {
   };
 
  
+  //TODO : cree un useEffect permettant de rafrachir la page apres l'envoi du tweet
+
   const handleSubmit = (e) => {
     e.preventDefault();
     addPost({ content: text, userId });

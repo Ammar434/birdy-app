@@ -11,44 +11,131 @@ import {
   Divider,
   SimpleGrid,
 } from "@chakra-ui/react";
-// import { useUser } from "../../hooks/useUser";
-// import { usePosts } from "../../hooks/usePosts";
-// import { useFollowers } from "../../hooks/useFollowers";
-// import { useFollowing } from "../../hooks/useFollowing";
-// import Post from "../Post";
+
+import Feed from "./Feed";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const Profile = ({ username }) => {
-  const [user, setUser] = useState(null);
+  const { user, pseudo, avatar } = useAuthContext();
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
 
-  // const { isLoading: userLoading } = useUser(username, setUser);
-  // const { isLoading: postsLoading } = usePosts(username, setPosts);
-  // const { isLoading: followersLoading } = useFollowers(
-  //   username,
-  //   setFollowers
-  // );
-  // const { isLoading: followingLoading } = useFollowing(
-  //   username,
-  //   setFollowing
-  // );
+  const nbPost = user?.post?.length || 0;
+  const nbFollowing = user?.following?.length || 0;
+  const nbFollowers = user?.followers?.length || 0;
 
-  const { isLoading: userLoading } = false;
-  const { isLoading: postsLoading } = false;
-  const { isLoading: followersLoading } = false;
-  const { isLoading: followingLoading } = false; 
-
-
+  // TODO : a utiliser pour afficher les followers et les following 
   useEffect(() => {
-    setUser(null);
     setPosts([]);
     setFollowers([]);
     setFollowing([]);
   }, [username]);
 
   return (
-    <h1>Bonjour</h1>
+    <Box
+    w="100%"
+    h="100%"
+    boxShadow="lg"
+    display="flex"
+    flexDirection="column"
+    gap={6}
+    borderRadius="xl"
+    justifyContent="start"
+    alignItems="center"
+    p={10}
+    css={{
+      "&::-webkit-scrollbar": {
+        width: "5px",
+        height: "5px",
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "transparent",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background:
+          "linear-gradient(90deg, rgba(174,3,216,1) 0%, rgba(227,13,135,1) 100%)",
+        borderRadius: "10px",
+        border: "solid 1px #dedede",
+      },
+    }}
+    overflow="auto"
+  >
+      <Grid
+        templateColumns="repeat(12, 1fr)"
+        gap={3}
+      >
+        <GridItem  colSpan={4} rowSpan={4} >
+          <Flex
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            h="100%"
+          >
+            <Image
+              borderRadius="full"
+              boxSize="200px"
+              src={avatar}
+            />
+            <Heading size="md" mt={5}>
+            {pseudo}
+            </Heading>
+            <Text fontSize="sm" color="gray.500">
+              {user?.email}
+            </Text>
+
+            <Button mt={5} colorScheme="blue">
+              Edit Profile
+            </Button>
+          </Flex>
+        </GridItem>
+        <GridItem colSpan={8} rowSpan={4} >
+          <Flex
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+            h="100%"
+          >
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Posts
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {nbPost}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Followers
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {nbFollowers}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Following
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {nbFollowing}
+              </Text>
+            </Box>
+          </Flex>
+          <Divider mt={5} />
+          <SimpleGrid columns={3} spacing={5} mt={5}>
+            {posts.map((post) => (
+              <Box key={post.id}>
+                {/* <Post post={post} /> */}
+              </Box>
+            ))}
+          </SimpleGrid>
+        </GridItem>
+      </Grid>
+
+
+    </Box>
+
+
   );
 };
 

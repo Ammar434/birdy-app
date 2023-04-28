@@ -87,7 +87,6 @@ userSchema.statics.findUserById = async function (id) {
   }
   const user = await this.findOne({ _id: id });
 
-  console.log("user trouvé", user);
   return user;
 };
 

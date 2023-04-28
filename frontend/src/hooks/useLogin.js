@@ -14,7 +14,6 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -34,7 +33,7 @@ export const useLogin = () => {
       // update the auth context
       dispatch({ type: "LOGIN", payload: json });
 
-      // update loading state
+      // update loading state  
       setIsLoading(false);
       navigate(ROOT);
       //initially it was set to navigate("/ROOT") but it was not working
