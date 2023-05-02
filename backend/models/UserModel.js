@@ -105,7 +105,7 @@ userSchema.statics.listPost = async function (post) {
   const user = await this.findOne({ post });
 
   if (!user) {
-    throw Error("User not exists in our database");
+    throw Error("User does not exists in our database");
   }
 
   return user;
@@ -119,7 +119,7 @@ userSchema.statics.resetPassword = async function (
   let user = await this.findOne({ email });
 
   if (!user) {
-    throw Error("Email not exists in our database");
+    throw Error("Email does not exists in our database");
   }
 
   if (!validator.isStrongPassword(previousPassword)) {
@@ -192,12 +192,17 @@ userSchema.statics.removeFollower = async function (user1Id, user2Id) {
 
 // user2ID ajoute à sa liste de   à l'identifiant user2Id de sa liste de following
 userSchema.statics.addFollowing = async function (user1Id, user2Id) {
+  // if ({_id : user1Id} = {_id : user2Id}){
+  //   console.log(user1Id)
+  //   console.log(user2Id)
+  //   throw Error("User cannot follow himself");
+  // }
   let user = await this.findOne({ _id: user2Id });
 
   if (!user) {
     throw Error("User not exists in our database");
   }
-
+  
   const filter = { _id: user2Id };
   const updateDoc = {
     $push: {

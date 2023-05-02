@@ -1,14 +1,11 @@
-import { Icon, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
-import { Box, Input, Button } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import React, { useState } from "react";    
 
 
 const SearchBar = () => {
     const [search, setSearch] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
-    const [isSearchingError, setIsSearchingError] = useState(false);
 
     const handleChange = (event) => {
         setSearch(event.target.value);
@@ -16,11 +13,7 @@ const SearchBar = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        setIsSearching(true);
-        setIsSearchingError(false);
-        // Search for the user
-        // If the user is found, then we can redirect him to his profile
-        // If the user is not found, then we can display an error message
+
     }
 
     return (
@@ -53,27 +46,9 @@ const SearchBar = () => {
                     color: "purple", 
                     borderColor: "purple.100",
                 }}
-                />
-                
-
+                />    
 
         </InputGroup>            
-
-        {/* A garder au cas ou l'application est mobile, car pas la possibilité d'entrer sur mobile */}
-        {/* <Button
-                type="submit"
-                mx="4"
-                p="5"
-                bg="white"
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="column"
-                position="relative"
-                borderRadius="3xl"
-            >
-                Search
-        </Button> */}
-
            
         </Box>
     );

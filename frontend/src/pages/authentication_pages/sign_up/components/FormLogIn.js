@@ -32,6 +32,7 @@ const FormSignUp = () => {
   const handleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
   const { signup, error, isLoading } = useSignup();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signup(email, password, pseudo);

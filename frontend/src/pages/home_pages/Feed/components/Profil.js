@@ -16,21 +16,15 @@ import Feed from "./Feed";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const Profile = ({ username }) => {
-  const { user, pseudo, avatar } = useAuthContext();
+  const { user, pseudo, avatar, followers, following } = useAuthContext();
   const [posts, setPosts] = useState([]);
-  const [followers, setFollowers] = useState([]);
-  const [following, setFollowing] = useState([]);
 
   const nbPost = user?.post?.length || 0;
-  const nbFollowing = user?.following?.length || 0;
-  const nbFollowers = user?.followers?.length || 0;
+  const nbFollowing = following?.length || 0;
+  const nbFollowers = followers?.length || 0;
 
-  // TODO : a utiliser pour afficher les followers et les following 
-  useEffect(() => {
-    setPosts([]);
-    setFollowers([]);
-    setFollowing([]);
-  }, [username]);
+  console.log("following dans profil", following);
+
 
   return (
     <Box
@@ -109,7 +103,7 @@ const Profile = ({ username }) => {
                 Followers
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {nbFollowers}
+                {followers?.length || 0}
               </Text>
             </Box>
             <Box>
@@ -117,7 +111,7 @@ const Profile = ({ username }) => {
                 Following
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {nbFollowing}
+                {following?.length || 0}
               </Text>
             </Box>
           </Flex>

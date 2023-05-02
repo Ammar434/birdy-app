@@ -11,10 +11,7 @@ import { HStack, Flex } from "@chakra-ui/react";
 
 
 const Home = () => {
-  // Prend le isAuthentificated en paramétre. Si le user  est authentifier, alors on peut le faire entre dans la page home 
-  // Sinon, on le redirige vers la page de connexion.
-  const [isAuthentificated, setIsAuthentificated] = useState(false);
-  const {colorMode, toggleColorMode } = useColorMode();
+  const {colorMode } = useColorMode();
   const [selectedComponent, setSelectedComponent] = useState("Feed");
 
 

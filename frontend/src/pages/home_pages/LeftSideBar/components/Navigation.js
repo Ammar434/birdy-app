@@ -74,7 +74,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           color: "white",
         }}
       >
-        {/* The avatar */}
+        {/* L'avatar */}
         <Menu>
           <MenuButton
             as={Button}
@@ -87,7 +87,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
               src={avatar}
             />
           </MenuButton>
-          {/* The dropdown */}
+          {/* Le menu */}
           <MenuList alignItems="center" color="black">
             <br />
             <Center>
@@ -131,7 +131,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
 
       <Divider my="6" borderColor="purple.400" />
 
-      {/* The other buttons */}
+      {/* L'autre boutton */}
 
       {LinkItems.map((link) => (
         <NavItem
