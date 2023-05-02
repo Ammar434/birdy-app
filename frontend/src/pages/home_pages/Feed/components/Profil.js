@@ -20,10 +20,6 @@ const Profile = ({ username }) => {
   const [posts, setPosts] = useState([]);
 
   const nbPost = user?.post?.length || 0;
-  const nbFollowing = following?.length || 0;
-  const nbFollowers = followers?.length || 0;
-
-  console.log("following dans profil", following);
 
 
   return (
@@ -78,9 +74,6 @@ const Profile = ({ username }) => {
               {user?.email}
             </Text>
 
-            <Button mt={5} colorScheme="blue">
-              Edit Profile
-            </Button>
           </Flex>
         </GridItem>
         <GridItem colSpan={8} rowSpan={4} >
