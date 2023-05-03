@@ -2,13 +2,18 @@ import {
   Box,
   Flex,
   Button,
+  Link,
+  Icon,
   Text,
   Stack,
   useColorMode,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import theme from '../../../../utils/theme.js';
+import { Link as RouterLink } from 'react-router-dom';
+import { useLogout } from '../../../../hooks/useLogout.js';
 
+import { MdOutlineLogout } from 'react-icons/md';
 
 function getText(selectedComponent) {
   let text = '';
@@ -35,6 +40,8 @@ function getText(selectedComponent) {
 export default function Nav( {selectedComponent}) {
   const { colorMode, toggleColorMode } = useColorMode();
   const text = getText(selectedComponent);
+  const { logout } = useLogout();
+
 
   return (
     <Box 
@@ -55,11 +62,14 @@ export default function Nav( {selectedComponent}) {
         <Flex alignItems="center">
           <Stack direction="row" spacing={7}>
             <Button onClick={toggleColorMode}>
-              {colorMode === "light" ? <MoonIcon style={{ backgroundColor: 'transparent' }} /> : <SunIcon style={{ backgroundColor: 'transparent' }}  />}
+              {colorMode === "light" ? 
+                <MoonIcon style={{ backgroundColor: 'transparent' }} /> 
+                : 
+                  <SunIcon style={{ backgroundColor: 'transparent' }}  />}
             </Button>
           </Stack>
         </Flex>
-
+       
       </Flex>
     </Box>
   );

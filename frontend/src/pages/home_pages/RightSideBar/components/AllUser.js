@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Flex, Text, Box, Button, Avatar, Spinner } from '@chakra-ui/react';
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 
+import theme from '../../../../utils/theme';
 
 const AllUser = () => {
   const [users, setusers] = useState([]);
@@ -99,10 +100,12 @@ const AllUser = () => {
       justifyContent="space-between"
       alignItems="center"
       borderRadius="lg"
+      fontFamily={theme.fonts.fontFamily}
     >      
           <Avatar src={`https://api.multiavatar.com/${userFriend._id}.svg`} mr="4" />
-          <Text mr="4">{userFriend.pseudo}</Text>
+          <Text fontSize={theme.fonts.fontSize} fontFamily={theme.fonts.fontFamily} mr="4">{userFriend.pseudo}</Text>
           <Button
+          fontFamily={theme.fonts.fontFamily}
           _hover={{
               color: "white",
             }}

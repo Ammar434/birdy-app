@@ -18,6 +18,6 @@ const usePosts = () => {
     }, []);
 
   return posts;
-  
+
 };
 export default usePosts;

@@ -1,15 +1,19 @@
 // theme.js
 export default {
+  fonts: {
+    fontFamily: "monospace",
+    fontSize: "1.2rem",
+  }, 
   colors: {
     //vert
-    // backgroundColor: "#07250C",
+    backgroundColor: "#07250C",
     //violet
     // backgroundColor: "#3C3F98",
     //bleu
     // backgroundColor: "#061859",
 
-    //bleu foncée
-    backgroundColor: "#051343",
+    // //bleu foncée
+    // backgroundColor: "#051343",
     
 
     transparent: "transparent",

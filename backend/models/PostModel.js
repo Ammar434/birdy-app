@@ -72,7 +72,6 @@ postSchema.statics.addPost = async function(content, userId) {
 //Like a post
 postSchema.statics.likePost = async function (postId, userId) {
     const post = await this.findById(postId); 
-    console.log("post", post)
     if (!post) {
         throw new Error("Post not found");
     }
@@ -93,7 +92,6 @@ postSchema.statics.likePost = async function (postId, userId) {
 //remove a like
 postSchema.statics.removeLike = async function (postId, userId) {
   const post = await this.findById(postId);
-  console.log("post", post)
   if (!post) {
     throw new Error("Post not found");
   }

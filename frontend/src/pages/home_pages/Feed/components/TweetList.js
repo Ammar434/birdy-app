@@ -1,6 +1,6 @@
 
 import { Box, Text, IconButton, Avatar, Spacer, Flex, Button } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaTrash } from "react-icons/fa";
 import { useState } from "react";
 
 import { formatDistanceToNow, format } from 'date-fns';
@@ -22,7 +22,7 @@ const TweetList = ( {post, postId}) => {
 
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
-  
+
     const handleLikeClick = () => {
       if (!isLiked) {
         setLikeCount(likeCount + 1);
@@ -31,8 +31,7 @@ const TweetList = ( {post, postId}) => {
         setLikeCount(likeCount - 1);
         setIsLiked(false);
       }
-    }
-
+    }; 
 
     const handleLikeClickServer = async (postId, userId) => {
         //TODO : interaction avec le backend, quand au click ajout d'un like dans le post 
@@ -74,18 +73,34 @@ const TweetList = ( {post, postId}) => {
       const isLiked = like.some(user => user._id === userId);
 
       if (isLiked) {
+        // Unlike
         await handleUnlikeClickServer(postId, userId);
-        console.log("post UNliké")
-        // Unlicked
-        console.log("post", post)
+ 
         
       } else {
         // Like
         await handleLikeClickServer(postId, userId);
-        console.log("postLiké")
-        console.log("post", post)
+
       }
     };
+
+    const handleDeletePost = async (postId) => {
+      
+      try {
+        const response = await fetch('/api/user/home/deletePost', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ postId }),
+        });
+        const data = await response.json();
+      }
+      catch (error) {
+        console.error(error);
+      }
+    };
+
 
   
 
@@ -118,17 +133,30 @@ const TweetList = ( {post, postId}) => {
         </Text>
       </Flex>
       <Text>{content}</Text>
-      <Flex alignItems="center" mt={5}>
+      <Flex 
+        alignItems="center"  
+        // center the elements
+        justifyContent="space-between"
+        mt={5}
+      >
       <Button
         leftIcon={<FaHeart color={isLiked ? 'red' : 'gray'} />}
         onClick={() => handleLikeClick(!isLiked)}
-        mt={3}
       >
         {likeCount} Likes
       </Button>
-     
+      
+      { post.author._id === userId && (
+        <IconButton
+        icon={<FaTrash />}
+        
+        onClick={()=> handleDeletePost(postId)}
 
-      </Flex>
+      />
+      )}
+    </Flex>
+
+
     </Box>
   );
 };

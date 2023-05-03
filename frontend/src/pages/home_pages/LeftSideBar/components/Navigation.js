@@ -104,23 +104,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
             <MenuDivider />
             <MenuItem>Paramètres</MenuItem>
             <MenuItem>
-              <Link
-                as={RouterLink}
-                onClick={() => logout()}
-                to="/"
-                fontWeight="medium"
-                textDecor="underline"
-              >
-                <Icon
-                  mr="6"
-                  fontSize="16"
-                  _groupHover={{
-                    color: "black",
-                  }}
-                  as={MdOutlineLogout}
-                />
-                Logout
-              </Link>{" "}
+
             </MenuItem>
           </MenuList>
         </Menu>
@@ -144,6 +128,35 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           {link.name}
         </NavItem>
       ))}
+      <Link
+        as={RouterLink}
+        onClick={() => logout()}
+        to="/"
+      >
+        <Flex 
+          align="center"
+          p="5"
+          mx="4"
+          //can you add the flex down the box 
+          my="auto"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            borderColor: "purple.200",
+            borderWidth: "2px",
+            color: "white",
+          }}>
+          <Icon
+            mr="2"
+            fontSize="16"
+            as={MdOutlineLogout}
+          />
+          Deconnexion
+        </Flex>
+      </Link>{" "}
+        
+
     </Box>
   );
 };

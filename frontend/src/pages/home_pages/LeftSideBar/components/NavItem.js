@@ -1,5 +1,6 @@
 import React from "react";
 import { Flex, Icon, Link } from "@chakra-ui/react";
+import theme from "../../../../utils/theme";
 
 const NavItem = ({
   children,

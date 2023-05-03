@@ -15,7 +15,7 @@ import {
 import Feed from "./Feed";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 
-const Profile = ({ username }) => {
+const Profile = () => {
   const { user, pseudo, avatar, followers, following, posts } = useAuthContext();
 
 
@@ -85,7 +85,7 @@ const Profile = ({ username }) => {
                 Posts
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {user.post?.length || 0}
+                {posts?.length || 0}
               </Text>
             </Box>
             <Box>
@@ -107,11 +107,11 @@ const Profile = ({ username }) => {
           </Flex>
           <Divider mt={5} />
           <SimpleGrid columns={3} spacing={5} mt={5}>
-            {posts.map((post) => (
-              <Box key={post.id}>
-                {/* <Post post={post} /> */}
-              </Box>
-            ))}
+          {posts.map((post, index) => (
+            <Box key={post.id || index}>
+              {/* <Post post={post} /> */}
+            </Box>
+          ))}
           </SimpleGrid>
         </GridItem>
       </Grid>

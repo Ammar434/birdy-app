@@ -41,7 +41,6 @@ const newPost = async (req, res) => {
     const post = await Post.addPost(content, userId);
     //201 car creation d'un nouveau post 
     res.status(200).json(post);
-    console.log("post", post);
 
   } catch (error) {
     console.error(error);
@@ -55,9 +54,8 @@ const newPost = async (req, res) => {
 //Prends en paramètre l'id du post à supprimer et non l'id de l'utilisateur
 const deletePost = async (req, res) => {
   const postId  = req.body;
-
   try {
-    await Post.deletePost(postId._id);
+    await Post.deletePost(postId.postId);
     res.status(200).json({ message: "Post supprimé" });
   } catch (error) {
     console.error(error);
@@ -75,8 +73,7 @@ const likePost = async (req, res) => {
     await Post.likePost(postId,userId);
   } catch (error) {
     console.error(error);
-    console.log("postId = ", postId);
-    console.log("userId = ", userId);
+
     console.log(req.body)
     res.status(500).json({ message: "Une erreur est survenue dans le like Post." });
   }
