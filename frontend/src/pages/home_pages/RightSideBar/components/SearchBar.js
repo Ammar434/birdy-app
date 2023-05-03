@@ -13,7 +13,6 @@ const SearchBar = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-
     }
 
     return (

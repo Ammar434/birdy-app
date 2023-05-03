@@ -38,10 +38,11 @@ const newPost = async (req, res) => {
     return res.status(400).json({ message: "Le contenu du post est vide." });
   }
   try {
-    // Appeler la méthode addPost du schéma Post pour créer un nouveau tweet
     const post = await Post.addPost(content, userId);
     //201 car creation d'un nouveau post 
-    res.status(201).json(post);
+    res.status(200).json(post);
+    console.log("post", post);
+
   } catch (error) {
     console.error(error);
     console.log("erreur newPost", req.body);
@@ -66,22 +67,25 @@ const deletePost = async (req, res) => {
 
 //OK mais un peu lent 
 const likePost = async (req, res) => {
-  const postId = req.body._idPost;
-  const userId = req.body._idUser;
+  const postId = req.body.postId;
+  const userId = req.body.userId;
 
   try {
     // Appeler la méthode addPost du schéma Post pour créer un nouveau tweet
     await Post.likePost(postId,userId);
   } catch (error) {
     console.error(error);
+    console.log("postId = ", postId);
+    console.log("userId = ", userId);
+    console.log(req.body)
     res.status(500).json({ message: "Une erreur est survenue dans le like Post." });
   }
 };
 
 //OK mais un peu lent
 const removelikePost = async (req, res) => {
-  const postId = req.body._idPost;
-  const userId = req.body._idUser;
+  const postId = req.body.postId;
+  const userId = req.body.userId;
   try {
     // Appeler la méthode addPost du schéma Post pour créer un nouveau tweet
     await Post.removeLike(postId, userId);

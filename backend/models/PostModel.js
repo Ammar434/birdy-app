@@ -18,7 +18,35 @@ postSchema.statics.listPostsAll = async function () {
 };
 
 
-//OK
+//addPost 
+// postSchema.statics.addPost = async function(content, userId) {
+//   if (!content || !userId) {
+//     throw new Error('Content and user ID must be provided');
+//   }
+
+//   // Create a new Post document
+//   const newPost = new this({
+//     content: content,
+//     author: userId,
+//     dateCreated: Date.now(),
+//   });
+
+//   // Save the Post document in the posts collection
+//   await newPost.save();
+
+//   // Add the reference to the Post document to the user's posts field
+//   const user = await User.findById(userId);
+
+//   if (!user) {
+//     throw new Error('No user found with this ID');
+//   }
+
+//   user.posts.push(newPost._id);
+//   await user.save();
+
+//   return newPost;
+// };
+// //OK
 //add a post 
 postSchema.statics.addPost = async function(content, userId) {
     // Créer un nouveau document Post
@@ -35,6 +63,7 @@ postSchema.statics.addPost = async function(content, userId) {
       { _id: userId },
       { $push: { post: newPost._id } }
     );
+    console.log("newPost._id", newPost._id)
   
     return newPost;
 };
@@ -43,7 +72,7 @@ postSchema.statics.addPost = async function(content, userId) {
 //Like a post
 postSchema.statics.likePost = async function (postId, userId) {
     const post = await this.findById(postId); 
-    
+    console.log("post", post)
     if (!post) {
         throw new Error("Post not found");
     }
@@ -64,12 +93,11 @@ postSchema.statics.likePost = async function (postId, userId) {
 //remove a like
 postSchema.statics.removeLike = async function (postId, userId) {
   const post = await this.findById(postId);
-  
+  console.log("post", post)
   if (!post) {
     throw new Error("Post not found");
   }
-  // Supprimer un like d'un post correspondant
-  // Ne permet pas à un utilisateur de retirer un like s'il n'a pas déjà aimé le post
+
   const hasLiked = post.like.includes(userId);
   if (!hasLiked) {
     throw new Error("User has not liked the post");

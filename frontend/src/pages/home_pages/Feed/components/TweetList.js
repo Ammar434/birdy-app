@@ -1,25 +1,93 @@
 
 import { Box, Text, IconButton, Avatar, Spacer, Flex, Button } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
+import { useState } from "react";
 
 import { formatDistanceToNow, format } from 'date-fns';
-import { useAuthContext } from "../../../../hooks/useAuthContext";
+import { useAuthContext } from "../../../../hooks/useAuthContext"
 
-const TweetList = ( { post } ) => {
-    const { author, content, dateCreated, like, likedBy } = post;
-    // const { user, pseudo, avatar, dispatch } = useAuthContext();
+const TweetList = ( {post, postId}) => {
+    const { user, dispatch } = useAuthContext();
+    const author = post.author;
+    const content = post.content;
+    const dateCreated = post.dateCreated;
+    const like = post.like;
 
 
-    const handleLikeClick = () => {
-        //TODO : interaction avec le backend, quand au click ajout d'un like dans le post 
 
-    };
-  
-    const isLiked = likedBy.includes(author._id);
-
+    const userId = user._id;
     const now = new Date();
     const createdDate = new Date(dateCreated);
     let timeAgo;
+
+    const [likeCount, setLikeCount] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+  
+    const handleLikeClick = () => {
+      if (!isLiked) {
+        setLikeCount(likeCount + 1);
+        setIsLiked(true);
+      } else {
+        setLikeCount(likeCount - 1);
+        setIsLiked(false);
+      }
+    }
+
+
+    const handleLikeClickServer = async (postId, userId) => {
+        //TODO : interaction avec le backend, quand au click ajout d'un like dans le post 
+        try {
+          const response = await fetch('/api/user/home/likePost', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ postId, userId }),
+          });
+          const data = await response.json();
+        }
+        catch (error) {
+          console.error(error);
+        }
+    };
+
+    const handleUnlikeClickServer = async (postId, userId) => {
+        //TODO : interaction avec le backend, quand au click suppression d'un like dans le post
+        try {
+          const response = await fetch('/api/user/home/removelikePost', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ postId, userId }),
+          });
+          const data = await response.json();
+        }
+        catch (error) {
+          console.error(error);
+        }
+   
+    }; 
+
+    const handleToggleLikeServeur = async (postId, userId) => {
+      // Check if the post is liked 
+      const isLiked = like.some(user => user._id === userId);
+
+      if (isLiked) {
+        await handleUnlikeClickServer(postId, userId);
+        console.log("post UNliké")
+        // Unlicked
+        console.log("post", post)
+        
+      } else {
+        // Like
+        await handleLikeClickServer(postId, userId);
+        console.log("postLiké")
+        console.log("post", post)
+      }
+    };
+
+  
 
     if (now.getTime() - createdDate.getTime() < 24 * 60 * 60 * 1000) {
         timeAgo = formatDistanceToNow(createdDate, { addSuffix: true });
@@ -31,6 +99,7 @@ const TweetList = ( { post } ) => {
     <Box
       w="100%"
       h="auto"
+      key= {postId}
       maxH={600}
       boxShadow="lg"
       borderRadius="xl"
@@ -38,7 +107,9 @@ const TweetList = ( { post } ) => {
       borderColor="white"
       p={10}
     >
+    
       <Flex alignItems="center" mb={5}>
+
         <Avatar src={`https://api.multiavatar.com/${author._id}.svg`} mr={3} />
         <Text fontWeight="bold">{author.pseudo}</Text>
         <Spacer />
@@ -48,29 +119,17 @@ const TweetList = ( { post } ) => {
       </Flex>
       <Text>{content}</Text>
       <Flex alignItems="center" mt={5}>
-        <Button
-          leftIcon={<FaHeart />}
-          colorScheme={isLiked ? 'red' : 'gray'}
-          onClick={handleLikeClick}
-          mr={3}
-          disabled={isLiked}
-        >
-          {like.length} Likes
-        </Button>
-        {isLiked && (
-          <IconButton
-            icon={<FaHeart />}
-            colorScheme="red"
-            aria-label="Liked"
-            disabled
-          />
-        )}
+      <Button
+        leftIcon={<FaHeart color={isLiked ? 'red' : 'gray'} />}
+        onClick={() => handleLikeClick(!isLiked)}
+        mt={3}
+      >
+        {likeCount} Likes
+      </Button>
+     
+
       </Flex>
     </Box>
   );
 };
   export default TweetList;
-  
-  
-  
-  

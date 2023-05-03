@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState} from "react";
 
 export const AuthContext = createContext();
 
@@ -21,11 +21,15 @@ export const authReducer = (state, action) => {
     case "SET_AVATAR":
       return { ...state, avatar: action.payload };
 
-    case "SET_FOLLOWERS":
-      return { ...state, followers: action.payload };
-    
     case "SET_FOLLOWING":
       return { ...state, following: action.payload };
+    
+    case "SET_POSTS":
+      return { ...state, posts: action.payload };
+    
+    case "ADD_POST":
+      // Ajout d'un nouveau post
+      return { ...state, posts: [action.payload, ...state.posts] };
 
     case "LOGOUT":
       // return { user: null };
@@ -34,9 +38,28 @@ export const authReducer = (state, action) => {
     default:
       return state;
   }
-};export const AuthContextProvider = ({ children }) => {
+};
+export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { user: null, pseudo: '', avatar: ''  });
-  
+  const [ posts, setPosts ] = useState([]); // posts = usePosts()
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch('/api/user/home/listPostAll');
+        const { posts } = await response.json();
+        const sortedPosts = posts.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)); // ordre chronologique
+        setPosts(sortedPosts);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPosts();
+  }, [ posts ]);
+
+
+
   useEffect(() => {
     const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
 
@@ -61,68 +84,20 @@ export const authReducer = (state, action) => {
         dispatch({ type: "SET_USER", payload: userData.user });
         dispatch({ type: "SET_PSEUDO", payload: pseudo });
         dispatch({ type: "SET_AVATAR", payload: `https://api.multiavatar.com/${userData.user._id}.svg` });
-        dispatch({ type: "SET_FOLLOWERS", payload: userData.user.followers });
         dispatch({ type: "SET_FOLLOWING", payload: userData.user.following });
+        dispatch({ type: "SET_POSTS", payload: posts });
       }
     }
-  
+
     getUserInformation();
+
   }, [state.user]); 
 
   return (
-    <AuthContext.Provider value={{ ...state, dispatch }}>
+    <AuthContext.Provider value={{ ...state, dispatch, posts }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export default AuthContextProvider;
-
-// export const AuthContextProvider = ({ children }) => {
-//   const [state, dispatch] = useReducer(authReducer, { user: null, pseudo: '', avatar: ''  });
-//   useEffect(() => {
-//     const user = JSON.parse(localStorage.getItem("user"));
-//     if (user) {
-//       dispatch({ type: "LOGIN", payload: user });
-//     } 
-//   }, []);
-  
-//   //state.user.userId correspond à l'id de l'utilisateur connecté récupéré dans le local storage
-//   useEffect(() => {
-//     async function getUserInformation() {
-//       const response = await fetch('/api/user/profil/getUserById', {
-//           method: 'POST', 
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({ _id: state.user.userId }),
-//       });
-        
-//       if (!response.ok) {
-//         throw new Error('Failed to fetch user information');
-//       }
-  
-//       const userData = await response.json();
-//       const pseudo = userData.user.pseudo;      
-  
-//       dispatch({ type: "SET_USER", payload: userData.user });
-//       dispatch({ type: "SET_PSEUDO", payload: pseudo });
-//       dispatch({ type: "SET_AVATAR", payload: `https://api.multiavatar.com/${userData.user._id}.svg` });
-//       dispatch({ type: "SET_FOLLOWERS", payload: userData.user.followers });
-//       dispatch({ type: "SET_FOLLOWING", payload: userData.user.following });
-
-//     }
-  
-//     if (state.user && state.user.userId) {
-//       getUserInformation();
-//     }
-//   }, [state.user]); 
-
-//   return (
-//     <AuthContext.Provider value={{ ...state, dispatch }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// export default AuthContextProvider;

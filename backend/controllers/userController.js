@@ -75,8 +75,12 @@ const addFollowing = async (req, res) => {
 const removeFollowing = async (req, res) => {
   const { user1Id, user2Id } = req.body;
   try {
+    // Remove user2 from the following list of user1
     const user1 = await User.removeFollower(user1Id, user2Id);
+
+    // Remove user1 from the followers list of user2
     const user2 = await User.removeFollowing(user1Id, user2Id);
+
     res.status(200).json({ user1, user2 });
   } catch (error) {
     res.status(400).json({ error: error.message });

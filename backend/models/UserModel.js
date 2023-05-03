@@ -12,6 +12,7 @@ const userSchema = new Schema({
   following: [{ type: Schema.Types.ObjectId, ref: "User" }],
   post: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   dateCreated: Date,
+  
 });
 
 
@@ -190,6 +191,26 @@ userSchema.statics.removeFollower = async function (user1Id, user2Id) {
   return user;
 };
 
+
+userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
+  let user = await this.findOne({ _id: user2Id });
+
+  if (!user) {
+    throw Error("User not exists in our database");
+  }
+
+  const filter = { _id: user2Id };
+  const updateDoc = {
+    $pull: {
+      following: user1Id,
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ _id: user2Id });
+
+  return user;
+};
+
 // user2ID ajoute à sa liste de   à l'identifiant user2Id de sa liste de following
 userSchema.statics.addFollowing = async function (user1Id, user2Id) {
   // if ({_id : user1Id} = {_id : user2Id}){
@@ -215,24 +236,7 @@ userSchema.statics.addFollowing = async function (user1Id, user2Id) {
   return user;
 };
 
-userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
-  let user = await this.findOne({ _id: user2Id });
 
-  if (!user) {
-    throw Error("User not exists in our database");
-  }
-
-  const filter = { _id: user2Id };
-  const updateDoc = {
-    $pull: {
-      following: user1Id,
-    },
-  };
-  await this.updateOne(filter, updateDoc);
-  user = await this.findOne({ _id: user2Id });
-
-  return user;
-};
 
 
 

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { Flex, Text, Box, Button,Divider, Avatar } from '@chakra-ui/react';
+import { Flex, Text, Box, Button, Avatar, Spinner } from '@chakra-ui/react';
 import { useAuthContext } from '../../../../hooks/useAuthContext';
 
 
-const Actualite = () => {
+const AllUser = () => {
   const [users, setusers] = useState([]);
   const { user , following } = useAuthContext();
-  const userId1 = user._id; 
+  const [ isLoading, setIsLoading ] = useState(true);
 
   useEffect (() => {
     const getlistAllUser = async () => {
@@ -19,15 +19,20 @@ const Actualite = () => {
         });
 
         const data = await response.json(); 
-        const filteredUsers = data.users.filter((userdata) => userdata._id !== userId1 );
+        const filteredUsers = user && user._id ? data.users.filter((userdata) => userdata._id !== user._id) : [];
         setusers(filteredUsers)
+        setIsLoading(false); // Une fois que toute les données sont récupérer, ont
 
       } catch (error) {
         console.error(error);
       }
     };
-    getlistAllUser();
-  }, []);
+    if (user && user._id){
+      getlistAllUser();
+
+    }
+  }, [user]);
+
 
   const handleFollow = async (user1Id, user2Id) => {
 
@@ -76,10 +81,15 @@ const Actualite = () => {
     }
   }
 
+  if (isLoading || !users || !following) return (
+    <Flex justifyContent="center" alignItems="center" height="100vh">
+      <Spinner />
+    </Flex>
+    
+    );
 
 
-
-
+  if (!isLoading && users.length > 0 && user._id) {
   return (
     <Box>
       {users.map((userFriend) => (
@@ -89,27 +99,30 @@ const Actualite = () => {
       justifyContent="space-between"
       alignItems="center"
       borderRadius="lg"
-    >
+    >      
           <Avatar src={`https://api.multiavatar.com/${userFriend._id}.svg`} mr="4" />
           <Text mr="4">{userFriend.pseudo}</Text>
           <Button
-              _hover={{
-                bg: "purple.200",
-                color: "white",
-              }}
-              bg={following.includes(userFriend._id) ? "purple.200" : ""}
-              border="1px"
-              borderColor={user.following.includes(userFriend._id) ? "" : "purple.200"}
-              onClick={() => handleToggleFollow(userId1, userFriend._id)}
-            >
-              {user.following.includes(userFriend._id) ? "Unfollow" : "Follow"}
-            </Button>
+          _hover={{
+              color: "white",
+            }}
+            bg={following?.includes(userFriend._id) ? "purple.200" : ""}
+            border="1px"
+            borderColor={user?.following?.includes(userFriend._id) ? "" : "purple.200"}
+            onClick={() => handleToggleFollow(user._id, userFriend._id)}
+          >
+            {following?.includes(userFriend._id) ? "Unfollow" : "Follow"}
+          </Button>
      
         </Flex>
 
       ))}
     </Box>
   );  
+  }
+
+
 };
 
-export default Actualite;
+
+export default AllUser;

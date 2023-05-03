@@ -16,10 +16,7 @@ import Feed from "./Feed";
 import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const Profile = ({ username }) => {
-  const { user, pseudo, avatar, followers, following } = useAuthContext();
-  const [posts, setPosts] = useState([]);
-
-  const nbPost = user?.post?.length || 0;
+  const { user, pseudo, avatar, followers, following, posts } = useAuthContext();
 
 
   return (
@@ -88,7 +85,7 @@ const Profile = ({ username }) => {
                 Posts
               </Text>
               <Text fontSize="sm" color="gray.500">
-                {nbPost}
+                {user.post?.length || 0}
               </Text>
             </Box>
             <Box>

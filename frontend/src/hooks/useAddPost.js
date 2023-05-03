@@ -18,7 +18,7 @@ export const useAddPost = () => {
       setIsLoading(false);
       return data;
     } catch (error) {
-      setIsLoading(false);
+      setIsLoading(true);
       console.error(error);
     }
   };

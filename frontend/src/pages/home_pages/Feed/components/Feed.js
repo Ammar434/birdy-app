@@ -1,13 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import { Box } from "@chakra-ui/react";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
-import usePosts from "../../../../hooks/usePost";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
 
 const Feed = () => {
 
-  const posts = usePosts(); 
-
+  const {posts} = useAuthContext();
 
   return (
     <Box
@@ -38,11 +37,9 @@ const Feed = () => {
       }}
       overflow="auto"
     >
-      {/* <TweetBox addPost={addPost} /> */}
       <TweetBox />
-
       {posts.map((post) => (
-        <TweetList key={post._id} post={post} />
+        <TweetList key={post._id} post={post} postId={post._id}/>
       ))}
     </Box>
   );
