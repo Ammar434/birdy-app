@@ -14,13 +14,13 @@ import { LOGIN } from "../../../../routes.js";
 import { React } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import FormSignUp from "./FormLogIn.js";
+import FormSignUp from "./FormSignUp.js";
 
 const LeftSide = () => {
   const { colorMode } = useColorMode();
 
   return (
-    <Box flex="1">
+    <Box flex="1" w={"100%"}>
       <Grid
         h={"100%"}
         gap={constants.padding.kSmallPaddingValue}
@@ -28,11 +28,7 @@ const LeftSide = () => {
       >
         <GridItem w="100%">
           <Center height={"100%"}>
-            <Text
-              fontSize={"4xl"}
-              fontWeight={"bold"}
-              color={colorMode === "light" ? "black" : "white"}
-            >
+            <Text fontSize={"4xl"} fontWeight={"bold"} color={"black"}>
               Welcome to Birdy 🐦
             </Text>
           </Center>

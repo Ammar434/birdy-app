@@ -7,6 +7,7 @@ import {
   InputLeftElement,
   InputRightElement,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -32,6 +33,7 @@ const FormSignUp = () => {
   const handleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
   const { signup, error, isLoading } = useSignup();
+  const { colorMode } = useColorMode();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,12 +50,13 @@ const FormSignUp = () => {
     <Flex
       direction="column"
       justifyContent="space-evenly"
-      alignItems="center"
+      padding={constants.padding.kPaddingValue * 3}
+      // alignItems="center"
       h="100%"
     >
       <form onSubmit={handleSubmit}>
         <FormControl isInvalid={checkEmail("email")}>
-          <InputGroup mt={5}>
+          <InputGroup mt={5} w={"100%"}>
             <InputLeftElement
               pointerEvents="none"
               mt={1}
@@ -67,7 +70,9 @@ const FormSignUp = () => {
               placeholder="Enter your email"
               size={"lg"}
               type="email"
-              w={"25vw"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"100%"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}
@@ -91,7 +96,9 @@ const FormSignUp = () => {
               placeholder="Enter your password"
               size={"lg"}
               type={showPassword ? "text" : "password"}
-              w={"25vw"}
+              w={"100%"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               onChange={(event) => setPassword(event.currentTarget.value)}
@@ -124,7 +131,9 @@ const FormSignUp = () => {
               paddingLeft={constants.padding.kPaddingValue * 2}
               variant="filled"
               size={"lg"}
-              w={"25vw"}
+              w={"100%"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               onChange={(event) =>
@@ -158,7 +167,9 @@ const FormSignUp = () => {
               placeholder="Enter your pseudo"
               size={"lg"}
               type="text"
-              w={"25vw"}
+              w={"100%"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}

@@ -4,10 +4,11 @@ import constants from "../../../utils/constants.js";
 import theme from "../../../utils/theme.js";
 import LeftSide from "./components/LeftSide.js";
 import RightSide from "./components/RightSide.js";
-import { useColorMode } from "@chakra-ui/react";
+import { useColorMode, useMediaQuery } from "@chakra-ui/react";
 
 const SignIn = () => {
   const { colorMode } = useColorMode();
+  const [isWeb] = useMediaQuery("(min-width: 1200px)");
 
   return (
     <Center h={"100vh"} bg={theme.colors.backgroundColor}>
@@ -21,7 +22,7 @@ const SignIn = () => {
       >
         <Flex color="white" h="100%">
           <LeftSide />
-          <RightSide />
+          {isWeb && <RightSide />}
         </Flex>
       </Box>
     </Center>

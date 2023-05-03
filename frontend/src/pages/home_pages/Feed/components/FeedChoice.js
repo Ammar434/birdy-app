@@ -1,18 +1,26 @@
 import React from "react";
-import Feed from "./Feed";
+
 import Profil from "./Profil";
+import Feed from "./Feed";
 import Messages from "./Messages";
 import Notification from "./Notification";
 
 const FeedChoice = ({ selectedComponent }) => {
-  return (
-    <>
-      {selectedComponent === "Home" && <Feed />}
-      {selectedComponent === "Profil" && <Profil />}
-      {selectedComponent === "Messages" && <Messages />}
-      {selectedComponent === "Notification" && <Notification />}
-    </>
-  );
+  const renderComponent = () => {
+    switch (selectedComponent) {
+      case "Home":
+        return <Feed />;
+      case "Profil":
+        return <Profil />;
+      case "Messages":
+        return <Messages />;
+      case "Notification":
+        return <Notification />;
+      default:
+        return <Feed />;
+    }
+  };
+  return <>{renderComponent()}</>;
 };
 
 export default FeedChoice;

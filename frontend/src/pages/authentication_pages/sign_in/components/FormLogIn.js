@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   Checkbox,
   Flex,
   FormControl,
@@ -10,6 +11,7 @@ import {
   Link,
   Stack,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -32,6 +34,7 @@ const FormLogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
   const { login, error, isLoading } = useLogin();
+  const { colorMode } = useColorMode();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,7 +45,8 @@ const FormLogIn = () => {
     <Flex
       direction="column"
       justifyContent="space-evenly"
-      alignItems="center"
+      padding={constants.padding.kPaddingValue * 3}
+      // alignItems="center"
       h="100%"
     >
       <form onSubmit={handleSubmit}>
@@ -64,7 +68,9 @@ const FormLogIn = () => {
               placeholder="Enter your email"
               size={"lg"}
               type={"email"}
-              w={"25vw"}
+              w={"100%"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}
@@ -89,7 +95,9 @@ const FormLogIn = () => {
               placeholder="Enter your password"
               size={"lg"}
               type={showPassword ? "text" : "password"}
-              w={"25vw"}
+              w={"100%"}
+              color={colorMode === "light" ? "black" : "white"}
+              // w={"25vw"}
               // color={"black"}
               borderRadius={constants.radius.kRadius}
               onChange={(event) => setPassword(event.currentTarget.value)}
@@ -146,9 +154,11 @@ const FormLogIn = () => {
         </Button>
 
         {error && (
-          <Text color={"red"} mt={3}>
-            {error}
-          </Text>
+          <Center>
+            <Text color={"red"} mt={3}>
+              {error}
+            </Text>
+          </Center>
         )}
       </form>
     </Flex>
