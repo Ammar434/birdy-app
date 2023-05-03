@@ -2,26 +2,26 @@ const express = require("express");
 const router = express.Router();
 const {
   loginUser,
-  signUpUser, 
+  signUpUser,
   getPseudoById,
-  getListFollowing, 
-  getListFollower, 
-  addFollowing, 
-  removeFollowing, 
-  getUserById, 
+  getListFollowing,
+  getListFollower,
+  addFollowing,
+  removeFollowing,
+  getUserById,
   resetPassword,
-  listUsers, 
-  getIdByEmail
-  } = require("../controllers/userController");
+  listUsers,
+  getIdByEmail,
+} = require("../controllers/userController");
 
-const{ 
-  newPost, 
-  likePost, 
+const {
+  newPost,
+  likePost,
   removelikePost,
-  deletePost, 
-  listPost, 
+  deletePost,
+  listPost,
   searchPostsandFriends,
-  listPostAll
+  listPostAll,
 } = require("../controllers/postController");
 
 //UserController endpoints
@@ -32,7 +32,7 @@ router.post("/signup", signUpUser);
 
 router.post("/profil/getUserById", getUserById);
 
-router.post("/home/idUser", getIdByEmail); 
+router.post("/home/idUser", getIdByEmail);
 
 router.post("/profil/getPseudoById", getPseudoById);
 
@@ -46,7 +46,7 @@ router.post("/profil/addfollowing", addFollowing);
 
 router.post("/profil/removefollowing", removeFollowing);
 
-router.post("/listUser", listUsers); 
+router.post("/listUser", listUsers);
 
 //PostController endpoints
 
@@ -63,6 +63,5 @@ router.post("/home/likePost", likePost);
 router.post("/home/removelikePost", removelikePost);
 
 router.post("/home/searchPostsandFriends", searchPostsandFriends);
-
 
 module.exports = router;

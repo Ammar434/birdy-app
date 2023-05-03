@@ -86,7 +86,6 @@ userSchema.statics.findUserById = async function (id) {
   }
   const user = await this.findOne({ _id: id });
 
-  console.log("user trouvé", user);
   return user;
 };
 
@@ -104,7 +103,7 @@ userSchema.statics.listPost = async function (post) {
   const user = await this.findOne({ post });
 
   if (!user) {
-    throw Error("User not exists in our database");
+    throw Error("User does not exists in our database");
   }
 
   return user;
@@ -118,11 +117,17 @@ userSchema.statics.resetPassword = async function (
   let user = await this.findOne({ email });
 
   if (!user) {
-    throw Error("Email not exists in our database");
+    throw Error("Email does not exists in our database");
   }
 
-  if (!validator.isStrongPassword(newPassword)) {
+  if (!validator.isStrongPassword(previousPassword)) {
     throw Error("New Password is not strong enough");
+  }
+
+  const match = await bcrypt.compare(previousPassword, user.password);
+
+  if (!match) {
+    throw Error("Password is not correct");
   }
 
   const saltRounds = 10;
@@ -185,6 +190,11 @@ userSchema.statics.removeFollower = async function (user1Id, user2Id) {
 
 // user2ID ajoute à sa liste de   à l'identifiant user2Id de sa liste de following
 userSchema.statics.addFollowing = async function (user1Id, user2Id) {
+  // if ({_id : user1Id} = {_id : user2Id}){
+  //   console.log(user1Id)
+  //   console.log(user2Id)
+  //   throw Error("User cannot follow himself");
+  // }
   let user = await this.findOne({ _id: user2Id });
 
   if (!user) {
@@ -222,4 +232,40 @@ userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
   return user;
 };
 
+userSchema.statics.resetPassword = async function (
+  email,
+  previousPassword,
+  newPassword
+) {
+  let user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error("Email does not exists in our database");
+  }
+
+  if (!validator.isStrongPassword(previousPassword)) {
+    throw Error("New Password is not strong enough");
+  }
+
+  const match = await bcrypt.compare(previousPassword, user.password);
+
+  if (!match) {
+    throw Error("Password is not correct");
+  }
+
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(newPassword, salt);
+
+  const filter = { email };
+  const updateDoc = {
+    $set: {
+      password: hash,
+    },
+  };
+  await this.updateOne(filter, updateDoc);
+  user = await this.findOne({ email });
+
+  return user;
+};
 module.exports = mongoose.model("User", userSchema);

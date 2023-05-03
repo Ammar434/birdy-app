@@ -1,62 +1,129 @@
-import React, {useState, useEffect} from "react";
-import { Text, Box } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Button,
+  Divider,
+  SimpleGrid,
+} from "@chakra-ui/react";
 
-import { useUserInformation } from "../../../../hooks/useUserInformation.js";
+import Feed from "./Feed";
+import { useAuthContext } from "../../../../hooks/useAuthContext";
+
+const Profile = ({ username }) => {
+  const { user, pseudo, avatar, followers, following } = useAuthContext();
+  const [posts, setPosts] = useState([]);
+
+  const nbPost = user?.post?.length || 0;
 
 
+  return (
+    <Box
+    w="100%"
+    h="100%"
+    boxShadow="lg"
+    display="flex"
+    flexDirection="column"
+    gap={6}
+    borderRadius="xl"
+    justifyContent="start"
+    alignItems="center"
+    p={10}
+    css={{
+      "&::-webkit-scrollbar": {
+        width: "5px",
+        height: "5px",
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "transparent",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background:
+          "linear-gradient(90deg, rgba(174,3,216,1) 0%, rgba(227,13,135,1) 100%)",
+        borderRadius: "10px",
+        border: "solid 1px #dedede",
+      },
+    }}
+    overflow="auto"
+  >
+      <Grid
+        templateColumns="repeat(12, 1fr)"
+        gap={3}
+      >
+        <GridItem  colSpan={4} rowSpan={4} >
+          <Flex
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            h="100%"
+          >
+            <Image
+              borderRadius="full"
+              boxSize="200px"
+              src={avatar}
+            />
+            <Heading size="md" mt={5}>
+            {pseudo}
+            </Heading>
+            <Text fontSize="sm" color="gray.500">
+              {user?.email}
+            </Text>
 
-const Profil = () => { 
-  // [userInformation, setUserInformation] = useState(null);
-  // const pseudo = localStorage.getItem("user");
+          </Flex>
+        </GridItem>
+        <GridItem colSpan={8} rowSpan={4} >
+          <Flex
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+            h="100%"
+          >
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Posts
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {nbPost}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Followers
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {followers?.length || 0}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Following
+              </Text>
+              <Text fontSize="sm" color="gray.500">
+                {following?.length || 0}
+              </Text>
+            </Box>
+          </Flex>
+          <Divider mt={5} />
+          <SimpleGrid columns={3} spacing={5} mt={5}>
+            {posts.map((post) => (
+              <Box key={post.id}>
+                {/* <Post post={post} /> */}
+              </Box>
+            ))}
+          </SimpleGrid>
+        </GridItem>
+      </Grid>
 
-  // useEffect(() => {
-  //   const fetchUserInformation = async () => {
-  //     // Simulating a fetch request to get the user's information
-  //     const response = await fetch("h");
-  //     const data = await response.json();
-  //     setUserInformation(data);
-  //   };
 
-  //   fetchUserInformation();
-  // }, [pseudo]);
+    </Box>
 
-  // if (!userInformation) {
-  //   return <div>Loading user information...</div>;
-  // }
 
-    return (
-      <>
-      
-      <Box
-      w="full"
-      h="full"
-      justifyContent="center"
-      alignItems="start"
-      display="flex"
-      flexDirection="column">
-      
-        <Text fontSize={50}>  Profil </Text>      
-        <Text fontSize={20} color="gray"> User pseudo </Text>
-        {/* lists of follower from the backend */}
-        <Text fontSize={20} color="gray"> Followers </Text>
-        {/* lists of following from the backend */}
-        <Text fontSize={20} color="gray"> Following </Text>
-        {/* lists of post from the backend */}
-      </Box>
-
-      <Box 
-      w="full"
-      h="full"
-      justifyContent="center"
-      alignItems="start"
-      display="flex"
-      flexDirection="column">
-
-        <Text fontSize={50}> Posts </Text>
-        <Text fontSize={20} color="gray"> Posts </Text>
-      </Box>
-      </>
-    )
+  );
 };
 
-export default Profil;
+export default Profile;

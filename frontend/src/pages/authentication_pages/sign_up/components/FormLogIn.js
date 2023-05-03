@@ -7,7 +7,6 @@ import {
   InputLeftElement,
   InputRightElement,
   Text,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -21,7 +20,6 @@ import { FaUserGraduate } from "react-icons/fa";
 import { useState } from "react";
 import { useSignup } from "../../../../hooks/useSignUp.js";
 import constants from "../../../../utils/constants.js";
-import validator from "validator";
 
 const FormSignUp = () => {
   const [email, setEmail] = useState("");
@@ -34,49 +32,27 @@ const FormSignUp = () => {
   const handleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
   const { signup, error, isLoading } = useSignup();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signup(email, password, pseudo);
     // alert(`Email: ${email} & Password: ${password}`);
   };
-  const isEmailError = validator.isEmail(email) === false && email !== "";
 
-  const isPasswordError =
-    password !== "" &&
-    password !== confirmPassword &&
-    validator.isStrongPassword(password) === false;
-  const isPasswordConfirmError =
-    password !== confirmPassword && password !== "" && confirmPassword !== "";
-  const isPseudoError = pseudo !== "" && pseudo.length < 3;
-
-  const isError = isEmailError || isPasswordError || isPseudoError;
-
-  const [position, setPosition] = React.useState({ top: "50%", left: "50%" });
-
-  const getRandomPercentage = () => {
-    const min = 0;
-    const max = 90;
-    const r = Math.floor(Math.random() * (max - min + 1) + min);
-    console.log(r);
-    return `${r}%`;
+  const checkEmail = (value) => {
+    // console.log(value);
+    return false;
   };
 
-  const handleMouseEnter = () => {
-    if (isError === false) {
-      setPosition({ top: "5%" });
-    } else {
-      setPosition({ top: getRandomPercentage(), left: getRandomPercentage() });
-    }
-  };
   return (
     <Flex
       direction="column"
       justifyContent="space-evenly"
-      padding={constants.padding.kPaddingValue * 2}
-      // backgroundColor={"red"}
+      alignItems="center"
+      h="100%"
     >
       <form onSubmit={handleSubmit}>
-        <FormControl isInvalid={isEmailError}>
+        <FormControl isInvalid={checkEmail("email")}>
           <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
@@ -91,16 +67,16 @@ const FormSignUp = () => {
               placeholder="Enter your email"
               size={"lg"}
               type="email"
-              w={"100%"}
-              color={"black"}
+              w={"25vw"}
+              // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}
               onChange={(event) => setEmail(event.currentTarget.value)}
             />
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={isPasswordError}>
-          <InputGroup mt={5} w={"100%"}>
+        <FormControl isInvalid={checkEmail("email")}>
+          <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
               mt={1}
@@ -115,8 +91,8 @@ const FormSignUp = () => {
               placeholder="Enter your password"
               size={"lg"}
               type={showPassword ? "text" : "password"}
-              w={"100%"}
-              color={"black"}
+              w={"25vw"}
+              // color={"black"}
               borderRadius={constants.radius.kRadius}
               onChange={(event) => setPassword(event.currentTarget.value)}
             />
@@ -132,8 +108,8 @@ const FormSignUp = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={isPasswordConfirmError}>
-          <InputGroup mt={5} w={"100%"}>
+        <FormControl isInvalid={checkEmail("email")}>
+          <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
               mt={1}
@@ -143,13 +119,13 @@ const FormSignUp = () => {
               children={<AiFillLock />}
             />
             <Input
+              placeholder="Confirm your password"
+              type={showConfirmPassword ? "text" : "password"}
               paddingLeft={constants.padding.kPaddingValue * 2}
               variant="filled"
-              placeholder="Confirm your password"
               size={"lg"}
-              type={showConfirmPassword ? "text" : "password"}
-              w={"100%"}
-              color={"black"}
+              w={"25vw"}
+              // color={"black"}
               borderRadius={constants.radius.kRadius}
               onChange={(event) =>
                 setConfirmPassword(event.currentTarget.value)
@@ -167,7 +143,7 @@ const FormSignUp = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={isPseudoError}>
+        <FormControl isInvalid={checkEmail("email")}>
           <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
@@ -182,8 +158,8 @@ const FormSignUp = () => {
               placeholder="Enter your pseudo"
               size={"lg"}
               type="text"
-              w={"100%"}
-              color={"black"}
+              w={"25vw"}
+              // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}
               onChange={(event) => setPseudo(event.currentTarget.value)}
@@ -191,36 +167,23 @@ const FormSignUp = () => {
           </InputGroup>
         </FormControl>
 
-        <Flex
-          position="relative"
-          width="100%"
-          // height="300px"
-          padding="10px"
-          // alignItems="center"
-          justifyContent="center"
+        <Button
+          type="submit"
+          width="full"
+          bg={"black"}
+          color="white"
+          borderColor={"purple.500"}
+          borderWidth="1px"
+          mt={constants.padding.kPaddingValue}
+          size={"lg"}
+          borderRadius={constants.radius.kRadius}
+          // colorScheme={"purple"}
+          colorScheme={"purple.500"}
+          isLoading={isLoading}
+          _hover={{ background: "purple.500" }}
         >
-          <Button
-            type="submit"
-            bg="black"
-            color="white"
-            width={"30%"}
-            borderColor={"purple.500"}
-            borderWidth="1px"
-            mt={constants.padding.kPaddingValue}
-            size={"lg"}
-            borderRadius={constants.radius.kRadius}
-            colorScheme={"purple.500"}
-            isLoading={isLoading}
-            _hover={{ background: "purple.500" }}
-            position="absolute"
-            top={position.top}
-            left={position.left}
-            onMouseEnter={handleMouseEnter}
-          >
-            Se connecter
-          </Button>
-        </Flex>
-
+          Sign Up
+        </Button>
         {error && (
           <Text color={"red"} mt={3}>
             {error}

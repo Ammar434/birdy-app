@@ -5,10 +5,7 @@ import TweetList from "./TweetList";
 import usePosts from "../../../../hooks/usePost";
 
 const Feed = () => {
-
-    const posts = usePosts(); 
-
-
+  const { posts, refreshPosts } = usePosts();
   return (
     <Box
       w="100%"
@@ -38,14 +35,13 @@ const Feed = () => {
       }}
       overflow="auto"
     >
-      {/* <TweetBox addPost={addPost} /> */}
-      <TweetBox />
+      <TweetBox refreshPosts={refreshPosts} />
 
-      {posts.map((post) => (
-        <TweetList key={post._id} post={post} />
-      ))}
+      {posts.map((post) => {
+        return <TweetList key={post._id} post={post} />;
+      })}
     </Box>
   );
 };
 
-export default Feed;
+export default React.memo(Feed);

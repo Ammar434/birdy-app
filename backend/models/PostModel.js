@@ -85,7 +85,6 @@ postSchema.statics.removeLike = async function (postId, userId) {
 postSchema.statics.listPosts = async function(userId) {
   const userPosts = await this.find({ author: userId }).populate('author', 'pseudo');
   if (!userPosts) {
-    console.log("pas de post pour cet utilisateur")
     throw new Error("Posts not found");
   }
     // On récupère le contenu et l'auteur de chaque post, et on les ajoute à un objet qui sera retourné

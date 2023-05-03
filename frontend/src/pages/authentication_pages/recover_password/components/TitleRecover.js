@@ -1,13 +1,14 @@
-import { Center, GridItem, Text } from "@chakra-ui/react";
+import { Center, GridItem, Text, useColorMode } from "@chakra-ui/react";
 
 const TitleRecover = () => {
+  const { colorMode } = useColorMode();
   return (
     <GridItem w="100%">
       <Center height={"100%"}>
         <Text
           fontSize={"5xl"}
           fontWeight={"bold"}
-          color={"black"}
+          color={colorMode === "light" ? "black" : "white"}
           textAlign={"center"}
         >
           Hey, did someone forget their password? 🥲

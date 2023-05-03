@@ -9,25 +9,21 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import { useAddPost } from "../../../../hooks/useAddPost";
 
-
-
-const TweetBox = () => {
-  //get the email from the localStorage 
+const TweetBox = ({ refreshPosts }) => {
+  //get the email from the localStorage
   const user = JSON.parse(localStorage.getItem("user"));
-  const {email} = user;  
+  const { email } = user;
   const [text, setText] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(280);
   const [addPost, isLoading] = useAddPost();
-  const [userId, setUserId] = useState('');
-  const [refresh, setRefresh] = useState(false);
-
+  const [userId, setUserId] = useState("");
 
   const getUserId = async (email) => {
     try {
-      const response = await fetch('/api/user/home/idUser', {
-        method: 'POST',
+      const response = await fetch("/api/user/home/idUser", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
@@ -38,9 +34,7 @@ const TweetBox = () => {
       console.error(error);
     }
   };
-  
 
-  
   const handleTextChange = (event) => {
     const tweetText = event.target.value;
     setText(tweetText);
@@ -48,14 +42,13 @@ const TweetBox = () => {
     setCharactersLeft(280 - tweetText.length);
   };
 
- 
+  //TODO : cree un useEffect permettant de rafrachir la page apres l'envoi du tweet
+
   const handleSubmit = (e) => {
     e.preventDefault();
     addPost({ content: text, userId });
-    setText('');
-    setRefresh(true);
-    //REFLECHIR A UNE AUTRE SOLUTION CAR TROP LOURD DE TOUJOURS RECHARGER LA PAGE 
-    window.location.reload();
+    refreshPosts();
+    setText("");
   };
 
   const bg = useColorModeValue("white", "gray.900");
@@ -98,7 +91,6 @@ const TweetBox = () => {
           <IconButton
             type="submit"
             onClick={handleSubmit}
-            isLoading={refresh}
             aria-label="Tweet"
             icon={<AddIcon />}
             bgGradient="linear(to-r, purple.400, pink.400)"
@@ -111,8 +103,6 @@ const TweetBox = () => {
             }}
             isDisabled={text.length === 0 || text.length > 280 || isLoading}
           />
-
-
         </Flex>
       </form>
     </Flex>

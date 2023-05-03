@@ -8,11 +8,11 @@ import TitleLogIn from "./TitleLogIn.js";
 
 const LeftSide = () => {
   return (
-    <Box flex="1" w="100%">
+    <Box flex="1">
       <Grid
         h={"100%"}
         gap={constants.padding.kSmallPaddingValue}
-        // margin={100}
+        paddingY={100}
       >
         <TitleLogIn />
         <FormLogIn />

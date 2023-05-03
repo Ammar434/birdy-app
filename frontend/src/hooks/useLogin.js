@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuthContext } from "./useAuthContext";
-import { ROOT } from "../routes.js";
+import { HOME, MAIN_PAGE, ROOT } from "../routes.js";
+import { GiRobotAntennas } from "react-icons/gi";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -13,7 +14,6 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

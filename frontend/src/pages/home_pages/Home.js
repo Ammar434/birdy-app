@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import { useColorMode } from "@chakra-ui/react";
+import React, { useState, useContext, useEffect } from "react";
+import { useColorMode, CircularProgress } from "@chakra-ui/react";
 import theme from "../../utils/theme";
 
 import Navigation from "./LeftSideBar/components/Navigation";
 import Main from "./Feed/Main";
 import RightSideBar from "./RightSideBar/RightSideBar";
 
-
 import { HStack, Flex } from "@chakra-ui/react";
-
+import { AuthContext } from "../../context/AuthContext";
 
 const Home = () => {
-  // Prend le isAuthentificated en paramétre. Si le user  est authentifier, alors on peut le faire entre dans la page home 
-  // Sinon, on le redirige vers la page de connexion.
-  const [isAuthentificated, setIsAuthentificated] = useState(false);
-  const {colorMode, toggleColorMode } = useColorMode();
-  const [selectedComponent, setSelectedComponent] = useState("Feed");
+  const { colorMode } = useColorMode();
+  const [selectedComponent, setSelectedComponent] = useState("Home");
+  const { refreshUserData, user, isLoading } = useContext(AuthContext);
 
+  useEffect(() => {
+    refreshUserData();
+  }, []);
+  if (isLoading) return <div>Loading...</div>;
 
   function updateSelectedComponent(newValue) {
     setSelectedComponent(newValue);
   }
-
   return (
     <HStack w="full" h="100vh" bg={theme.colors.backgroundColor} padding={10}>
-    <Flex
+      <Flex
         as="menu"
         w="full"
         h="full"
@@ -34,46 +34,42 @@ const Home = () => {
         padding={6}
         flexDirection="column"
         justifyContent="flex-start"
-        borderRadius="3xl">
-
-        <Navigation selectedComponent={selectedComponent} updateSelectedComponent={updateSelectedComponent} />
-
-    </Flex>
-
-    <Flex 
+        borderRadius="3xl"
+      >
+        <>{user.pseudo + " " + user.email}</>
+        <Navigation
+          selectedComponent={selectedComponent}
+          updateSelectedComponent={updateSelectedComponent}
+        />
+      </Flex>{" "}
+      <Flex
         bg={colorMode === "light" ? "white" : "black"}
-        w="full" 
+        w="full"
         h="full"
         padding={9}
-        alignItems="center" 
-        justifyContent="flex-start" 
-        flexDirection="column" 
-        position="relative" 
-        borderRadius="3xl">
-        
+        alignItems="center"
+        justifyContent="flex-start"
+        flexDirection="column"
+        position="relative"
+        borderRadius="3xl"
+      >
         <Main selectedComponent={selectedComponent} />
-
-
-    </Flex>
-
-    <Flex 
-        w="full" 
+      </Flex>
+      <Flex
+        w="full"
         h="full"
         maxW={350}
         bg={colorMode === "light" ? "white" : "black"}
         padding={6}
-        alignItems="center" 
-        justifyContent="center" 
-        flexDirection="column" 
-        position="relative" 
-        borderRadius="3xl">
-
-       <RightSideBar/>
-
-    </Flex>
-
-  </HStack>
-   
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        position="relative"
+        borderRadius="3xl"
+      >
+        <RightSideBar />
+      </Flex>
+    </HStack>
   );
 };
 
