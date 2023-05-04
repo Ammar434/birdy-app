@@ -1,27 +1,30 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useColorMode, CircularProgress } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useColorMode } from "@chakra-ui/react";
 import theme from "../../utils/theme";
 
 import Navigation from "./LeftSideBar/components/Navigation";
 import Main from "./Feed/Main";
 import RightSideBar from "./RightSideBar/RightSideBar";
 
-import { HStack, Flex } from "@chakra-ui/react";
-import { AuthContext } from "../../context/AuthContext";
+import { HStack, Flex, Center, Text } from "@chakra-ui/react";
+import { useUserContext } from "../../hooks/useUserContext";
 
 const Home = () => {
   const { colorMode } = useColorMode();
   const [selectedComponent, setSelectedComponent] = useState("Home");
-  const { refreshUserData, user, isLoading } = useContext(AuthContext);
+  const { currentUser, isLoading } = useUserContext();
 
-  useEffect(() => {
-    refreshUserData();
-  }, []);
-  if (isLoading) return <div>Loading...</div>;
+  const updateSelectedComponent = (component) => {
+    setSelectedComponent(component);
+  };
 
-  function updateSelectedComponent(newValue) {
-    setSelectedComponent(newValue);
-  }
+  if (isLoading)
+    return (
+      <Center>
+        <Text>Loading...</Text>
+      </Center>
+    );
+
   return (
     <HStack w="full" h="100vh" bg={theme.colors.backgroundColor} padding={10}>
       <Flex
@@ -36,12 +39,12 @@ const Home = () => {
         justifyContent="flex-start"
         borderRadius="3xl"
       >
-        <>{user.pseudo + " " + user.email}</>
         <Navigation
           selectedComponent={selectedComponent}
           updateSelectedComponent={updateSelectedComponent}
         />
-      </Flex>{" "}
+      </Flex>
+
       <Flex
         bg={colorMode === "light" ? "white" : "black"}
         w="full"
@@ -55,6 +58,7 @@ const Home = () => {
       >
         <Main selectedComponent={selectedComponent} />
       </Flex>
+
       <Flex
         w="full"
         h="full"

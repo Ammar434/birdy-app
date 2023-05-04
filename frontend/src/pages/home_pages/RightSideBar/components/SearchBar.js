@@ -1,9 +1,11 @@
 import { InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
-import { Box, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Box, Input, useColorMode } from "@chakra-ui/react";
+import React from "react";
 
 const SearchBar = ({ search, setSearch }) => {
+  const { colorMode } = useColorMode();
+
   const handleChange = (event) => {
     setSearch(event.target.value);
   };
@@ -26,20 +28,15 @@ const SearchBar = ({ search, setSearch }) => {
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
-          children={<MdSearch mr="4" fontSize="16" />}
+          children={<MdSearch mr="4" fontSize="16" color="grey" />}
         />
         <Input
           type="text"
           value={search}
           onChange={handleChange}
-          bg="white"
+          bg={colorMode === "light" ? "white" : "black"}
           alignItems="center"
           borderRadius="3xl"
-          _hover={{
-            bg: "white",
-            color: "purple",
-            borderColor: "purple.100",
-          }}
         />
       </InputGroup>
     </Box>

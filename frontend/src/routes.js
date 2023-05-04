@@ -6,10 +6,12 @@ import SignUp from "./pages/authentication_pages/sign_up/SignUp";
 import RecoverPassword from "./pages/authentication_pages/recover_password/RecoverPassword";
 import Home from "./pages/home_pages/Home";
 import RecoverPasswordSuccess from "./pages/authentication_pages/recover_password/RecoverPasswordSuccess";
+import SignUpSuccess from "./pages/authentication_pages/sign_up/SignUpSuccess.js";
 
 export const ROOT = "/";
 export const LOGIN = "/signIn";
 export const REGISTER = "/signUp";
+export const REGISTER_SUCCRESS = "/signUp-success";
 export const RECOVER_PASSWORD = "/recover-password";
 export const RECOVER_PASSWORD_SUCCESS = "/recover-password-success";
 
@@ -22,7 +24,7 @@ export const router = createBrowserRouter([
   { path: REGISTER, element: <SignUp /> },
   { path: RECOVER_PASSWORD, element: <RecoverPassword /> },
   { path: RECOVER_PASSWORD_SUCCESS, element: <RecoverPasswordSuccess /> },
-
+  { path: REGISTER_SUCCRESS, element: <SignUpSuccess /> },
   { path: HOME, element: <Home /> },
   {
     path: PROTECTED,

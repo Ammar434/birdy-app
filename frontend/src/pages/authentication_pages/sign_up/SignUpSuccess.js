@@ -1,9 +1,9 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LOGIN, ROOT } from "../../../routes.js";
+import { ROOT } from "../../../routes.js";
 
-const RecoverPasswordSuccess = () => {
+const SignUpSuccess = () => {
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate(ROOT);
@@ -19,14 +19,14 @@ const RecoverPasswordSuccess = () => {
       flexDirection="column"
     >
       <Heading color="text" mb={4}>
-        Password Reset Successful
+        Success, Welcome in 👋
       </Heading>
       <Text color="text" fontSize="xl" textAlign="center" mb={6}>
-        Your password has been reset successfully.
+        Your account has been created successfully.
       </Text>
-      <Button onClick={navigateToLogin}>Go to Login</Button>
+      <Button onClick={navigateToLogin}>Explore</Button>
     </Box>
   );
 };
 
-export default RecoverPasswordSuccess;
+export default SignUpSuccess;

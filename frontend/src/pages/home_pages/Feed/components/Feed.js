@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
-import usePosts from "../../../../hooks/usePost";
+import usePosts from "../../../../hooks/usePost.js";
+import useToggleLike from "../../../../hooks/useToggleLike";
 
 const Feed = () => {
-  const { posts, refreshPosts } = usePosts();
+  const { posts, isLoading, refreshPosts } = usePosts();
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <Box
       w="100%"
@@ -37,11 +41,11 @@ const Feed = () => {
     >
       <TweetBox refreshPosts={refreshPosts} />
 
-      {posts.map((post) => {
-        return <TweetList key={post._id} post={post} />;
-      })}
+      {posts.map((post) => (
+        <TweetList key={`${post._id}`} post={post} />
+      ))}
     </Box>
   );
 };
 
-export default React.memo(Feed);
+export default Feed;

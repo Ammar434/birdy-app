@@ -1,12 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import SearchBar from "./components/SearchBar";
 import Actualite from "./components/Actualite";
 import { useState } from "react";
-import { useAuthContext } from "../../../hooks/useAuthContext.js";
 import { useSearch } from "../../../hooks/useSearch";
-import useFetchUsers from "../../../hooks/useFetchUsers";
-import { useEffect } from "react";
 
 const RightSideBar = () => {
   const [search, setSearch] = useState("");

@@ -17,7 +17,6 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-
 import { Link as RouterLink } from "react-router-dom";
 
 import { GiWireframeGlobe } from "react-icons/gi";
@@ -25,7 +24,7 @@ import { MdHome, MdMessage, MdOutlineLogout } from "react-icons/md";
 
 import NavItem from "./NavItem";
 import { useLogout } from "../../../../hooks/useLogout.js";
-import { useAuthContext } from "../../../../hooks/useAuthContext";
+import { useUserContext } from "../../../../hooks/useUserContext";
 
 export const LinkItems = [
   { id: 1, name: "Home", icon: MdHome },
@@ -35,9 +34,12 @@ export const LinkItems = [
 
 const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
   const { logout } = useLogout();
-  const { pseudo, avatar } = useAuthContext();
-  
+  const { currentUser, isLoading } = useUserContext();
+  console.log(currentUser.avatar);
+  const avatar = currentUser.avatar;
+  const pseudo = currentUser.pseudo;
 
+  // console.log(currentUser);
   const handleClick = (newComponent) => {
     updateSelectedComponent(newComponent);
   };
@@ -82,19 +84,13 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
             variant="link"
             cursor="pointer"
           >
-            <Avatar
-              size="sm"
-              src={avatar}
-            />
+            <Avatar size="sm" src={avatar} />
           </MenuButton>
           {/* Le menu */}
           <MenuList alignItems="center" color="black">
             <br />
             <Center>
-              <Avatar
-                size="2xl"
-                src={avatar}
-                />
+              <Avatar size="2xl" src={avatar} />
             </Center>
             <br />
             <Center>

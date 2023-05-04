@@ -1,31 +1,27 @@
-import {
-  Box,
-  Text,
-  IconButton,
-  Avatar,
-  Spacer,
-  Flex,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Text, Avatar, Spacer, Flex, Button } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 
 import { formatDistanceToNow, format } from "date-fns";
-// import { useAuthContext } from "../../../../hooks/useAuthContext";
+import { useUserContext } from "../../../../hooks/useUserContext";
+import useToggleLike from "../../../../hooks/useToggleLike";
+import { useEffect } from "react";
 
 const TweetList = ({ post }) => {
-  const { author, content, dateCreated, like, likedBy } = post;
-  // const { user, pseudo, avatar, dispatch } = useAuthContext();
-  // const id = author._id;
-  if (!author) return <div>Loading </div>;
-  // console.log(author._id);
+  const { currentUser } = useUserContext();
 
-  const handleLikeClick = () => {
-    //TODO : interaction avec le backend, quand au click ajout d'un like dans le post
-  };
+  const { likeCount, isLiked, toggleLike } = useToggleLike({
+    postId: post._id,
+    userId: currentUser._id,
+    initialLike: post.like.includes(currentUser._id),
+    initialLikeCount: post.like.length,
+  });
 
-  // const isLiked = likedBy.includes(author.id);
-  const isLiked = false;
+  useEffect(() => {}, [post.like.length]);
 
+  const authorId = post.author._id;
+  const authorPseudo = post.author.pseudo;
+  const content = post.content;
+  const dateCreated = post.dateCreated;
   const now = new Date();
   const createdDate = new Date(dateCreated);
   let timeAgo;
@@ -48,8 +44,8 @@ const TweetList = ({ post }) => {
       p={10}
     >
       <Flex alignItems="center" mb={5}>
-        <Avatar src={`https://api.multiavatar.com/${author._id}.svg`} mr={3} />
-        <Text fontWeight="bold">{author.pseudo}</Text>
+        {/* <Avatar src={`https://api.multiavatar.com/${authorId}.svg`} mr={3} /> */}
+        <Text fontWeight="bold">{authorPseudo}</Text>
         <Spacer />
         <Text fontSize="sm" color="gray.500">
           {timeAgo}
@@ -58,22 +54,12 @@ const TweetList = ({ post }) => {
       <Text>{content}</Text>
       <Flex alignItems="center" mt={5}>
         <Button
-          leftIcon={<FaHeart />}
-          colorScheme={isLiked ? "red" : "gray"}
-          onClick={handleLikeClick}
-          mr={3}
-          disabled={isLiked}
+          leftIcon={<FaHeart color={isLiked ? "red" : "gray"} />}
+          onClick={toggleLike}
+          mt={3}
         >
-          {like.length} Likes
+          {likeCount} Likes
         </Button>
-        {isLiked && (
-          <IconButton
-            icon={<FaHeart />}
-            colorScheme="red"
-            aria-label="Liked"
-            disabled
-          />
-        )}
       </Flex>
     </Box>
   );

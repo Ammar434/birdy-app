@@ -32,10 +32,7 @@ export const useLogin = () => {
       // update the auth context
       dispatch({ type: "LOGIN", payload: json });
 
-      // update loading state
       setIsLoading(false);
-      navigate(ROOT);
-      //initially it was set to navigate("/ROOT") but it was not working
     } else {
       console.log("erreur");
     }

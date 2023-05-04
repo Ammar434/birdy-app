@@ -1,13 +1,4 @@
-import { AuthContext } from "../context/AuthContext";
-import { useContext, useEffect } from "react";
-
 export const useFollowing = () => {
-  const { refreshUserData } = useContext(AuthContext);
-
-  useEffect(() => {
-    refreshUserData();
-  }, []);
-
   const handleFollow = async (user1Id, user2Id) => {
     try {
       const response = await fetch("/api/user/profil/addfollowing", {

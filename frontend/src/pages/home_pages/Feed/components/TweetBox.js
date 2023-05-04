@@ -8,45 +8,26 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useAddPost } from "../../../../hooks/useAddPost";
+import { useUserContext } from "../../../../hooks/useUserContext";
 
 const TweetBox = ({ refreshPosts }) => {
-  //get the email from the localStorage
-  const user = JSON.parse(localStorage.getItem("user"));
-  const { email } = user;
+  const { currentUser } = useUserContext();
+
+  const userId = currentUser._id;
   const [text, setText] = useState("");
   const [charactersLeft, setCharactersLeft] = useState(280);
   const [addPost, isLoading] = useAddPost();
-  const [userId, setUserId] = useState("");
-
-  const getUserId = async (email) => {
-    try {
-      const response = await fetch("/api/user/home/idUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      const userId = data.user;
-      setUserId(userId);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleTextChange = (event) => {
     const tweetText = event.target.value;
     setText(tweetText);
-    getUserId(email);
     setCharactersLeft(280 - tweetText.length);
   };
 
-  //TODO : cree un useEffect permettant de rafrachir la page apres l'envoi du tweet
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addPost({ content: text, userId });
+    const newPost = await addPost({ content: text, userId });
+    console.log(newPost);
     refreshPosts();
     setText("");
   };

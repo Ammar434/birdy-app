@@ -5,151 +5,136 @@ const Schema = mongoose.Schema;
 
 //OK
 const postSchema = new Schema({
-    content: { type: String, required: true },
-    like: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    dateCreated: { type: Date, default: Date.now }, 
-    author: { type: Schema.Types.ObjectId, ref: "User" }, 
+  content: { type: String, required: true },
+  like: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  dateCreated: { type: Date, default: Date.now },
+  author: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 postSchema.statics.listPostsAll = async function () {
-    const posts = await this.find().populate("author").populate("like").populate("likedBy");  
-    return posts;
+  const posts = await this.find().populate("author");
+  return posts;
 };
 
-
 //OK
-//add a post 
-postSchema.statics.addPost = async function(content, userId) {
-    // Créer un nouveau document Post
-    const newPost = new this({
-      content: content,
-      author: userId,
-    });
-    
-    // Enregistrer le document Post dans la collection posts
-    await newPost.save();
-  
-    // Ajouter la référence au document Post au champ post de l'utilisateur
-    await User.updateOne(
-      { _id: userId },
-      { $push: { post: newPost._id } }
-    );
-  
-    return newPost;
+//add a post
+postSchema.statics.addPost = async function (content, userId) {
+  // Créer un nouveau document Post
+  const newPost = new this({
+    content: content,
+    author: userId,
+  });
+
+  // Enregistrer le document Post dans la collection posts
+  await newPost.save();
+
+  // Ajouter la référence au document Post au champ post de l'utilisateur
+  await User.updateOne({ _id: userId }, { $push: { post: newPost._id } });
+
+  return newPost;
 };
 
 //OK mais des fois lent
 //Like a post
 postSchema.statics.likePost = async function (postId, userId) {
-    const post = await this.findById(postId); 
-    
-    if (!post) {
-        throw new Error("Post not found");
-    }
-    //Rajouter un like au post correspondant
-    // Ne permet pas à un utilisateur de liker plusieurs fois le même post
-    const hasLiked = post.like.includes(userId);
-    if (hasLiked) {
-      throw new Error("Post already liked by user");
-    }
-    post.like.push(userId);
-    await post.save();
-    return post;
-};
+  const post = await this.findOneAndUpdate(
+    { _id: postId, like: { $ne: userId } },
+    { $push: { like: userId } },
+    { new: true }
+  );
 
-
-
-//A TESTER
-//remove a like
-postSchema.statics.removeLike = async function (postId, userId) {
-  const post = await this.findById(postId);
-  
   if (!post) {
-    throw new Error("Post not found");
+    throw new Error("Post not found or already liked by user");
   }
-  // Supprimer un like d'un post correspondant
-  // Ne permet pas à un utilisateur de retirer un like s'il n'a pas déjà aimé le post
-  const hasLiked = post.like.includes(userId);
-  if (!hasLiked) {
-    throw new Error("User has not liked the post");
-  }
-  post.like.pull(userId);
-  await post.save();
+
   return post;
 };
 
+postSchema.statics.removeLike = async function (postId, userId) {
+  const post = await this.findOneAndUpdate(
+    { _id: postId, like: userId },
+    { $pull: { like: userId } },
+    { new: true }
+  );
+
+  if (!post) {
+    throw new Error("Post not found or user has not liked the post");
+  }
+
+  return post;
+};
 
 //OK
-//post de l'ulisateur avec son contenue 
-postSchema.statics.listPosts = async function(userId) {
-  const userPosts = await this.find({ author: userId }).populate('author', 'pseudo');
+//post de l'ulisateur avec son contenue
+postSchema.statics.listPosts = async function (userId) {
+  const userPosts = await this.find({ author: userId }).populate(
+    "author",
+    "pseudo"
+  );
   if (!userPosts) {
     throw new Error("Posts not found");
   }
-    // On récupère le contenu et l'auteur de chaque post, et on les ajoute à un objet qui sera retourné
-    const postsWithContentAndAuthor = userPosts.map(post => {
-      return {
-        content: post.content,
-        author: post.author.pseudo,
-        dateCreated: post.dateCreated,
-        like: post.like,
-        id: post.id,
-      };
-    });
-  
-    return postsWithContentAndAuthor;
+  // On récupère le contenu et l'auteur de chaque post, et on les ajoute à un objet qui sera retourné
+  const postsWithContentAndAuthor = userPosts.map((post) => {
+    return {
+      content: post.content,
+      author: post.author.pseudo,
+      dateCreated: post.dateCreated,
+      like: post.like,
+      id: post.id,
+    };
+  });
 
+  return postsWithContentAndAuthor;
 };
 
 //OK
 // supprimer un post
 postSchema.statics.deletePost = async function (postId) {
-    const post = await this.findById(postId);
-    if (!post) {
-        throw new Error("Post not found");
-    }
-    await this.deleteOne({ _id: postId });
-    return post;
+  const post = await this.findById(postId);
+  if (!post) {
+    throw new Error("Post not found");
+  }
+  await this.deleteOne({ _id: postId });
+  return post;
 };
-
 
 //A TESTER
 //Recherche de post et d'amis
 postSchema.statics.searchAll = async function (query) {
-    try {
-      const posts = await this.find({
-        $or: [
-          { title: { $regex: query, $options: 'i' } },
-          { content: { $regex: query, $options: 'i' } },
-        ],
-      }).populate('author');
-  
-      const friends = await User.find({
-        $or: [
-          { pseudo: { $regex: query, $options: 'i' } },
-          { email: { $regex: query, $options: 'i' } },
-        ],
-      });
-  
-      const results = [...posts, ...friends];
-  
+  try {
+    const posts = await this.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+      ],
+    }).populate("author");
+
+    const friends = await User.find({
+      $or: [
+        { pseudo: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    const results = [...posts, ...friends];
+
     // Algorithme the pertinence des résultats de recherche
-    // a = les post et b = friends  
-        const sortedResults = results.sort((a, b) => {
-        const aScore = getRelevanceScore(a, query);
-        const bScore = getRelevanceScore(b, query);
-        return bScore - aScore;
-      });
-  
-      return sortedResults;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
+    // a = les post et b = friends
+    const sortedResults = results.sort((a, b) => {
+      const aScore = getRelevanceScore(a, query);
+      const bScore = getRelevanceScore(b, query);
+      return bScore - aScore;
+    });
 
+    return sortedResults;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
-//A TESTER 
+//A TESTER
 //Algorithme de pertinence basé sur un score pour les résultats de recherche
 const getRelevanceScore = (result, query) => {
   let score = 0;
@@ -172,13 +157,4 @@ const getRelevanceScore = (result, query) => {
   return score;
 };
 
-
-
 module.exports = mongoose.model("Post", postSchema);
-
-  
-
-
-
-
-

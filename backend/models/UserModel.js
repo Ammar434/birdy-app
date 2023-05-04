@@ -115,12 +115,12 @@ userSchema.statics.resetPassword = async function (
   newPassword
 ) {
   let user = await this.findOne({ email });
-
+  console.log(user);
   if (!user) {
     throw Error("Email does not exists in our database");
   }
 
-  if (!validator.isStrongPassword(previousPassword)) {
+  if (!validator.isStrongPassword(newPassword)) {
     throw Error("New Password is not strong enough");
   }
 
@@ -170,20 +170,22 @@ userSchema.statics.addFollower = async function (user1Id, user2Id) {
 // user1ID retire  à l'identifiant user2Id de sa liste de following
 
 userSchema.statics.removeFollower = async function (user1Id, user2Id) {
-  let user = await this.findOne({ _id: user1Id });
+  let user = await this.findOne({ _id: user2Id });
 
   if (!user) {
     throw Error("User not exists in our database");
   }
 
-  const filter = { _id: user1Id };
+  const filter = { _id: user2Id };
   const updateDoc = {
     $pull: {
-      following: user2Id,
+      follower: user1Id,
     },
   };
   await this.updateOne(filter, updateDoc);
   user = await this.findOne({ _id: user1Id });
+  console.log("first");
+  console.log(user);
 
   return user;
 };
@@ -214,16 +216,16 @@ userSchema.statics.addFollowing = async function (user1Id, user2Id) {
 };
 
 userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
-  let user = await this.findOne({ _id: user2Id });
+  let user = await this.findOne({ _id: user1Id });
 
   if (!user) {
     throw Error("User not exists in our database");
   }
 
-  const filter = { _id: user2Id };
+  const filter = { _id: user1Id };
   const updateDoc = {
     $pull: {
-      following: user1Id,
+      following: user2Id,
     },
   };
   await this.updateOne(filter, updateDoc);
@@ -232,40 +234,4 @@ userSchema.statics.removeFollowing = async function (user1Id, user2Id) {
   return user;
 };
 
-userSchema.statics.resetPassword = async function (
-  email,
-  previousPassword,
-  newPassword
-) {
-  let user = await this.findOne({ email });
-
-  if (!user) {
-    throw Error("Email does not exists in our database");
-  }
-
-  if (!validator.isStrongPassword(previousPassword)) {
-    throw Error("New Password is not strong enough");
-  }
-
-  const match = await bcrypt.compare(previousPassword, user.password);
-
-  if (!match) {
-    throw Error("Password is not correct");
-  }
-
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hash = await bcrypt.hash(newPassword, salt);
-
-  const filter = { email };
-  const updateDoc = {
-    $set: {
-      password: hash,
-    },
-  };
-  await this.updateOne(filter, updateDoc);
-  user = await this.findOne({ email });
-
-  return user;
-};
 module.exports = mongoose.model("User", userSchema);

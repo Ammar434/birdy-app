@@ -49,6 +49,7 @@ const FormLogIn = () => {
       navigate(RECOVER_PASSWORD_SUCCESS);
     }
   };
+
   const isNewPasswordError =
     validator.isStrongPassword(newPassword) === false && newPassword !== "";
   const isError = validator.isEmail(email) === false && email !== "";

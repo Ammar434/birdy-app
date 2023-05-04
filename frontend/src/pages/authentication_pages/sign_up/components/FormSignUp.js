@@ -21,7 +21,9 @@ import { FaUserGraduate } from "react-icons/fa";
 import { useState } from "react";
 import { useSignup } from "../../../../hooks/useSignUp.js";
 import constants from "../../../../utils/constants.js";
-
+import { useNavigate } from "react-router-dom";
+import validator from "validator";
+import { REGISTER_SUCCRESS } from "../../../../routes.js";
 const FormSignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,18 +36,43 @@ const FormSignUp = () => {
     setShowConfirmPassword(!showConfirmPassword);
   const { signup, error, isLoading } = useSignup();
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signup(email, password, pseudo);
+    if (!error) navigate(REGISTER_SUCCRESS);
     // alert(`Email: ${email} & Password: ${password}`);
   };
 
   const checkEmail = (value) => {
-    // console.log(value);
+    console.log(validator.isEmail(value));
+    if (validator.isEmail(value) === false && value !== "") {
+      return true;
+    }
     return false;
   };
 
+  const checkPassword = (value) => {
+    if (!validator.isStrongPassword(value) && value !== "") {
+      return true;
+    }
+    return false;
+  };
+
+  const checkConfirmPassword = (value) => {
+    if (value !== password && value !== "") {
+      return true;
+    }
+    return false;
+  };
+
+  const chechPseudo = (value) => {
+    if (value.length < 3 && value !== "") {
+      return true;
+    }
+    return false;
+  };
   return (
     <Flex
       direction="column"
@@ -55,7 +82,7 @@ const FormSignUp = () => {
       h="100%"
     >
       <form onSubmit={handleSubmit}>
-        <FormControl isInvalid={checkEmail("email")}>
+        <FormControl isInvalid={checkEmail(email)}>
           <InputGroup mt={5} w={"100%"}>
             <InputLeftElement
               pointerEvents="none"
@@ -71,16 +98,13 @@ const FormSignUp = () => {
               size={"lg"}
               type="email"
               color={colorMode === "light" ? "black" : "white"}
-              // w={"100%"}
-              // w={"25vw"}
-              // color={"black"}
               borderRadius={constants.radius.kRadius}
               paddingLeft={constants.padding.kPaddingValue * 2}
               onChange={(event) => setEmail(event.currentTarget.value)}
             />
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={checkEmail("email")}>
+        <FormControl isInvalid={checkPassword(password)}>
           <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
@@ -115,7 +139,8 @@ const FormSignUp = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={checkEmail("email")}>
+
+        <FormControl isInvalid={checkConfirmPassword(confirmPassword)}>
           <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
@@ -152,7 +177,7 @@ const FormSignUp = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <FormControl isInvalid={checkEmail("email")}>
+        <FormControl isInvalid={chechPseudo(pseudo)}>
           <InputGroup mt={5}>
             <InputLeftElement
               pointerEvents="none"
