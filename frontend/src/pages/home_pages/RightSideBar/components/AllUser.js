@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import UserTile from "./UserTile.js";
 import { useFollowing } from "../../../../hooks/useFollowing.js";
-import { useUserContext } from "../../../../hooks/useUserContext";
+import { useUserContext } from "../../../../hooks/useUserContext.js";
 
-const Actualite = ({ users }) => {
+const AllUser = ({ users }) => {
   const { currentUser, refreshUSer } = useUserContext();
   const { handleFollow, handleUnfollow } = useFollowing();
 
@@ -40,4 +40,4 @@ const Actualite = ({ users }) => {
   );
 };
 
-export default Actualite;
+export default AllUser;

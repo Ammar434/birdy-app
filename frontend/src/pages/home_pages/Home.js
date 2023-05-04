@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { useColorMode } from "@chakra-ui/react";
+import { Spinner, useColorMode } from "@chakra-ui/react";
 import theme from "../../utils/theme";
+
 
 import Navigation from "./LeftSideBar/components/Navigation";
 import Main from "./Feed/Main";
 import RightSideBar from "./RightSideBar/RightSideBar";
 
-import { HStack, Flex, Center, Text } from "@chakra-ui/react";
+import { HStack, Flex, Center } from "@chakra-ui/react";
 import { useUserContext } from "../../hooks/useUserContext";
 
 const Home = () => {
   const { colorMode } = useColorMode();
   const [selectedComponent, setSelectedComponent] = useState("Home");
-  const { currentUser, isLoading } = useUserContext();
+  const {isLoading } = useUserContext();
 
   const updateSelectedComponent = (component) => {
     setSelectedComponent(component);
@@ -21,7 +22,7 @@ const Home = () => {
   if (isLoading)
     return (
       <Center>
-        <Text>Loading...</Text>
+        <Spinner size="xl" />
       </Center>
     );
 

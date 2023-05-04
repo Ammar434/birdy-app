@@ -58,10 +58,10 @@ const newPost = async (req, res) => {
 //sortie JSON avec la suppression d'un post
 //Prends en paramètre l'id du post à supprimer et non l'id de l'utilisateur
 const deletePost = async (req, res) => {
-  const postId = req.body;
+  const postId = req.body.postId;
 
   try {
-    await Post.deletePost(postId._id);
+    await Post.deletePost(postId);
     res.status(200).json({ message: "Post supprimé" });
   } catch (error) {
     console.error(error);

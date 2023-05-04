@@ -97,6 +97,8 @@ postSchema.statics.deletePost = async function (postId) {
     throw new Error("Post not found");
   }
   await this.deleteOne({ _id: postId });
+  await User.updateOne({ _id: post.author }, { $pull: { post: postId } });
+  
   return post;
 };
 

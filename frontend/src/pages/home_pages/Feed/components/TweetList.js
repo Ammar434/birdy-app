@@ -1,13 +1,15 @@
-import { Box, Text, Avatar, Spacer, Flex, Button } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
+import { Box, Text, Avatar, IconButton, Spacer, Flex, Button } from "@chakra-ui/react";
+import { FaHeart, FaTrash } from "react-icons/fa";
 
 import { formatDistanceToNow, format } from "date-fns";
 import { useUserContext } from "../../../../hooks/useUserContext";
+import { useDeletePost } from "../../../../hooks/useDeletePost";
 import useToggleLike from "../../../../hooks/useToggleLike";
 import { useEffect } from "react";
 
-const TweetList = ({ post }) => {
+const TweetList = ({ post, refreshPosts }) => {
   const { currentUser } = useUserContext();
+  const { handleDeletePost } = useDeletePost();
 
   const { likeCount, isLiked, toggleLike } = useToggleLike({
     postId: post._id,
@@ -17,6 +19,11 @@ const TweetList = ({ post }) => {
   });
 
   useEffect(() => {}, [post.like.length]);
+
+  const handleSubmit = async (e) => {
+    handleDeletePost(post._id);
+    refreshPosts();
+  };
 
   const authorId = post.author._id;
   const authorPseudo = post.author.pseudo;
@@ -44,7 +51,7 @@ const TweetList = ({ post }) => {
       p={10}
     >
       <Flex alignItems="center" mb={5}>
-        {/* <Avatar src={`https://api.multiavatar.com/${authorId}.svg`} mr={3} /> */}
+        <Avatar src={`https://api.multiavatar.com/${authorId}.svg`} mr={3} />
         <Text fontWeight="bold">{authorPseudo}</Text>
         <Spacer />
         <Text fontSize="sm" color="gray.500">
@@ -52,7 +59,11 @@ const TweetList = ({ post }) => {
         </Text>
       </Flex>
       <Text>{content}</Text>
-      <Flex alignItems="center" mt={5}>
+      <Flex 
+        alignItems="center"
+        justifyContent="space-between"
+        mt={5}
+        >
         <Button
           leftIcon={<FaHeart color={isLiked ? "red" : "gray"} />}
           onClick={toggleLike}
@@ -60,6 +71,13 @@ const TweetList = ({ post }) => {
         >
           {likeCount} Likes
         </Button>
+        { authorId === currentUser._id && (
+        <IconButton
+        icon={<FaTrash />}
+        onClick={()=> handleSubmit()}
+      />
+      )}
+
       </Flex>
     </Box>
   );

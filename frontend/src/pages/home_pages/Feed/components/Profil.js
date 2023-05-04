@@ -13,7 +13,7 @@ import {
 import { useUserContext } from "../../../../hooks/useUserContext";
 import { useEffect } from "react";
 
-const Profile = ({ username }) => {
+const Profile = () => {
   const { currentUser, isLoading, refreshUSer } = useUserContext();
 
   useEffect(() => {

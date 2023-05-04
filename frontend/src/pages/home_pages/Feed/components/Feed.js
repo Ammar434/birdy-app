@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { Box } from "@chakra-ui/react";
+import React from "react";
+import { Box, Spinner } from "@chakra-ui/react";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
 import usePosts from "../../../../hooks/usePost.js";
-import useToggleLike from "../../../../hooks/useToggleLike";
 
 const Feed = () => {
   const { posts, isLoading, refreshPosts } = usePosts();
+  
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner size="xl" />;
 
   return (
     <Box
@@ -42,7 +42,7 @@ const Feed = () => {
       <TweetBox refreshPosts={refreshPosts} />
 
       {posts.map((post) => (
-        <TweetList key={`${post._id}`} post={post} />
+        <TweetList refreshPosts={refreshPosts} key={`${post._id}`} post={post} />
       ))}
     </Box>
   );

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import SearchBar from "./components/SearchBar";
-import Actualite from "./components/Actualite";
+import AllUser from "./components/AllUser";
 import { useState } from "react";
 import { useSearch } from "../../../hooks/useSearch";
 
@@ -18,7 +18,7 @@ const RightSideBar = () => {
       justifyContent="center"
     >
       <SearchBar search={search} setSearch={setSearch} />
-      <Actualite users={filteredUsers} />
+      <AllUser users={filteredUsers} />
     </Box>
   );
 };
