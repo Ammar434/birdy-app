@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const useToggleLike = ({ postId, userId, initialLike, initialLikeCount }) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount);
