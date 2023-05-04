@@ -14,6 +14,7 @@ import {
   MenuItem,
   MenuDivider,
   Button,
+  Image,
   Center,
 } from "@chakra-ui/react";
 
@@ -25,6 +26,7 @@ import { MdHome, MdMessage, MdOutlineLogout } from "react-icons/md";
 import NavItem from "./NavItem";
 import { useLogout } from "../../../../hooks/useLogout.js";
 import { useUserContext } from "../../../../hooks/useUserContext";
+import logo from "../../../../assets/logo.png";
 
 export const LinkItems = [
   { id: 1, name: "Home", icon: MdHome },
@@ -55,13 +57,14 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
       borderRadius="3xl"
     >
       {/* Ici le logo de l'app */}
-      <Flex h="100" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="5xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
 
-        <CloseButton display={{ base: "flex", md: "none" }} />
+
+      <Flex  h="16" mx="4" alignItems="center" >
+      <Image src={logo} alt="logo" boxSize="75px"/>
+      <Text fontSize="2xl" fontFamily="monospace">Birdy</Text>
+
       </Flex>
+
 
       <Flex
         align="center"
@@ -76,6 +79,7 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           color: "white",
         }}
       >
+
         {/* L'avatar */}
         <Menu>
           <MenuButton
