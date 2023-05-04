@@ -22,7 +22,7 @@ const AllUser = () => {
         const data = await response.json(); 
         const filteredUsers = user && user._id ? data.users.filter((userdata) => userdata._id !== user._id) : [];
         setusers(filteredUsers)
-        setIsLoading(false); // Une fois que toute les données sont récupérer, ont
+        setIsLoading(false); // Une fois que toute les données sont récupérer, ont retire le loading
 
       } catch (error) {
         console.error(error);
