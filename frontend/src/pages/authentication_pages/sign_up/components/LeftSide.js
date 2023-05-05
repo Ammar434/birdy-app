@@ -20,15 +20,21 @@ const LeftSide = () => {
   const { colorMode } = useColorMode();
 
   return (
-    <Box flex="1" w={"100%"}>
+    <Box flex="1">
       <Grid
         h={"100%"}
-        gap={constants.padding.kSmallPaddingValue}
+        w={"100%"}
+        // gap={constants.padding.kSmallPaddingValue}
         // paddingY={100}
       >
         <GridItem w="100%">
           <Center height={"100%"}>
-            <Text fontSize={"4xl"} fontWeight={"bold"} color={"black"}>
+            <Text
+              fontSize={"4xl"}
+              fontWeight={"bold"}
+              color={colorMode === "light" ? "black" : "white"}
+            >
+              {""}
               Welcome to Birdy 🐦
             </Text>
           </Center>

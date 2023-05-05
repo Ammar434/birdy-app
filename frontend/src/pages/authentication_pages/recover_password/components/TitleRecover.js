@@ -6,7 +6,7 @@ const TitleRecover = () => {
     <GridItem w="100%">
       <Center height={"100%"}>
         <Text
-          fontSize={"5xl"}
+          fontSize={"4xl"}
           fontWeight={"bold"}
           color={colorMode === "light" ? "black" : "white"}
           textAlign={"center"}

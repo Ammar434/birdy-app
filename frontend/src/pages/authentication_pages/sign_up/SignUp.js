@@ -15,12 +15,12 @@ const SignUp = () => {
       <Box
         bg={colorMode === "light" ? "white" : "black"}
         borderRadius={constants.radius.kRadius}
-        w="130vh"
-        h="80vh"
+        w="150vh"
+        // h="80vh"
         p={constants.padding.kSmallPaddingValue}
         color="red"
       >
-        <Flex color="white" h="100%">
+        <Flex h="100%">
           <LeftSide />
           {isWeb && <RightSide />}
         </Flex>
