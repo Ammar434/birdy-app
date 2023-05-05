@@ -24,7 +24,7 @@ const LeftSide = () => {
       <Grid
         h={"100%"}
         gap={constants.padding.kSmallPaddingValue}
-        paddingY={100}
+        // paddingY={100}
       >
         <GridItem w="100%">
           <Center height={"100%"}>

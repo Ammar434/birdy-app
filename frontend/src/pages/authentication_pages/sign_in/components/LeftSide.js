@@ -10,9 +10,11 @@ const LeftSide = () => {
   return (
     <Box flex="1">
       <Grid
+        w={"100%"}
+        // color={"red"}
+        // backgroundColor={"red"}
         h={"100%"}
-        gap={constants.padding.kSmallPaddingValue}
-        paddingY={100}
+        // gap={constants.padding.kSmallPaddingValue}
       >
         <TitleLogIn />
         <FormLogIn />

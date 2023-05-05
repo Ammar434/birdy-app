@@ -33,6 +33,8 @@ export const useLogin = () => {
       dispatch({ type: "LOGIN", payload: json });
 
       setIsLoading(false);
+
+      navigate(ROOT);
     } else {
       console.log("erreur");
     }

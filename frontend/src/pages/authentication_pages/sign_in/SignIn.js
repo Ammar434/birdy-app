@@ -20,7 +20,7 @@ const SignIn = () => {
         p={constants.padding.kSmallPaddingValue}
         color="red"
       >
-        <Flex color="white" h="100%">
+        <Flex h="100%">
           <LeftSide />
           {isWeb && <RightSide />}
         </Flex>

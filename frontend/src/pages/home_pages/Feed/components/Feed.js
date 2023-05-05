@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Spinner } from "@chakra-ui/react";
 import TweetBox from "./TweetBox";
 import TweetList from "./TweetList";
