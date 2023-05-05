@@ -6,8 +6,12 @@ import usePosts from "../../../../hooks/usePost.js";
 
 const Feed = () => {
   const { posts, isLoading, refreshPosts } = usePosts();
-  
-
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshPosts();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   if (isLoading) return <Spinner size="xl" />;
 
   return (
@@ -42,7 +46,11 @@ const Feed = () => {
       <TweetBox refreshPosts={refreshPosts} />
 
       {posts.map((post) => (
-        <TweetList refreshPosts={refreshPosts} key={`${post._id}`} post={post} />
+        <TweetList
+          refreshPosts={refreshPosts}
+          key={`${post._id}`}
+          post={post}
+        />
       ))}
     </Box>
   );
