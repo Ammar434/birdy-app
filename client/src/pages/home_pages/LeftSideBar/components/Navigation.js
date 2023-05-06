@@ -56,15 +56,12 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
       borderRadius="3xl"
     >
       {/* Ici le logo de l'app */}
-
-
-      <Flex  h="16" mx="4" alignItems="center" >
-      <Image src={logo} alt="logo" boxSize="75px"/>
-      <Text fontSize="2xl" fontFamily="monospace">Birdy</Text>
-
+      <Flex h="16" mx="4" alignItems="center">
+        <Image src={logo} alt="logo" boxSize="75px" />
+        <Text fontSize="2xl" fontFamily="monospace">
+          Birdy
+        </Text>
       </Flex>
-
-
       <Flex
         align="center"
         p="5"
@@ -78,7 +75,6 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           color: "white",
         }}
       >
-
         {/* L'avatar */}
         <Menu>
           <MenuButton
@@ -127,11 +123,8 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           {pseudo}
         </Text>
       </Flex>
-
       <Divider my="6" borderColor="purple.400" />
-
       {/* L'autre boutton */}
-
       {LinkItems.map((link) => (
         <NavItem
           onClick={handleClick}
@@ -143,17 +136,11 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           {link.name}
         </NavItem>
       ))}
-
-      <Link
-        as={RouterLink}
-        onClick={() => logout()}
-        to="/"
-      >
-        <Flex 
+      <Link as={RouterLink} onClick={() => logout()} to="/">
+        <Flex
           align="center"
           p="5"
           mx="4"
-          //can you add the flex down the box 
           my="auto"
           borderRadius="lg"
           role="group"
@@ -161,13 +148,10 @@ const Navigation = ({ selectedComponent, updateSelectedComponent }) => {
           _hover={{
             borderColor: "purple.200",
             borderWidth: "2px",
-            color: "white",
-          }}>
-          <Icon
-            mr="2"
-            fontSize="16"
-            as={MdOutlineLogout}
-          />
+            backgroundColor: "red.300",
+          }}
+        >
+          <Icon mr="2" fontSize="16" as={MdOutlineLogout} />
           Deconnexion
         </Flex>
       </Link>{" "}

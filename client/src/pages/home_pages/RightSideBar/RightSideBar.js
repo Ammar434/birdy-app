@@ -16,6 +16,22 @@ const RightSideBar = () => {
       alignItems="center"
       flexDirection="column"
       justifyContent="center"
+      css={{
+        "&::-webkit-scrollbar": {
+          width: "5px",
+          height: "5px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "transparent",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background:
+            "linear-gradient(90deg, rgba(174,3,216,1) 0%, rgba(227,13,135,1) 100%)",
+          borderRadius: "10px",
+          border: "solid 1px #dedede",
+        },
+      }}
+      overflow="auto"
     >
       <SearchBar search={search} setSearch={setSearch} />
       <AllUser users={filteredUsers} />

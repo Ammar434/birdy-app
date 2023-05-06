@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "516c6d4b-662e-46eb-9930-390f4ead1431",
+		"name": "birdy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listPost",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"643dad2d272794ad9268d729\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/listPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"listPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"643dad2d272794ad9268d729\", \r\n    \"content\": \"deuxieme pour chaam\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"home"
+					]
+				},
+				"description": "newPost"
+			},
+			"response": []
+		},
+		{
+			"name": "deletePost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"643ec0ec9698a957a67cee36\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/home/deletePost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"home",
+						"deletePost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "likePost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_idPost\": \"643ec0cf3be8f0dc3e5300a0\", \r\n    \"_idUser\": \"643d58ea91fe0dd005434091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/home/likePost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"home",
+						"likePost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removelikePost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_idUser\": \"643d58ea91fe0dd005434091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/getUserById",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"getUserById"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"643d58ea91fe0dd005434091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/getUserById",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"getUserById"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pseudoById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"643d58ea91fe0dd005434091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/getPseudoById",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"getPseudoById"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Following",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user1Id\": \"643d58ea91fe0dd005434091\",\r\n    \"user2Id\": \"643f043450f8e79cd2fc77f4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/addfollowing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"addfollowing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Following",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user1Id\": \"643d58ea91fe0dd005434091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/getListFollowing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"getListFollowing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove following",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user1Id\": \"643d58ea91fe0dd005434091\",\r\n    \"user2Id\": \"643f043450f8e79cd2fc77f4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/removefollowing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"removefollowing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list Follower",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/profil/listfollower",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"profil",
+						"listfollower"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listAllUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/listUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"listUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lisPostAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/home/listPostAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"home",
+						"listPostAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getIdByMail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"aya@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/user/home/idUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"user",
+						"home",
+						"idUser"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

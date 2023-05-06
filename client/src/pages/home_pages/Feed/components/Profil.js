@@ -110,18 +110,19 @@ const Profile = () => {
             </Box>
           </Flex>
           <Divider mt={5} />
-          {posts? ( 
+        
+        {posts ? ( 
           <SimpleGrid columns={3} spacing={5} mt={5}>
             {posts.map((post) => (
               <Box key={post.id}>{/* <Post post={post} /> */}</Box>
             ))}
           </SimpleGrid>
-          ) : (
-            <Text fontSize="sm" color="gray.500" mt={5}>
-              No posts yet
-            </Text>
-          )}
-          
+        ) : (
+          <Text fontSize="sm" color="gray.500">
+            No posts yet
+          </Text>
+        )}
+
         </GridItem>
       </Grid>
     </Box>

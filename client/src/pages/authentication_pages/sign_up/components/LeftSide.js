@@ -62,7 +62,7 @@ const LeftSide = () => {
             mt="6"
             color={colorMode === "light" ? "teal.800" : "white"}
           >
-            Alreadt have an account? {"  "}
+            Already have an account? {"  "}
             <Link
               as={RouterLink}
               to={LOGIN}
