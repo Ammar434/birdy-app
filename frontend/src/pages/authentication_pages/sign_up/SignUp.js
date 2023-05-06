@@ -16,7 +16,7 @@ const SignUp = () => {
         bg={colorMode === "light" ? "white" : "black"}
         borderRadius={constants.radius.kRadius}
         w="150vh"
-        // h="80vh"
+        h="80%"
         p={constants.padding.kSmallPaddingValue}
         color="red"
       >
