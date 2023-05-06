@@ -16,7 +16,7 @@ const SignIn = () => {
         bg={colorMode === "light" ? "white" : "black"}
         borderRadius={constants.radius.kRadius}
         w="130vh"
-        h="80%"
+        h="95%"
         p={constants.padding.kSmallPaddingValue}
         color="red"
       >
